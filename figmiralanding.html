@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figmira — Dream Boldly. Build Everything.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --gold:   #f0c040;
+  --gold-lt:#fde68a;
+  --pur:    #7c3aed;
+  --pur-lt: #c084fc;
+  --pink:   #e879f9;
+  --dark:   #06060d;
+  --tx:     #d4a84b;
+  --tx-dim: #3a2e1c;
+}
+
+body { 
+  background:var(--dark); 
+  font-family:'Montserrat', sans-serif; 
+  overflow-x:hidden; 
+  cursor:none; 
+  color:var(--tx); 
+  line-height: 1.6; 
+  opacity: 0; 
+  animation: fadeInApp 1.2s ease-out forwards; 
+}
+
+@keyframes fadeInApp {
+  to { opacity: 1; }
+}
+
+/* ── CURSOR (Reverted to your exact smooth logic) ── */
+#cursorStar { position:fixed; top:-100px; left:-100px; pointer-events:none; z-index:9999; width:16px; height:16px; clip-path:polygon(50% 0%,55% 42%,100% 50%,55% 58%,50% 100%,45% 58%,0% 50%,45% 42%); background:radial-gradient(circle,white 10%,var(--gold) 55%,rgba(192,132,252,.5) 100%); animation:starSpin 4s linear infinite; filter:drop-shadow(0 0 5px var(--gold)) drop-shadow(0 0 12px rgba(192,132,252,.6)); mix-blend-mode:screen; transform:translate(-50%,-50%) rotate(0deg); transition:width .2s, height .2s, opacity 0.3s ease; opacity: 0; will-change: transform, opacity; }
+@keyframes starSpin { to { transform:translate(-50%,-50%) rotate(360deg); } }
+#cursorRing { position:fixed; top:-100px; left:-100px; pointer-events:none; z-index:9998; width:40px; height:40px; border:1px solid rgba(240,192,64,.35); border-radius:50%; transform:translate(-50%,-50%); transition:width .25s, height .25s, border-color .25s, opacity 0.3s ease; opacity: 0; will-change: transform, opacity; }
+.trail-dot { position:fixed; top:-100px; left:-100px; border-radius:50%; pointer-events:none; z-index:9997; transform:translate(-50%,-50%); mix-blend-mode:screen; transition: opacity 0.3s ease; opacity: 0; will-change: transform, opacity; }
+
+/* ── TOUCH DEVICE FALLBACK ── */
+@media (hover: none) and (pointer: coarse) {
+  body, .btn, .brand-card, .value-card, a, .door-letter { cursor: auto !important; }
+  #cursorStar, #cursorRing, .trail-dot { display: none !important; }
+}
+
+/* ── REDUCED MOTION ACCESSIBILITY ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .sweep-ray, .particle, .orb-1, .orb-2 { display: none !important; }
+  .gw-canvas { opacity: 0.5 !important; } 
+}
+
+body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:.35; }
+
+/* ── NAV ── */
+nav { position:fixed; top:0; left:0; right:0; z-index:500; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; height:64px; background:linear-gradient(to bottom,rgba(6,6,13,.97),transparent); transition: padding 0.3s; }
+.nav-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.nav-butterfly { width:24px; height:22px; filter:drop-shadow(0 0 5px rgba(192,132,252,.7)); }
+.nav-logo { font-family:'Cinzel',serif; font-size:16px; font-weight:900; letter-spacing:.28em; background:linear-gradient(90deg,var(--gold),var(--pur-lt)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; }
+.nav-links { display:flex; gap:36px; list-style:none; }
+.nav-links a { font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:.2em; color:rgba(255,255,255,0.7); text-decoration:none; text-transform:uppercase; transition:color .3s; white-space:nowrap; }
+.nav-links a:hover { color:var(--gold); }
+
+/* ── HERO & AMBIENT ORBS ── */
+#hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden; padding:64px 20px 120px; }
+.orb { position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; will-change: transform; }
+
+@keyframes orbBreathe {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.08) translate(30px, -20px); }
+}
+@keyframes orbBreatheAlt {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.1) translate(-40px, 30px); }
+}
+
+.orb-1 { width:700px; height:700px; background:var(--pur); top:-200px; left:-200px; opacity:.15; animation: orbBreathe 18s ease-in-out infinite; }
+.orb-2 { width:500px; height:500px; background:var(--gold); bottom:-150px; right:-100px; opacity:.07; animation: orbBreatheAlt 22s ease-in-out infinite; }
+
+.hero-imagination { font-family:'Cinzel',serif; font-weight: 700; font-size:clamp(12px,1.4vw,18px); letter-spacing:.55em; text-transform:uppercase; margin-bottom:28px; text-align:center; }
+
+/* ══════════════════════════════════════════════════════ 
+  FIGMIRA GATEWAY (Reverted to your golden code with 36px mobile clamp)
+  ═══════════════════════════════════════════════════════ */
+#gwWrap { position:relative; width:min(92vw, 1100px); margin-bottom:18px; }
+#gwLetters { display:flex; align-items:center; justify-content:center; gap:0; }
+
+.gw-letter { position:relative; display:inline-flex; align-items:center; justify-content:center; opacity:0; transform:translateY(50px); }
+.gw-glyph { font-family:'Cinzel',serif; font-weight:900; font-size:clamp(36px,10.5vw,152px); line-height:1; color:rgba(175,170,195,0.52); display:block; user-select:none; letter-spacing:-.01em; text-shadow:0 2px 40px rgba(0,0,0,.8); position: relative; z-index: 5; }
+.gw-canvas { position:absolute; pointer-events:none; mix-blend-mode:screen; z-index: 6; }
+
+/* ── THE SWEEPING LIGHT APERTURES (Original Masks Restored) ── */
+.aperture-scene { position: relative; display: inline-flex; justify-content: center; align-items: center; }
+.light-sweep-container { position: absolute; top: 50%; left: 50%; width: 200vw; height: 150vh; transform: translate(-50%, 0); pointer-events: none; z-index: 1; mix-blend-mode: screen; opacity: 0; }
+.sweep-ray { width: 100%; height: 100%; transform-origin: 50% 0%; animation: pendulumSweep 8s ease-in-out infinite alternate; will-change: transform; }
+@keyframes pendulumSweep { 0% { transform: rotate(-14deg); } 100% { transform: rotate(14deg); } }
+
+.ray-nimble { background: conic-gradient(from 180deg at 50% 0%, transparent 145deg, rgba(255, 150, 50, 0.1) 155deg, rgba(255, 220, 100, 0.5) 175deg, rgba(255, 255, 255, 0.8) 180deg, rgba(255, 220, 100, 0.5) 185deg, rgba(255, 150, 50, 0.1) 205deg, transparent 215deg); -webkit-mask-image: radial-gradient(circle at 50% 0%, black 10%, transparent 60%); }
+.ray-frost { background: conic-gradient(from 180deg at 50% 0%, transparent 145deg, rgba(100, 180, 255, 0.1) 155deg, rgba(160, 230, 255, 0.5) 175deg, rgba(255, 255, 255, 0.8) 180deg, rgba(160, 230, 255, 0.5) 185deg, rgba(100, 180, 255, 0.1) 205deg, transparent 215deg); -webkit-mask-image: radial-gradient(circle at 50% 0%, black 10%, transparent 60%); }
+
+/* ── DOM PARTICLES ── */
+.dom-particles { position: absolute; inset: 0; pointer-events: none; z-index: 10; opacity: 0; }
+.particle { position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; border-radius: 50%; opacity: 0; will-change: transform, opacity; }
+.dom-particles.active .particle { animation: particleFloat var(--dur) ease-out infinite var(--del); }
+@keyframes particleFloat { 0% { transform: translate(0, 0) scale(0.5); opacity: 0; } 20% { opacity: 0.8; } 100% { transform: translate(var(--tx), var(--ty)) scale(1.5); opacity: 0; } }
+
+/* AAA Performance Pause */
+.hero-paused .sweep-ray, .hero-paused .particle, .hero-paused .orb-1, .hero-paused .orb-2 { animation-play-state: paused !important; }
+
+/* ── THE PIXEL MASK ── */
+.pixel-scene { position: relative; display: inline-flex; }
+.pixel-grid { position: absolute; inset: -5px; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr); z-index: 20; }
+.pixel-block { background: var(--gold-lt); opacity: 1; border-radius: 1px; will-change: transform, opacity; }
+
+/* ── LAYOUT ELEMENTS ── */
+.hero-tagline { font-family:'Cinzel',serif; font-size:clamp(12px,1.5vw,20px); letter-spacing:.42em; text-transform:uppercase; margin-bottom:44px; margin-top:6px; text-align:center; }
+.hero-cta { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; opacity: 0; transform: translateY(20px); }
+
+.btn { font-family:'Cinzel',serif; font-size:12px; font-weight: 700; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; padding:15px 36px; border-radius:2px; position:relative; overflow:hidden; transition: color .3s ease, border-color .3s ease, box-shadow .3s ease; cursor:none; text-align:center; display: inline-block; will-change: transform; }
+.btn-primary { background:transparent; border:1px solid var(--gold); color:var(--gold-lt); }
+.btn-primary::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(240,192,64,.12),rgba(124,58,237,.08)); opacity:0; transition:opacity .3s; }
+.btn-primary:hover::before { opacity:1; }
+.btn-primary:hover { box-shadow:0 0 30px rgba(240,192,64,.3); }
+.btn-secondary { background:transparent; border:1px solid rgba(192,132,252,.35); color:var(--pur-lt); }
+.btn-secondary:hover { border-color:var(--pur-lt); box-shadow:0 0 30px rgba(192,132,252,.2); }
+
+.scroll-hint { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:10px; font-weight:700; letter-spacing:.3em; color:rgba(255,255,255,0.4); text-transform:uppercase; opacity: 0; }
+.scroll-line { width:1px; height:40px; background:linear-gradient(to bottom,rgba(240,192,64,.5),transparent); animation:scrollDrop 2s ease-in-out infinite; }
+@keyframes scrollDrop { 0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom} }
+
+/* SECTIONS */
+.section-divider { width:100%; display:flex; align-items:center; gap:24px; padding:0 60px; margin:0 auto; max-width:1200px; }
+.section-divider::before,.section-divider::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(240,192,64,.2),transparent); }
+.section-divider span { font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:.4em; color:rgba(255,255,255,0.4); white-space:nowrap; }
+
+.ill-word { display: inline; color: rgba(255, 255, 255, 0.4); transition: color 0.15s ease-out, text-shadow 0.15s ease-out; will-change: color, text-shadow; }
+.ill-word.active { color: var(--tx); text-shadow: 0px 0px 20px rgba(240,192,64,0.6); }
+
+/* ── VALUES SECTION (WITH NEW SVGS) ── */
+#values { padding:110px 60px; max-width:1300px; margin:0 auto; }
+.values-headline { font-family:'Cinzel',serif; font-size:clamp(24px,3.8vw,46px); font-weight:900; margin-bottom:68px; text-align:center; }
+.values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; }
+.value-card { background:linear-gradient(145deg,#0d0d1e,#110d22); border:1px solid #1a1a2e; border-radius:4px; padding:40px 32px; position:relative; overflow:hidden; cursor:none; opacity: 0; transform: translateY(30px); }
+
+.value-icon { margin-bottom: 16px; display: flex; }
+.value-icon svg { width: 32px; height: 32px; stroke: var(--gold); filter: drop-shadow(0 0 8px rgba(240, 192, 64, 0.4)); transition: transform 0.4s ease, filter 0.4s ease; }
+.value-card:hover .value-icon svg { transform: scale(1.1) translateY(-2px); filter: drop-shadow(0 0 12px var(--gold-lt)); stroke: var(--gold-lt); }
+
+.value-label { font-family:'Cinzel',serif; font-size:14px; font-weight:700; letter-spacing:.25em; margin-bottom:12px; text-transform:uppercase; color: var(--gold-lt); }
+.value-desc { font-size:15px; font-weight: 300; line-height: 1.8; }
+
+/* ── BRANDS SECTION (3-COLUMN GRID) ── */
+#brands { padding:110px 60px; }
+.brands-inner { max-width:1400px; margin:0 auto; text-align:center; }
+.brands-eyebrow { font-family:'Cinzel',serif; font-size:12px; font-weight:700; letter-spacing:.45em; margin-bottom:52px; text-transform:uppercase; color: rgba(255,255,255,0.6); }
+
+.brands-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
+
+.brand-card { background:linear-gradient(145deg,#0d0d1e,#110d22); border:1px solid #1a1a2e; border-radius:4px; padding:50px 20px; width: 100%; position:relative; overflow:hidden; transition:all .4s ease; cursor:none; display:flex; flex-direction:column; align-items:center; gap:14px; opacity: 0; transform: translateY(30px); }
+.brand-card:hover { border-color:rgba(240,192,64,.28); transform:translateY(-8px); box-shadow:0 24px 80px rgba(240,192,64,.07); }
+
+.brand-word-row { display:flex; gap:2px; flex-wrap:nowrap; justify-content:center; margin-bottom: 12px; width: 100%; min-width: 0;}
+.brand-divider { width:40px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); opacity:.4; }
+.brand-desc { font-size:14px; font-weight: 300; text-align:center; line-height: 1.8; margin: 0 10px; }
+.brand-link { font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:.3em; color:var(--pur-lt); text-decoration:none; text-transform:uppercase; margin-top:8px; opacity:.75; transition:opacity .3s; }
+.brand-link:hover { opacity:1; }
+
+.door-letter { position:relative; display:inline-flex; align-items:center; justify-content:center; overflow:visible; cursor:pointer; flex: 0 1 auto; min-width: 0; }
+.door-letter-inner { position:relative; display:inline-flex; align-items:center; justify-content:center; overflow:hidden; min-width: 0; }
+.letter-char { font-family:'Cinzel',serif; font-weight:900; letter-spacing:0.02em; background:linear-gradient(90deg,var(--gold-lt),var(--gold) 40%,var(--pur-lt)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:block; position:relative; z-index:2; user-select:none; transition:opacity .35s ease; font-size:clamp(12px, 4vw, 42px); padding: 0 1px; min-width: 0; }
+.door-reveal { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; z-index:1; transition:opacity .4s ease; transition-delay: 0.2s; }
+.door-reveal-symbol { filter:drop-shadow(0 0 12px currentColor); font-size:clamp(14px, 4vw, 32px); }
+
+.door-panel-left,.door-panel-right { position:absolute; top:0; bottom:0; width:50%; background:linear-gradient(160deg,#130e28,#0c0819); border:1px solid rgba(192,132,252,.1); transition:transform 1.4s cubic-bezier(0.22, 1, 0.36, 1); z-index:3; will-change: transform; }
+.door-panel-left  { left:0; transform-origin:left center; }
+.door-panel-right { right:0; transform-origin:right center; }
+.door-letter.open .door-panel-left  { transform:perspective(700px) rotateY(-88deg); }
+.door-letter.open .door-panel-right { transform:perspective(700px) rotateY(88deg); }
+.door-letter.open .letter-char      { opacity:0; }
+.door-letter.open .door-reveal      { opacity:1; }
+
+/* ── FOOTER ── */
+#footer { padding:58px; border-top:1px solid #0f0f1a; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:30px; }
+.footer-brand { font-family:'Cinzel',serif; font-size:22px; font-weight:900; letter-spacing:.3em; background:linear-gradient(90deg,var(--gold),var(--pur-lt)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.footer-copy  { font-size:13px; font-weight: 400; color: rgba(255,255,255,0.5); }
+.footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; margin-left: 20px; }
+.footer-links a:hover { color: var(--gold); }
+
+.footer-socials { display: flex; gap: 20px; align-items: center; }
+.footer-socials a { color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+.footer-socials a:hover { color: var(--gold); transform: translateY(-2px); filter: drop-shadow(0 0 8px rgba(240,192,64,0.7)); }
+.footer-socials svg { width: 20px; height: 20px; fill: currentColor; }
+
+/* ── MOBILE RESPONSIVE MEDIA QUERIES ── */
+@media (max-width: 1024px) {
+  .brands-row { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; flex-direction: column; gap: 12px; height: auto; }
+  .nav-links { gap: 24px; flex-wrap: wrap; justify-content: center; }
+  #hero { padding-top: 120px; }
+  .section-divider { padding: 0 24px; }
+  #values, #brands { padding: 80px 24px; }
+  .hero-cta { flex-direction: column; width: 100%; max-width: 280px; }
+  .btn { width: 100%; }
+  .brand-card { padding: 40px 12px; }
+  #footer { padding: 40px 24px; flex-direction: column; text-align: center; justify-content: center; gap: 24px; }
+  .footer-links { display: flex; justify-content: center; width: 100%; }
+  .footer-links a { margin: 0 10px; }
+  .footer-socials { justify-content: center; width: 100%; margin-bottom: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursorStar"></div><div id="cursorRing"></div>
+
+<nav>
+  <a class="nav-brand" href="#">
+    <svg class="nav-butterfly" viewBox="0 0 200 180" fill="none">
+      <defs>
+        <radialGradient id="nbL" cx="25%" cy="35%" r="75%"><stop offset="0%" stop-color="#e879f9" stop-opacity=".9"/><stop offset="50%" stop-color="#9333ea" stop-opacity=".9"/><stop offset="100%" stop-color="#2e1065" stop-opacity="1"/></radialGradient>
+        <radialGradient id="nbR" cx="75%" cy="35%" r="75%"><stop offset="0%" stop-color="#e879f9" stop-opacity=".9"/><stop offset="50%" stop-color="#9333ea" stop-opacity=".9"/><stop offset="100%" stop-color="#2e1065" stop-opacity="1"/></radialGradient>
+      </defs>
+      <path d="M97,88 C86,72 62,48 36,30 C16,16 4,18 4,36 C4,56 22,76 46,86 C68,96 88,92 97,88Z" fill="url(#nbL)" stroke="#d946ef" stroke-width="1.8"/>
+      <path d="M103,88 C114,72 138,48 164,30 C184,16 196,18 196,36 C196,56 178,76 154,86 C132,96 112,92 103,88Z" fill="url(#nbR)" stroke="#d946ef" stroke-width="1.8"/>
+      <path d="M97,94 C80,102 52,114 32,128 C14,140 8,156 18,162 C30,170 56,160 76,144 C94,130 100,112 97,94Z" fill="#6d28d9" stroke="#9333ea" stroke-width="1.4" opacity=".95"/>
+      <path d="M103,94 C120,102 148,114 168,128 C186,140 192,156 182,162 C170,170 144,160 124,144 C106,130 100,112 103,94Z" fill="#6d28d9" stroke="#9333ea" stroke-width="1.4" opacity=".95"/>
+      <ellipse cx="100" cy="100" rx="5.5" ry="40" fill="#0a0818" stroke="#d946ef" stroke-width="1.5"/>
+    </svg>
+    <span class="nav-logo">FIGMIRA</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#values">Our Vision</a></li>
+    <li><a href="#brands">Our Brands</a></li>
+    <li><a href="#footer">Follow Us</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <p class="hero-imagination ill-target">Where Imagination Is Set Free</p>
+
+  <div id="gwWrap">
+    <div id="gwLetters">
+      
+      <div class="gw-letter">
+        <div class="aperture-scene">
+          <div class="light-sweep-container sweep-f"><div class="sweep-ray ray-frost"></div></div>
+          <div class="dom-particles p-frost"></div>
+          <span class="gw-glyph glyph-f">F</span>
+        </div>
+      </div>
+
+      <div class="gw-letter">
+        <div class="aperture-scene">
+          <div class="light-sweep-container sweep-i-1"><div class="sweep-ray ray-nimble"></div></div>
+          <div class="dom-particles p-nimble-1"></div>
+          <span class="gw-glyph glyph-i-1">I</span>
+        </div>
+      </div>
+
+      <div class="gw-letter" data-fx="galaxy"><span class="gw-glyph">G</span><canvas class="gw-canvas"></canvas></div>
+      <div class="gw-letter" data-fx="mist"><span class="gw-glyph">M</span><canvas class="gw-canvas"></canvas></div>
+      
+      <div class="gw-letter">
+        <div class="aperture-scene">
+          <div class="light-sweep-container sweep-i-2"><div class="sweep-ray ray-nimble" style="animation-delay: -3s;"></div></div>
+          <div class="dom-particles p-nimble-2"></div>
+          <span class="gw-glyph glyph-i-2">I</span>
+        </div>
+      </div>
+
+      <div class="gw-letter" data-fx="radiance"><span class="gw-glyph">R</span><canvas class="gw-canvas"></canvas></div>
+
+      <div class="gw-letter">
+        <div class="pixel-scene">
+          <span class="gw-glyph glyph-a">A</span>
+          <div class="pixel-grid" id="pixel-a"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="hero-tagline ill-target">Dream Boldly. Build Everything.</p>
+  <div class="hero-cta">
+    <a href="#brands" class="btn btn-primary">Explore Our World</a>
+    <a href="#values" class="btn btn-secondary">Our Vision</a>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<div class="section-divider"><span class="ill-target">✦ Our Purpose ✦</span></div>
+
+<section id="values">
+  <h2 class="values-headline ill-target">Born from a Figment. Built for Everything.</h2>
+  <div class="values-grid">
+    
+    <div class="value-card">
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+          <line x1="12" y1="22" x2="12" y2="12"></line><line x1="22" y1="8.5" x2="12" y2="12"></line><line x1="2" y1="8.5" x2="12" y2="12"></line>
+        </svg>
+      </div>
+      <div class="value-label">Play</div>
+      <p class="value-desc ill-target">We believe interactive worlds are the apex of imagination. Every realm we forge starts as a figment — and evolves into an unforgettable reality.</p>
+    </div>
+
+    <div class="value-card">
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+        </svg>
+      </div>
+      <div class="value-label">Envision</div>
+      <p class="value-desc ill-target">Ideas are the currency of creation. We nurture bold, impossible-sounding visions and give them the space to breathe, mutate, and surprise us.</p>
+    </div>
+
+    <div class="value-card">
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+      </div>
+      <div class="value-label">Forge</div>
+      <p class="value-desc ill-target">Dreaming isn't enough. We architect with absolute intention — building studios, ventures, and AI frameworks that stand the test of time.</p>
+    </div>
+
+    <div class="value-card">
+      <div class="value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"></ellipse>
+          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"></ellipse>
+        </svg>
+      </div>
+      <div class="value-label">Expand</div>
+      <p class="value-desc ill-target">Figmira is a multiverse, not a company. Every brand we launch is a new portal — branching from the exact same untamed imagination.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"><span class="ill-target">✦ Our Brands ✦</span></div>
+
+<section id="brands">
+  <div class="brands-inner">
+    <p class="brands-eyebrow ill-target">The Figmira Universe</p>
+    <div class="brands-row">
+      
+      <div class="brand-card" id="card-studios">
+        <div class="brand-word-row">
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">S</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#e879f9">S</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">T</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">T</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">U</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#c084fc">U</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">D</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#fde68a">D</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">I</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#e879f9">I</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">O</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">O</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">S</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#c084fc">S</span></div></div></div>
+        </div>
+        <div class="brand-divider"></div>
+        <p class="brand-desc ill-target">Our forge of worlds. Crafting immersive realms, mythical narratives, and untamed digital experiences where the impossible becomes your reality.</p>
+        <a href="#" class="brand-link">Coming Soon →</a>
+      </div>
+
+      <div class="brand-card" id="card-ventures">
+        <div class="brand-word-row">
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">V</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">V</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">E</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#c084fc">E</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">N</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#fde68a">N</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">T</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#e879f9">T</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">U</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">U</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">R</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#c084fc">R</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">E</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#fde68a">E</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">S</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">S</span></div></div></div>
+        </div>
+        <div class="brand-divider"></div>
+        <p class="brand-desc ill-target">Our creative incubator. Partnering alongside passionate builders and independent creators to help nurture, fund, and launch the ideas others call impossible.</p>
+        <a href="#" class="brand-link">Coming Soon →</a>
+      </div>
+
+      <div class="brand-card" id="card-labs">
+        <div class="brand-word-row">
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">L</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#c084fc">L</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">A</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">A</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">B</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#c084fc">B</span></div></div></div>
+          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">S</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">S</span></div></div></div>
+        </div>
+        <div class="brand-divider"></div>
+        <p class="brand-desc ill-target">Our digital alchemy. Pioneering autonomous AI entities and decentralized frameworks that weave living intelligence directly into the blockchain.</p>
+        <a href="#" class="brand-link">Coming Soon →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="footer-brand">FIGMIRA</div>
+  
+  <div class="footer-socials">
+    <a href="#" target="_blank" aria-label="Follow FIGMIRA on Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="#" target="_blank" aria-label="Follow FIGMIRA on X">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+  </div>
+
+  <div class="footer-links"><a href="#">Privacy</a></div>
+  <div class="footer-copy ill-target">© 2026 Figmira. Dream Boldly. Build Everything.</div>
+</footer>
+
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════════════════════════════ 
+  LENIS SMOOTH SCROLL (Your Golden Code Engine)
+═══════════════════════════════════════════════════════════════════ */
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  direction: 'vertical',
+  gestureDirection: 'vertical',
+  smooth: true,
+  mouseMultiplier: 1,
+  smoothTouch: false,
+  touchMultiplier: 2,
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+/* ═══════════════════════════════════════════════════════════════════ 
+  MAGIC CURSOR (Your Golden Code Logic)
+═══════════════════════════════════════════════════════════════════ */
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  const star = document.getElementById('cursorStar');
+  const ring = document.getElementById('cursorRing');
+  const TRAIL=6, dots=[], dPos=Array.from({length:TRAIL},()=>({x:0,y:0}));
+  const dCols=['#fde68a','#f0c040','#f0c040','#c084fc','#c084fc','#9333ea'];
+  
+  for(let i=0;i<TRAIL;i++){
+    const d=document.createElement('div'); d.className='trail-dot';
+    const sz=Math.round(7-i*.9);
+    const targetOp = (0.6-i*.08).toFixed(2);
+    d.dataset.op = targetOp; 
+    d.style.cssText=`width:${sz}px;height:${sz}px;background:${dCols[i]};box-shadow:0 0 ${sz+2}px ${dCols[i]};`;
+    document.body.appendChild(d); dots.push(d);
+  }
+  
+  let mx=0, my=0, rx=0, ry=0;
+  let cursorVisible = false;
+  let firstMove = true;
+  let loopRunning = false;
+
+  function runCursorLoop() {
+    rx+=(mx-rx)*.13; ry+=(my-ry)*.13; ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    dPos[0].x+=(mx-dPos[0].x)*.38; dPos[0].y+=(my-dPos[0].y)*.38;
+    for(let i=1;i<TRAIL;i++){dPos[i].x+=(dPos[i-1].x-dPos[i].x)*.38;dPos[i].y+=(dPos[i-1].y-dPos[i].y)*.38;}
+    for(let i=0;i<TRAIL;i++){dots[i].style.left=dPos[i].x+'px';dots[i].style.top=dPos[i].y+'px';}
+    requestAnimationFrame(runCursorLoop);
+  }
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    
+    if (firstMove) {
+      rx = mx; ry = my;
+      dPos.forEach(p => { p.x = mx; p.y = my; });
+      firstMove = false;
+      
+      if (!loopRunning) {
+        requestAnimationFrame(runCursorLoop);
+        loopRunning = true;
+      }
+    }
+
+    if (!cursorVisible) {
+      star.style.opacity = '1';
+      ring.style.opacity = '1';
+      dots.forEach(d => d.style.opacity = d.dataset.op);
+      cursorVisible = true;
+    }
+
+    star.style.left=mx+'px'; star.style.top=my+'px'; 
+  });
+  
+  document.addEventListener('mouseleave', () => {
+    star.style.opacity = '0';
+    ring.style.opacity = '0';
+    dots.forEach(d => d.style.opacity = '0');
+    cursorVisible = false;
+  });
+  
+  document.querySelectorAll('a,.door-letter,.value-card,.brand-card,.btn').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{star.style.width='24px';star.style.height='24px';ring.style.width='58px';ring.style.height='58px';ring.style.borderColor='rgba(240,192,64,.7)';});
+    el.addEventListener('mouseleave',()=>{star.style.width='16px';star.style.height='16px';ring.style.width='40px';ring.style.height='40px';ring.style.borderColor='rgba(240,192,64,.35)';});
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════ 
+  DOM PARTICLES
+═══════════════════════════════════════════════════════════════════ */
+const generateParticles = (className, color, shadow, rise) => {
+  document.querySelectorAll(`.${className}`).forEach(container => {
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.backgroundColor = color;
+      p.style.boxShadow = `0 0 8px ${shadow}`;
+      p.style.setProperty('--tx', (Math.random() - 0.5) * 300 + 'px'); 
+      p.style.setProperty('--ty', (Math.random() + (rise ? -1 : 0.2)) * 200 + 'px'); 
+      p.style.setProperty('--dur', 2 + Math.random() * 3 + 's');
+      p.style.setProperty('--del', Math.random() * 2 + 's');
+      container.appendChild(p);
+    }
+  });
+};
+generateParticles('p-frost', '#dff5ff', '#80d4ff', false); 
+generateParticles('p-nimble-1', '#fff4d4', '#ffb450', true); 
+generateParticles('p-nimble-2', '#fff4d4', '#ffb450', true); 
+
+const pixelGrid = document.getElementById('pixel-a');
+for (let i = 0; i < 100; i++) { 
+  const block = document.createElement('div');
+  block.className = 'pixel-block';
+  pixelGrid.appendChild(block);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ 
+  CANVAS EFFECTS (Your Golden Code Logic)
+═══════════════════════════════════════════════════════════════════ */
+function radialGlow(ctx, x, y, r, col0, col1) {
+  const g = ctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0,col0); g.addColorStop(1,col1);
+  ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
+  ctx.fillStyle=g; ctx.fill();
+}
+
+function initGalaxy(s,w,h){
+  s.cx=w*.42; s.cy=h*.52; s.stars=[];
+  const rings=[
+    {n:14,r:h*.14,sp:.008,cols:['255,255,220','240,192,64','255,255,255']},
+    {n:22,r:h*.25,sp:.005,cols:['192,132,252','255,255,200','255,200,100']},
+    {n:30,r:h*.38,sp:.003,cols:['144,90,232','180,120,255','200,160,255','255,240,180']}
+  ];
+  rings.forEach(ring=>{
+    for(let i=0;i<ring.n;i++){
+      const ang=(i/ring.n)*Math.PI*2+Math.random()*.5;
+      const col=ring.cols[Math.floor(Math.random()*ring.cols.length)];
+      s.stars.push({ang,r:ring.r*(0.85+Math.random()*.3),sp:ring.sp*(Math.random()<.5?1:-1), sz:0.8+Math.random()*2.2,col,bright:0.5+Math.random()*.5,phase:Math.random()*Math.PI*2});
+    }
+  });
+}
+function drawGalaxy(ctx,w,h,ts,s){
+  ctx.clearRect(0,0,w,h); const {cx,cy}=s;
+  radialGlow(ctx,cx,cy,h*.38,'rgba(120,60,200,0.55)','rgba(80,20,160,0)');
+  radialGlow(ctx,cx,cy,h*.035,'rgba(255,240,200,0.95)','rgba(220,160,255,0)');
+  for(let arm=0;arm<2;arm++){
+    const offset=arm*Math.PI; ctx.beginPath();
+    for(let i=0;i<=60;i++){
+      const t=i/60, ang=t*Math.PI*3+ts*.002+offset, r=t*h*.35;
+      const x=cx+Math.cos(ang)*r, y=cy+Math.sin(ang)*r*.5;
+      if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle=`rgba(160,90,255,${0.12+0.05*Math.sin(ts*.002)})`; ctx.lineWidth=6; ctx.stroke();
+  }
+  s.stars.forEach(star=>{
+    star.ang+=star.sp; const x=s.cx+Math.cos(star.ang)*star.r, y=s.cy+Math.sin(star.ang)*star.r*.6;
+    const twinkle=star.bright*(0.7+0.3*Math.sin(ts*.004+star.phase));
+    radialGlow(ctx,x,y,star.sz*2,`rgba(${star.col},${twinkle})`,`rgba(${star.col},0)`);
+  });
+}
+
+function initMist(s,w,h){
+  s.waves=[
+    {freq:0.012,amp:h*.12,speed:.0018,phase:0, r:0, g:220,b:180,a:.35},
+    {freq:0.020,amp:h*.09,speed:.0025,phase:2.1,r:192,g:132,b:252,a:.30}
+  ];
+  s.p=[];s.t=0;
+}
+function drawMist(ctx,w,h,ts,s){
+  ctx.clearRect(0,0,w,h); s.t++;
+  s.waves.forEach(wave=>{
+    wave.phase+=wave.speed; ctx.beginPath(); ctx.moveTo(0,h);
+    for(let x=0;x<=w;x+=4){
+      const y=h*.68-Math.sin(x*wave.freq+wave.phase)*wave.amp-Math.sin(x*wave.freq*.5+wave.phase*.7)*wave.amp*.4;
+      ctx.lineTo(x,y);
+    }
+    ctx.lineTo(w,h); ctx.closePath();
+    const g=ctx.createLinearGradient(0,h*.3,0,h);
+    g.addColorStop(0,`rgba(${wave.r},${wave.g},${wave.b},${wave.a*1.4})`);
+    g.addColorStop(1,`rgba(${wave.r},${wave.g},${wave.b},0)`);
+    ctx.fillStyle=g; ctx.fill();
+  });
+  radialGlow(ctx,w/2,h*.58,w*.28,'rgba(0,220,180,0.25)','rgba(0,180,140,0)');
+  if(s.t%4===0) s.p.push({x:w*.2+Math.random()*w*.6,y:h*.85, vy:-(0.4+Math.random()*.8),vx:(Math.random()-.5)*.5, life:0,ml:80+Math.random()*80, sz:1+Math.random()*2, r:Math.random()<.5?0:192,g:Math.random()<.5?220:132,b:Math.random()<.5?180:252});
+  for(let i=s.p.length-1;i>=0;i--){
+    const p=s.p[i]; p.x+=p.vx; p.y+=p.vy; p.life++;
+    if(p.life>p.ml){s.p.splice(i,1);continue;}
+    const a=(p.life/p.ml<.25?p.life/p.ml/.25:1-p.life/p.ml)*.7;
+    radialGlow(ctx,p.x,p.y,p.sz,`rgba(${p.r},${p.g},${p.b},${a})`,'rgba(0,200,160,0)');
+  }
+  if(s.p.length>60)s.p.splice(0,60);
+}
+
+function initRadiance(s,w,h){ s.rot=0;s.p=[];s.t=0; s.sx=w*.35; s.sy=h*.38; }
+function drawRadiance(ctx,w,h,ts,s){
+  ctx.clearRect(0,0,w,h); const {sx,sy}=s; s.rot+=.004;
+  radialGlow(ctx,sx,sy,h*.18,'rgba(255,220,80,0.80)','rgba(255,160,0,0)');
+  const RAY_COUNT=14;
+  for(let i=0;i<RAY_COUNT;i++){
+    const ang=s.rot+(i/RAY_COUNT)*Math.PI*2, len=h*.48*(0.7+.3*Math.sin(ts*.003+i*.7));
+    const ex=sx+Math.cos(ang)*len, ey=sy+Math.sin(ang)*len;
+    const rg=ctx.createLinearGradient(sx,sy,ex,ey); const isPrimary=i%2===0;
+    rg.addColorStop(0,`rgba(255,240,120,${isPrimary?.75:.45})`); rg.addColorStop(1,'rgba(255,160,0,0)');
+    ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(ex,ey); ctx.strokeStyle=rg; ctx.lineWidth=isPrimary?2.5:1.2; ctx.stroke();
+  }
+}
+
+const FX_MAP = {
+  galaxy:     { init:initGalaxy,     draw:drawGalaxy     },
+  mist:       { init:initMist,       draw:drawMist       },
+  radiance:   { init:initRadiance,   draw:drawRadiance   }
+};
+
+const PAD = 36;
+let letterData = [];
+let gatewayActive = false;
+
+function setupGateway() {
+  letterData = [];
+  document.querySelectorAll('.gw-letter').forEach(letterEl => {
+    const glyph  = letterEl.querySelector('.gw-glyph');
+    const canvas = letterEl.querySelector('.gw-canvas');
+    if (!canvas) return; 
+    const fx     = letterEl.dataset.fx;
+    const fxDef  = FX_MAP[fx];
+    if (!fxDef) return;
+
+    const rect   = glyph.getBoundingClientRect();
+    const cw     = Math.ceil(rect.width)  + PAD*2;
+    const ch     = Math.ceil(rect.height) + PAD*2;
+
+    canvas.width  = cw; canvas.height = ch;
+    canvas.style.left   = `-${PAD}px`; canvas.style.top    = `-${PAD}px`;
+    canvas.style.width  = `${cw}px`; canvas.style.height = `${ch}px`;
+
+    const ctx   = canvas.getContext('2d');
+    const state = {};
+    fxDef.init(state, cw, ch);
+    letterData.push({ ctx, w:cw, h:ch, draw:fxDef.draw, state });
+  });
+}
+
+function gatewayLoop(ts) {
+  if (gatewayActive) {
+    letterData.forEach(d => d.draw(d.ctx, d.w, d.h, ts, d.state));
+  }
+  requestAnimationFrame(gatewayLoop);
+}
+
+document.fonts.ready.then(() => {
+  setupGateway();
+  
+  let resizeTimer;
+  let lastWidth = window.innerWidth;
+  window.addEventListener('resize', () => { 
+    if (window.innerWidth !== lastWidth) {
+      lastWidth = window.innerWidth;
+      clearTimeout(resizeTimer); 
+      resizeTimer = setTimeout(setupGateway, 250); 
+    }
+  });
+  
+  requestAnimationFrame(gatewayLoop);
+});
+
+/* ═══════════════════════════════════════════════════════════════════ 
+  GSAP ANIMATION ENGINE
+═══════════════════════════════════════════════════════════════════ */
+gsap.registerPlugin(ScrollTrigger);
+
+// Sync GSAP with Lenis Smooth Scrolling (Golden Code)
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+
+const heroTl = gsap.timeline({
+  scrollTrigger: { trigger: "#hero", start: "top 20%" }
+});
+
+heroTl.from("nav .nav-brand, nav .nav-links li", {
+  opacity: 0,
+  y: -20,
+  duration: 1,
+  stagger: 0.1,
+  ease: "power3.out"
+}, 0.2); 
+
+heroTl.to(".gw-letter", {
+  opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out",
+  onStart: () => { gatewayActive = true; } 
+}, "-=0.5");
+
+heroTl.to([".sweep-f", ".sweep-i-1", ".sweep-i-2"], { opacity: 1, duration: 2 }, "-=0.5");
+
+heroTl.to(".glyph-f", { color: "#ffffff", textShadow: "0 0 20px #80d4ff, 0 0 40px #ffffff", duration: 1 }, "-=2");
+heroTl.to([".glyph-i-1", ".glyph-i-2"], { color: "#ffffff", textShadow: "0 0 20px #ffb450, 0 0 40px #ffffff", duration: 1 }, "-=2");
+heroTl.to(".glyph-a", { color: "#ffffff", textShadow: "0 0 25px var(--gold)", duration: 1 }, "-=2");
+
+heroTl.to(".pixel-block", {
+  opacity: 0, scale: 0.2, y: -25, duration: 1.5,
+  stagger: { amount: 1.5, from: "random" },
+  ease: "power3.out"
+}, "-=2");
+
+heroTl.call(() => {
+  document.querySelector('.p-frost').classList.add('active');
+  document.querySelector('.p-nimble-1').classList.add('active');
+  document.querySelector('.p-nimble-2').classList.add('active');
+}, null, "-=1.5");
+
+heroTl.to([".hero-cta", ".scroll-hint"], { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.5");
+
+ScrollTrigger.create({
+  trigger: "#hero",
+  start: "top bottom",
+  end: "bottom top",
+  onLeave: () => { 
+    gatewayActive = false; 
+    document.body.classList.add('hero-paused'); 
+  },
+  onEnterBack: () => { 
+    gatewayActive = true; 
+    document.body.classList.remove('hero-paused'); 
+  }
+});
+
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
+    });
+  });
+}
+
+// Scroll-Scrubbed Text Illumination (Your Golden Code Logic)
+document.querySelectorAll('.ill-target').forEach(el => {
+  const words = el.textContent.trim().split(/\s+/);
+  el.innerHTML = words.map(w => `<span class="ill-word">${w}</span>`).join(' ');
+  
+  const wordSpans = el.querySelectorAll('.ill-word');
+
+  ScrollTrigger.create({
+    trigger: el,
+    start: "top 95%", 
+    end: "bottom bottom", 
+    scrub: true,      
+    onUpdate: (self) => {
+      let activeWordsCount = Math.floor(self.progress * wordSpans.length);
+      if (self.progress > 0.99) activeWordsCount = wordSpans.length;
+
+      wordSpans.forEach((word, i) => {
+        const isActive = i < activeWordsCount;
+        if (isActive && !word.classList.contains('active')) {
+          word.classList.add('active');
+        } else if (!isActive && word.classList.contains('active')) {
+          word.classList.remove('active');
+        }
+      });
+    }
+  });
+});
+
+gsap.utils.toArray(".value-card").forEach((card, i) => {
+  gsap.to(card, {
+    scrollTrigger: { trigger: card, start: "top 90%" },
+    opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: i * 0.1
+  });
+});
+
+gsap.utils.toArray(".brand-card").forEach((card, i) => {
+  gsap.to(card, {
+    scrollTrigger: { trigger: card, start: "top 85%" },
+    opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: i * 0.1
+  });
+
+  ScrollTrigger.create({
+    trigger: card,
+    start: "top 75%", 
+    onEnter: () => {
+      card.querySelectorAll('.brand-door').forEach((door, j) => {
+        setTimeout(() => door.classList.add('open'), j * 150); 
+      });
+    },
+    onLeaveBack: () => {
+      card.querySelectorAll('.brand-door').forEach((door) => {
+        door.classList.remove('open');
+      });
+    }
+  });
+});
+</script>
+</body>
+</html>

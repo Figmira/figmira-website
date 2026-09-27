@@ -1,0 +1,32 @@
+---
+layout: base
+---
+<article class="rs-note">
+  <a class="rs-back" href="{{ '/research/' | relative_url }}">← All research</a>
+
+  <p class="rs-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
+    <span class="rs-topic">{{ page.topic }}</span>
+    <span>{{ page.content | strip_html | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+  </p>
+  <h1 class="rs-note-title">{{ page.title }}</h1>
+  {% if page.description %}<p class="rs-note-lede">{{ page.description }}</p>{% endif %}
+
+  {% if page.topic == "Investing" %}
+  <p class="rs-disclaimer">This note is research and personal opinion, not financial advice.</p>
+  {% endif %}
+
+  <div class="rs-body">
+{{ content }}
+  </div>
+
+  <footer class="rs-note-end">
+    <p class="rs-follow"><span aria-hidden="true">✦</span> New notes are announced on X. <a href="https://x.com/figmira" target="_blank" rel="noopener">Follow @figmira</a></p>
+    {% if page.previous or page.next %}
+    <nav class="rs-pager" aria-label="More notes">
+      {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span>Earlier</span>{{ page.previous.title }}</a>{% endif %}
+      {% if page.next %}<a class="rs-pager-next" href="{{ page.next.url | relative_url }}"><span>Newer</span>{{ page.next.title }}</a>{% endif %}
+    </nav>
+    {% endif %}
+  </footer>
+</article>

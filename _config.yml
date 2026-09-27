@@ -1,0 +1,19 @@
+# ✦ Figmira site settings (read by GitHub Pages)
+title: Figmira
+description: Notes from Figmira Studios on AI, blockchain, robotics, and investing.
+url: https://figmira.com
+
+# Research notes live at figmira.com/research/note-name/
+permalink: /research/:title/
+
+# A feed so people can follow new notes in a reader app
+plugins:
+  - jekyll-feed
+feed:
+  path: research/feed.xml
+
+# Files GitHub Pages should NOT publish
+exclude:
+  - NOTE-TEMPLATE.md
+  - PASTE-GUIDE.txt
+  - gateway-demo.html

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% if page.layout == "note" %}{{ page.title }} · Figmira Research{% else %}Research · Figmira Studios{% endif %}</title>
+<meta name="description" content="{{ page.description | default: site.description | escape }}">
+<meta name="theme-color" content="#06060d">
+<link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+<link rel="icon" href="{{ '/favicon-64.png' | relative_url }}" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
+<meta property="og:type" content="{% if page.layout == 'note' %}article{% else %}website{% endif %}">
+<meta property="og:site_name" content="Figmira">
+<meta property="og:title" content="{{ page.title | escape }}">
+<meta property="og:description" content="{{ page.description | default: site.description | escape }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:image" content="{{ '/og-image.png' | absolute_url }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@figmira">
+<link rel="alternate" type="application/atom+xml" title="Figmira Research" href="{{ '/research/feed.xml' | relative_url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/research/research.css' | relative_url }}">
+</head>
+<body>
+<div class="rs-sky" aria-hidden="true"></div>
+
+<header class="rs-nav">
+  <a class="rs-brand" href="{{ '/' | relative_url }}"><span aria-hidden="true">✦</span> FIGMIRA</a>
+  <nav aria-label="Research">
+    <a href="{{ '/research/' | relative_url }}"{% if page.layout != "note" %} aria-current="page"{% endif %}>Research</a>
+    <a href="https://x.com/figmira" target="_blank" rel="noopener">Follow on X</a>
+  </nav>
+</header>
+
+<main class="rs-main">
+{{ content }}
+</main>
+
+<footer class="rs-footer">
+  <a class="rs-footer-brand" href="{{ '/' | relative_url }}">FIGMIRA</a>
+  <p>© {{ site.time | date: '%Y' }} Figmira. Dream Boldly. Build Everything.</p>
+</footer>
+</body>
+</html>

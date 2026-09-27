@@ -389,13 +389,6 @@ html.gw-nowebgl body {
 /* 13. "Coming Soon" labels are no longer pretend links */
 .gw-soon { pointer-events: none; cursor: default; }
 
-/* 14. Fix: soften the edges of the glowing canvases inside the hero letters,
-       so no rectangle shows behind the title */
-.gw-canvas {
-  -webkit-mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 55%, transparent 100%);
-  mask-image: radial-gradient(ellipse closest-side at 50% 50%, #000 55%, transparent 100%);
-}
-
 @media (max-width: 768px) {
   .hero-oneliner { margin: -28px auto 32px; }
   .gw-origin { padding: 110px 16px 90px; }
@@ -473,3 +466,68 @@ html.gw-nowebgl body {
 }
 .gw-latest a { color: var(--gold-lt, #fde68a); text-underline-offset: 3px; }
 .gw-latest a:hover { color: var(--gold, #f0c040); }
+
+/* 17. The FIGMIRA title: clean letters, one per world on the journey.
+       Each letter has its world's color in --c (set in index.html). */
+#gwLetters { gap: 0.02em; }
+#gwLetters .gw-glyph {
+  color: #fff6de;
+  background: linear-gradient(180deg, #ffffff 18%, #fde68a 62%, #e9c7ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 16px rgba(240, 192, 64, 0.32)) drop-shadow(0 2px 30px rgba(0, 0, 0, 0.6));
+  transition: filter 1.2s ease;
+}
+/* A letter whose world you've reached keeps a soft glow in that world's color */
+#gwLetters .gw-letter.fg-on .gw-glyph {
+  filter: drop-shadow(0 0 14px var(--c)) drop-shadow(0 0 34px color-mix(in srgb, var(--c) 45%, transparent));
+}
+/* The flare: the letter fills with its world's color, then settles back to gold */
+#gwLetters .gw-letter.fg-flare .gw-glyph { animation: fgFlare 1.8s ease-out backwards; }
+@keyframes fgFlare {
+  0%   { -webkit-text-fill-color: var(--c); filter: drop-shadow(0 0 30px var(--c)) drop-shadow(0 0 70px var(--c)) brightness(1.5); }
+  35%  { -webkit-text-fill-color: var(--c); }
+  100% { -webkit-text-fill-color: transparent; }
+}
+
+/* 18. The ✦ logo in the top-left corner */
+.nav-star {
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(0 0 6px rgba(240, 192, 64, 0.8)) drop-shadow(0 0 14px rgba(192, 132, 252, 0.5));
+  animation: fgNavStar 6s ease-in-out infinite;
+}
+@keyframes fgNavStar {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50%      { transform: rotate(45deg) scale(1.12); }
+}
+
+/* 19. The FIGMIRA wordmark in the menu tracks your journey:
+       each letter lights up in its world's color once you reach that world. */
+.nav-logo.fg-track {
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+.nav-logo.fg-track span {
+  color: rgba(240, 192, 64, 0.55);
+  transition: color 0.6s ease, text-shadow 0.6s ease;
+}
+.nav-logo.fg-track span.fg-on {
+  color: var(--c);
+  text-shadow: 0 0 10px var(--c);
+}
+.nav-logo.fg-track span.fg-flare { animation: fgNavFlare 1.2s ease-out; }
+@keyframes fgNavFlare {
+  0%   { text-shadow: 0 0 2px var(--c); transform: translateY(0); }
+  30%  { text-shadow: 0 0 18px var(--c), 0 0 30px var(--c); transform: translateY(-2px); }
+  100% { text-shadow: 0 0 10px var(--c); transform: translateY(0); }
+}
+.nav-logo.fg-track span { display: inline-block; }
+
+@media (prefers-reduced-motion: reduce) {
+  #gwLetters .gw-letter.fg-flare .gw-glyph,
+  .nav-logo.fg-track span.fg-flare,
+  .nav-star { animation: none; }
+}

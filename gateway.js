@@ -59,6 +59,10 @@ const CONFIG = {
 };
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+
+// One color per stop on the journey: Home, Play, Envision, Forge, Expand, Studio, Finale.
+// The FIGMIRA letters (title and menu) light up in these colors.
+const LETTER_COLORS = ['#c084fc', '#f0c040', '#2ee6c8', '#ff9a3c', '#e879f9', '#b9b4ff', '#fff1c1'];
 const WORLD_COUNT = 6; // number of worlds drawn in the shader below
 
 /* ───────────────────────────────────────────────────────────────────
@@ -183,6 +187,50 @@ async function showLatestNote() {
   } catch (e) { /* no Research page yet: leave the card as it is */ }
 }
 showLatestNote();
+
+/* ───────────────────────────────────────────────────────────────────
+   2d. THE FIGMIRA LETTERS
+   • On page load, the title's letters flare one by one, each in the
+     color of the world it stands for.
+   • The FIGMIRA wordmark in the menu becomes a journey tracker: each
+     letter lights up once you reach its world (F = Home ... A = Finale).
+   ─────────────────────────────────────────────────────────────────── */
+const titleLetters = Array.from(document.querySelectorAll('#gwLetters .gw-letter'));
+const navLogo = document.querySelector('.nav-logo');
+let navLetters = [];
+if (navLogo && !navLogo.querySelector('span')) {
+  const word = navLogo.textContent.trim();
+  navLogo.setAttribute('aria-label', word);
+  navLogo.textContent = '';
+  navLetters = Array.from(word).map((ch, i) => {
+    const s = document.createElement('span');
+    s.textContent = ch;
+    s.setAttribute('aria-hidden', 'true');
+    s.style.setProperty('--c', LETTER_COLORS[i % LETTER_COLORS.length]);
+    navLogo.appendChild(s);
+    return s;
+  });
+  navLogo.classList.add('fg-track');
+}
+function flare(el) {
+  if (!el || reducedMotion) return;
+  el.classList.remove('fg-flare');
+  void el.offsetWidth;                       // restart the animation
+  el.classList.add('fg-flare');
+}
+let litStops = -1;
+// Called whenever the journey reaches a new world (stop = 0 for Home ... 6 for Finale)
+function lightLetters(stop) {
+  if (stop === litStops) return;
+  const forward = stop > litStops;
+  titleLetters.forEach((l, i) => l.classList.toggle('fg-on', i <= stop));
+  navLetters.forEach((l, i) => l.classList.toggle('fg-on', i <= stop));
+  if (forward && litStops >= 0) { flare(navLetters[stop]); flare(titleLetters[stop]); }
+  litStops = stop;
+}
+// The opening: letters flare left to right while the world blooms open
+titleLetters.forEach((l, i) => setTimeout(() => flare(l), 900 + i * 150));
+lightLetters(0);
 
 /* ───────────────────────────────────────────────────────────────────
    2c. RELEASE IT (the finale)
@@ -610,7 +658,9 @@ function startGateway() {
     bgUniforms.uA.value = worldNow;
     bgUniforms.uB.value = worldNext;
     bgUniforms.uOpen.value = open;
-    bgUniforms.uSeed.value = current >= lastStop ? 0 : 1;
+    // The little ✦ only appears once the next rift starts to open (so it never sits on your text)
+    bgUniforms.uSeed.value = current >= lastStop ? 0 : Math.min(1, open / 0.06);
+    lightLetters(open > 0.5 ? current + 1 : current);
     bgUniforms.uTime.value = reducedMotion ? 12.0 : (now - clockStart) / 1000;
     bgUniforms.uSpin.value = reducedMotion ? 0 : bgUniforms.uTime.value * 0.05;
 

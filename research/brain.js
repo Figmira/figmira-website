@@ -332,7 +332,8 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
   canvas.addEventListener('pointermove', (e) => {
     if (!dragging) return;
     brain.rotation.y += (e.clientX - lastX) * 0.008;
-    tiltTarget = Math.max(-0.6, Math.min(0.9, tiltTarget + (e.clientY - lastY) * 0.005));
+    // on phones, up/down swipes scroll the page, so only sideways swipes turn the brain
+    if (e.pointerType !== 'touch') tiltTarget = Math.max(-0.6, Math.min(0.9, tiltTarget + (e.clientY - lastY) * 0.005));
     lastX = e.clientX; lastY = e.clientY;
     if (reduced) render();
   });

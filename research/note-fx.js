@@ -240,4 +240,89 @@
     slider.addEventListener('input', () => { touched = true; update(); });
     update();
   });
+
+  /* ── 5. STOCK NOTE VISUALS ─────────────────────────────────────── */
+  // Each visual is written in the note as plain HTML with data-* settings,
+  // and carries a readable text version inside it (for no-JS and screen readers).
+  const reveal = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); reveal.unobserve(e.target); } });
+  }, { threshold: 0.3 });
+  const parsePairs = (str) => (str || '').split('|').map((kv) => { const [k, v, c] = kv.split(':'); return { k: k.trim(), v: Number(v), c: (c || '').trim() }; });
+  const esc = (t) => String(t).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+  const money = (v, pre, unit, dec) => (v < 0 ? '−' : '') + (pre || '') + Math.abs(v).toFixed(dec) + (unit || '');
+
+  // 5a. COLUMNS THAT CAN GO BELOW ZERO (for boom-and-bust cycles)
+  document.querySelectorAll('.fx-cols[data-fx="columns"]').forEach((fig) => {
+    const rows = [...fig.querySelectorAll('.fx-col')].map((el) => ({ el, v: Number(el.dataset.value), label: el.dataset.label, fc: el.dataset.forecast != null, note: el.dataset.note || '' }));
+    const max = Math.max(...rows.map((r) => r.v), 0), min = Math.min(...rows.map((r) => r.v), 0);
+    const range = max - min || 1;
+    const pre = fig.dataset.prefix || '', unit = fig.dataset.unit || '', dec = Number(fig.dataset.decimals || 0);
+    const grid = fig.querySelector('.fx-cols-grid');
+    grid.style.setProperty('--zero', ((max / range) * 100).toFixed(2) + '%');
+    rows.forEach((r) => {
+      const txt = money(r.v, pre, unit, dec);
+      r.el.classList.toggle('is-neg', r.v < 0);
+      r.el.classList.toggle('is-forecast', r.fc);
+      r.el.style.setProperty('--h', ((Math.abs(r.v) / range) * 100).toFixed(2) + '%');
+      r.el.innerHTML = `<span class="fx-col-bar"><span class="fx-col-val">${txt}</span></span><span class="fx-col-label">${esc(r.label)}${r.note ? `<small>${esc(r.note)}</small>` : ''}</span>`;
+      r.el.setAttribute('role', 'img');
+      r.el.setAttribute('aria-label', `${r.label}${r.note ? ' ' + r.note : ''}: ${txt}`);
+      r.el.title = `${r.label}${r.note ? ' (' + r.note + ')' : ''}: ${txt}`;
+    });
+    reveal.observe(fig);
+  });
+
+  // 5b. SPLIT BARS: one bar split into labeled parts (market share, "of every $100")
+  document.querySelectorAll('.fx-share[data-fx="share"]').forEach((fig) => {
+    fig.querySelectorAll('.fx-share-row').forEach((row) => {
+      const parts = parsePairs(row.dataset.parts), pre = row.dataset.prefix || '', suf = row.dataset.suffix ?? '%';
+      row.innerHTML = `<span class="fx-share-when">${esc(row.dataset.label)}</span><span class="fx-share-track">` +
+        parts.map((d) => `<span class="fx-share-seg" style="--w:${d.v}%;--c:${d.c}" title="${esc(d.k)}: ${pre}${d.v}${suf}"><b>${esc(d.k)}</b> ${pre}${d.v}${suf}</span>`).join('') + '</span>';
+      row.setAttribute('role', 'img');
+      row.setAttribute('aria-label', row.dataset.label + ': ' + parts.map((d) => `${d.k} ${pre}${d.v}${suf}`).join(', '));
+    });
+    reveal.observe(fig);
+  });
+
+  // 5c. DONUT: a ring split into parts; hover or tap a part to read it in the middle
+  document.querySelectorAll('.fx-donut[data-fx="donut"]').forEach((box) => {
+    const parts = parsePairs(box.dataset.parts), total = parts.reduce((a, d) => a + d.v, 0);
+    const R = 42, C = 2 * Math.PI * R, gapLen = 1.2;
+    let off = 0;
+    const segs = parts.map((d, i) => {
+      const len = (d.v / total) * C;
+      const seg = `<circle class="fx-donut-seg" data-i="${i}" r="${R}" cx="60" cy="60" style="--c:${d.c};--len:${Math.max(0, len - gapLen)};--off:${-off};--gap:${C}" tabindex="0" role="img" aria-label="${esc(d.k)}: ${d.v}%"></circle>`;
+      off += len;
+      return seg;
+    }).join('');
+    box.querySelector('.fx-donut-draw').innerHTML =
+      `<svg viewBox="0 0 120 120" class="fx-donut-svg">${segs}</svg><div class="fx-donut-mid"><b>${parts[0].v}%</b><span>${esc(parts[0].k)}</span></div>`;
+    const mid = box.querySelector('.fx-donut-mid');
+    const show = (i) => {
+      mid.innerHTML = `<b>${parts[i].v}%</b><span>${esc(parts[i].k)}</span>`;
+      box.querySelectorAll('.fx-donut-seg').forEach((c) => c.classList.toggle('is-on', Number(c.dataset.i) === i));
+    };
+    box.querySelectorAll('.fx-donut-seg').forEach((c) => {
+      const i = Number(c.dataset.i);
+      c.addEventListener('mouseenter', () => show(i));
+      c.addEventListener('focus', () => show(i));
+      c.addEventListener('click', () => show(i));
+    });
+    show(0);
+    reveal.observe(box);
+  });
+
+  // 5d. SNAPSHOT TILES: tap a tile to jump to the section that explains it
+  document.querySelectorAll('.fx-snap [data-jump], .fx-snap [data-href]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      if (el.dataset.href) { window.location.href = el.dataset.href; return; }
+      const t = document.getElementById(el.dataset.jump);
+      if (t) t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+  document.querySelectorAll('.fx-snap').forEach((el) => reveal.observe(el));
+
+  // 5e. TIMELINE: each moment lights up as it scrolls into view
+  document.querySelectorAll('.fx-tl-item').forEach((el) => reveal.observe(el));
 })();

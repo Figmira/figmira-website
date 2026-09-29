@@ -3,6 +3,7 @@ layout: note
 title: Why Figmira Studios Starts With Research
 description: Before building new worlds, I want to understand the forces shaping them. Here's what these notes will cover, and how I'll write them.
 topic: Studio
+whatif: What if the best way to build new worlds is to study this one first?
 ---
 
 Every world starts as a figment. Figmira began as one: the idea that the worlds we imagine deserve to be built, not only dreamed about.
@@ -34,5 +35,13 @@ One note on the investing pieces: they're my research and my opinions, not finan
 The worlds Figmira wants to build someday will be made from these technologies. Understanding them deeply now is how we build something that lasts later.
 
 Every realm on this site is still a figment. These notes are the first step toward making them real.
+
+<aside class="fx-figment" aria-label="Figment: an imagined scene">
+  <p class="fx-figment-label">✦ Figment · imagined, not reported</p>
+  <p>It's 2034. A delivery robot finishes its last route of the night and gets paid. Not its owner. The robot itself, a few cents sent over an open network.</p>
+  <p>It spends part of it on a software update an AI agent recommended, and saves the rest. Somewhere, an investor who backed the idea years ago, back when it sounded ridiculous, smiles.</p>
+  <p>This world doesn't exist yet. Every piece of it already does.</p>
+  <p class="fx-figment-src">Built from the four frontiers in this note: AI, blockchain, robotics, and investing.</p>
+</aside>
 
 *Iso, Founder of Figmira*

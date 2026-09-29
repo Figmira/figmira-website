@@ -2,7 +2,7 @@
 layout: base
 ---
 <article class="rs-note" data-world="{{ page.topic | downcase }}">
-  <a class="rs-back" href="{{ '/research/' | relative_url }}">← All research</a>
+  {% if page.parent_url %}<a class="rs-back" href="{{ page.parent_url | relative_url }}">← Back to {{ page.parent_title }}</a>{% else %}<a class="rs-back" href="{{ '/research/' | relative_url }}">← All research</a>{% endif %}
 
   <p class="rs-meta">
     <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
@@ -25,6 +25,12 @@ layout: base
   {% endif %}
 
   <div class="rs-body">
+{% if page.tldr %}<aside class="fx-tldr" aria-label="The short version">
+  <p class="fx-tldr-title">The short version</p>
+  <ul>{% for item in page.tldr %}
+    <li>{{ item }}</li>{% endfor %}
+  </ul>
+</aside>{% endif %}
 {% if page.whatif %}<p class="fx-whatif">{{ page.whatif }}</p>{% endif %}
 {{ content }}
   </div>

@@ -55,6 +55,10 @@ description: Notes from Figmira Studios on AI, blockchain, robotics, and investi
   </li>
 {% endfor %}
 </ol>
+<!-- ✦ The notes, as data for the 3D brain (filled in automatically; nothing to edit) ✦ -->
+<script type="application/json" id="rsNotes">[{% for post in site.posts %}{% assign parts = post.content | split: '<h2' %}
+  {"title": {{ post.title | jsonify }}, "url": {{ post.url | relative_url | jsonify }}, "topic": {{ post.topic | jsonify }}, "whatif": {{ post.whatif | jsonify }}, "date": {{ post.date | date: "%Y-%m-%d %H:%M" | jsonify }}, "sections": [{% for part in parts offset:1 %}{% assign h = part | split: '</h2>' | first | prepend: '<h2' | strip_html | strip %}{{ h | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}]}{% unless forloop.last %},{% endunless %}{% endfor %}
+]</script>
 <p class="rs-empty" id="rsEmpty" hidden>No notes in this world yet. The first one is on its way.</p>
 
 <script>
@@ -112,3 +116,4 @@ description: Notes from Figmira Studios on AI, blockchain, robotics, and investi
     allBtn.addEventListener('click', function () { show(null); });
   })();
 </script>
+<script type="module" src="{{ '/research/brain.js' | relative_url }}"></script>

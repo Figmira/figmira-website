@@ -3,6 +3,10 @@ layout: note
 title: Your Note Title Goes Here
 description: One or two sentences that sum up the note. This shows on the Research page and in link previews.
 topic: AI
+tldr:
+  - "First key point of the note, in one sentence."
+  - "Second key point."
+  - "Third key point."
 whatif: What if [the imaginative question that sent you looking]?
 ---
 
@@ -14,7 +18,8 @@ whatif: What if [the imaginative question that sent you looking]?
      (The date sets the order on the Research page. The words become the web address.)
   3. Copy everything in this template into the new file.
   4. Change the title, description, topic, and whatif above.
-     whatif is the glowing "What if...?" line at the top of the note. Delete the line if you don't want one.
+     tldr is "The short version" box at the very top (three short points).
+     whatif is the glowing "What if...?" line under it. Delete either one if you don't want it.
      topic must be exactly one of:  AI   Blockchain   Robotics   Investing   Studio
      (Investing notes automatically show a "not financial advice" line.)
   5. Write your note below. You can delete this comment.

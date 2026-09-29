@@ -5,16 +5,11 @@ description: The odds say most new things fail. The research says the people who
 topic: Studio
 whatif: What if the odds are the wrong thing to measure?
 date: 2026-09-27 12:00:00 -0500
+tldr:
+  - "New founders rate their odds far higher than reality does. That optimism is how the future gets built."
+  - "AI, robots, and money are moving faster than ever, and the people who move now have the most room to run."
+  - "The trick: be delusional about the destination and disciplined about the road."
 ---
-
-<aside class="fx-tldr" aria-label="The short version">
-  <p class="fx-tldr-title">The short version</p>
-  <ul>
-    <li>New founders rate their odds far higher than reality does. That optimism is how the future gets built.</li>
-    <li>AI, robots, and money are moving faster than ever, and the people who move now have the most room to run.</li>
-    <li>The trick: be delusional about the destination and disciplined about the road.</li>
-  </ul>
-</aside>
 
 Quick question before you read on: if you started something tomorrow, what are the odds it works? Out of 10.
 

@@ -9,23 +9,45 @@ description: Notes from Figmira Studios on AI, blockchain, robotics, and investi
   <p class="rs-lede">Notes on the forces shaping the next worlds: AI, blockchain, robotics, and investing. Written in plain language, while learning in public.</p>
 </section>
 
-<div class="rs-filters" role="group" aria-label="Filter notes by topic">
-  <button type="button" class="rs-chip" data-topic="all" aria-pressed="true">All</button>
-  <button type="button" class="rs-chip" data-topic="AI" aria-pressed="false">AI</button>
-  <button type="button" class="rs-chip" data-topic="Blockchain" aria-pressed="false">Blockchain</button>
-  <button type="button" class="rs-chip" data-topic="Robotics" aria-pressed="false">Robotics</button>
-  <button type="button" class="rs-chip" data-topic="Investing" aria-pressed="false">Investing</button>
+<!-- ✦ STAR MAP: Figmira's Studio star at the center, four worlds in orbit.
+     Each small star is a note. Tap a world to show only its notes. ✦ -->
+<div class="rs-map" id="rsMap" role="group" aria-label="Star map of research worlds. Choose a world to filter the notes.">
+  <svg class="rs-map-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <ellipse cx="50" cy="50" rx="34" ry="30" vector-effect="non-scaling-stroke"></ellipse>
+    <line x1="50" y1="50" x2="26" y2="29" vector-effect="non-scaling-stroke"></line>
+    <line x1="50" y1="50" x2="74" y2="29" vector-effect="non-scaling-stroke"></line>
+    <line x1="50" y1="50" x2="74" y2="71" vector-effect="non-scaling-stroke"></line>
+    <line x1="50" y1="50" x2="26" y2="71" vector-effect="non-scaling-stroke"></line>
+  </svg>
+  <button type="button" class="rs-world rs-world--studio" data-world="studio" data-topic="Studio" style="--x:50%;--y:50%" aria-pressed="false">
+    <span class="rs-world-orb" aria-hidden="true">✦</span><span class="rs-world-name">Studio</span><span class="rs-world-count"></span>
+  </button>
+  <button type="button" class="rs-world" data-world="ai" data-topic="AI" style="--x:26%;--y:29%" aria-pressed="false">
+    <span class="rs-world-orb" aria-hidden="true"></span><span class="rs-world-name">AI</span><span class="rs-world-count"></span>
+  </button>
+  <button type="button" class="rs-world" data-world="blockchain" data-topic="Blockchain" style="--x:74%;--y:29%" aria-pressed="false">
+    <span class="rs-world-orb" aria-hidden="true"></span><span class="rs-world-name">Blockchain</span><span class="rs-world-count"></span>
+  </button>
+  <button type="button" class="rs-world" data-world="robotics" data-topic="Robotics" style="--x:74%;--y:71%" aria-pressed="false">
+    <span class="rs-world-orb" aria-hidden="true"></span><span class="rs-world-name">Robotics</span><span class="rs-world-count"></span>
+  </button>
+  <button type="button" class="rs-world" data-world="investing" data-topic="Investing" style="--x:26%;--y:71%" aria-pressed="false">
+    <span class="rs-world-orb" aria-hidden="true"></span><span class="rs-world-name">Investing</span><span class="rs-world-count"></span>
+  </button>
+  <p class="rs-map-hint" aria-hidden="true">Each ✦ is a note. Tap a world to explore it.</p>
 </div>
+<p class="rs-showing" aria-live="polite"><span id="rsShowing">Showing all worlds</span> <button type="button" id="rsAll" hidden>Show all</button></p>
 
 <ol class="rs-list" id="rsList">
 {% for post in site.posts %}
-  <li class="rs-item" data-topic="{{ post.topic }}">
+  <li class="rs-item" data-topic="{{ post.topic }}" data-world="{{ post.topic | downcase }}" data-title="{{ post.title | escape }}" data-url="{{ post.url | relative_url }}">
     <a href="{{ post.url | relative_url }}">
       <p class="rs-meta">
         <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
         <span class="rs-topic">{{ post.topic }}</span>
         <span>{{ post.content | strip_html | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
       </p>
+      {% if post.whatif %}<p class="rs-item-whatif">{{ post.whatif }}</p>{% endif %}
       <h2 class="rs-item-title">{{ post.title }}</h2>
       <p class="rs-item-desc">{{ post.description }}</p>
       <span class="rs-read" aria-hidden="true">Read ✦</span>
@@ -33,25 +55,60 @@ description: Notes from Figmira Studios on AI, blockchain, robotics, and investi
   </li>
 {% endfor %}
 </ol>
-<p class="rs-empty" id="rsEmpty" hidden>No notes on this topic yet. The first one is on its way.</p>
+<p class="rs-empty" id="rsEmpty" hidden>No notes in this world yet. The first one is on its way.</p>
 
 <script>
-  // Topic buttons: show only the notes for the chosen topic
+  // Star map: place a small star for every note around its world, and let each world filter the list
   (function () {
-    var chips = document.querySelectorAll('.rs-chip');
+    var map = document.getElementById('rsMap');
+    var worlds = map.querySelectorAll('.rs-world');
     var items = document.querySelectorAll('.rs-item');
     var empty = document.getElementById('rsEmpty');
-    chips.forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        var topic = chip.dataset.topic, shown = 0;
-        chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
-        items.forEach(function (item) {
-          var match = topic === 'all' || item.dataset.topic === topic;
-          item.hidden = !match;
-          if (match) shown++;
-        });
-        empty.hidden = shown > 0;
+    var showing = document.getElementById('rsShowing');
+    var allBtn = document.getElementById('rsAll');
+
+    worlds.forEach(function (w) {
+      var notes = Array.prototype.filter.call(items, function (i) { return i.dataset.topic === w.dataset.topic; });
+      var n = notes.length;
+      w.querySelector('.rs-world-count').textContent = n ? n + (n === 1 ? ' note' : ' notes') : 'coming soon';
+      w.setAttribute('aria-label', w.dataset.topic + ': ' + (n ? n + (n === 1 ? ' note' : ' notes') : 'no notes yet'));
+      var cx = parseFloat(w.style.getPropertyValue('--x')), cy = parseFloat(w.style.getPropertyValue('--y'));
+      var r = w.dataset.world === 'studio' ? 13 : 11;              // distance from the world, in % of the map's height
+      var xs = map.clientHeight / map.clientWidth;                 // keeps the ring round on wide and square maps
+      notes.forEach(function (item, k) {
+        var a = (-90 + (k - (n - 1) / 2) * 34) * Math.PI / 180;    // fan the stars out in an arc above the world
+        var s = document.createElement('a');
+        s.className = 'rs-star';
+        s.href = item.dataset.url;
+        s.dataset.world = w.dataset.world;
+        s.style.setProperty('--x', (cx + Math.cos(a) * r * xs) + '%');
+        s.style.setProperty('--y', (cy + Math.sin(a) * r) + '%');
+        s.style.setProperty('--d', (k * 0.7) + 's');
+        s.innerHTML = '✦<span class="rs-star-tip"></span>';
+        s.querySelector('.rs-star-tip').textContent = item.dataset.title;
+        s.setAttribute('aria-label', 'Read: ' + item.dataset.title);
+        map.appendChild(s);
       });
     });
+
+    function show(topic) {
+      var shown = 0;
+      worlds.forEach(function (w) { w.setAttribute('aria-pressed', String(w.dataset.topic === topic)); });
+      map.classList.toggle('is-filtered', !!topic);
+      items.forEach(function (item) {
+        var match = !topic || item.dataset.topic === topic;
+        item.hidden = !match;
+        if (match) shown++;
+      });
+      empty.hidden = shown > 0;
+      showing.textContent = topic ? 'Showing the ' + topic + ' world' : 'Showing all worlds';
+      allBtn.hidden = !topic;
+    }
+    worlds.forEach(function (w) {
+      w.addEventListener('click', function () {
+        show(w.getAttribute('aria-pressed') === 'true' ? null : w.dataset.topic);
+      });
+    });
+    allBtn.addEventListener('click', function () { show(null); });
   })();
 </script>

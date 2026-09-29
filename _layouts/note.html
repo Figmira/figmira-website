@@ -1,22 +1,31 @@
 ---
 layout: base
 ---
-<article class="rs-note">
+<article class="rs-note" data-world="{{ page.topic | downcase }}">
   <a class="rs-back" href="{{ '/research/' | relative_url }}">← All research</a>
 
   <p class="rs-meta">
     <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
-    <span class="rs-topic">{{ page.topic }}</span>
+    <span class="rs-topic"><span aria-hidden="true">●</span> {{ page.topic }}</span>
     <span>{{ page.content | strip_html | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
   </p>
   <h1 class="rs-note-title">{{ page.title }}</h1>
   {% if page.description %}<p class="rs-note-lede">{{ page.description }}</p>{% endif %}
+
+  <!-- ✦ How to read our notes: every note mixes three layers, each with its own look ✦ -->
+  <p class="fx-layers" aria-label="How to read this note">
+    <span class="fx-layers-title">How to read this note</span>
+    <span class="fx-layer fx-layer--fact"><b>Fact</b> what happened</span>
+    <span class="fx-layer fx-layer--forecast"><b>Forecast</b> what experts expect</span>
+    <span class="fx-layer fx-layer--figment"><b>✦ Figment</b> what we imagine</span>
+  </p>
 
   {% if page.topic == "Investing" %}
   <p class="rs-disclaimer">This note is research and personal opinion, not financial advice.</p>
   {% endif %}
 
   <div class="rs-body">
+{% if page.whatif %}<p class="fx-whatif">{{ page.whatif }}</p>{% endif %}
 {{ content }}
   </div>
 
@@ -30,3 +39,4 @@ layout: base
     {% endif %}
   </footer>
 </article>
+<script src="{{ '/research/note-fx.js' | relative_url }}" defer></script>

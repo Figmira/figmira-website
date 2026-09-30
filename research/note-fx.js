@@ -325,4 +325,137 @@
 
   // 5e. TIMELINE: each moment lights up as it scrolls into view
   document.querySelectorAll('.fx-tl-item').forEach((el) => reveal.observe(el));
+
+  // 5f. LAUNCH LOG: rockets lift off one after another; some burst, one reaches orbit
+  const rocketSvg = '<svg viewBox="0 0 24 48" aria-hidden="true"><path d="M12 1c5 6 6 14 6 22v14H6V23C6 15 7 7 12 1z" fill="currentColor"/><path d="M6 30l-5 8v5l5-3zM18 30l5 8v5l-5-3z" fill="currentColor" opacity=".7"/><circle cx="12" cy="18" r="3" fill="#06060d"/><path class="fx-flame" d="M8 38h8l-4 9z"/></svg>';
+  document.querySelectorAll('.fx-launches[data-fx="launches"]').forEach((box) => {
+    const cards = [...box.querySelectorAll('.fx-launch')];
+    cards.forEach((c) => {
+      const pad = document.createElement('div');
+      pad.className = 'fx-launch-sky';
+      pad.setAttribute('aria-hidden', 'true');
+      pad.innerHTML = `<span class="fx-launch-rocket">${rocketSvg}</span><span class="fx-launch-end">${c.classList.contains('is-win') ? '✦' : '✕'}</span>`;
+      c.prepend(pad);
+    });
+    const go = () => cards.forEach((c, i) => setTimeout(() => c.classList.add('is-go'), reduced ? 0 : i * 1100));
+    new IntersectionObserver((es, ob) => { if (es[0].isIntersecting) { ob.disconnect(); go(); } }, { threshold: 0.4 }).observe(box);
+    const replay = box.querySelector('.fx-launch-replay');
+    if (replay) replay.addEventListener('click', () => { cards.forEach((c) => c.classList.remove('is-go')); void box.offsetWidth; setTimeout(go, 60); });
+  });
+
+
+  /* ── 6. ESSAY VISUALS (driven by how far you've scrolled through each one) ── */
+  // progress of an element through the screen: 0 when it enters at the bottom, 1 when it leaves at the top
+  const progressOf = (el) => {
+    const r = el.getBoundingClientRect(), vh = window.innerHeight;
+    return Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh)));
+  };
+  // progress through a tall "scene" whose inner part stays pinned: 0 at pin start, 1 at pin end
+  const pinnedProgress = (el) => {
+    const r = el.getBoundingClientRect(), vh = window.innerHeight;
+    return Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+  };
+  const scrollers = [];
+
+  // 6a. DELUSIONAL → VISION → OBVIOUS: one word, rewritten as time passes
+  document.querySelectorAll('.fx-morph').forEach((box) => {
+    const words = box.dataset.words.split('|'), notes = (box.dataset.notes || '').split('|');
+    const wordEl = box.querySelector('.fx-morph-word'), noteEl = box.querySelector('.fx-morph-note');
+    const dots = box.querySelector('.fx-morph-steps');
+    dots.innerHTML = words.map(() => '<i></i>').join('');
+    let shown = -1;
+    const show = (i) => {
+      if (i === shown) return;
+      shown = i;
+      wordEl.setAttribute('aria-label', words[i]);
+      wordEl.innerHTML = [...words[i]].map((ch, k) => {
+        const dx = (Math.random() - 0.5) * 120, dy = (Math.random() - 0.5) * 80;
+        return `<span style="--dx:${dx.toFixed(0)}px;--dy:${dy.toFixed(0)}px;--d:${k * 45}ms" aria-hidden="true">${ch}</span>`;
+      }).join('');
+      wordEl.className = 'fx-morph-word is-' + i;
+      noteEl.textContent = notes[i] || '';
+      dots.querySelectorAll('i').forEach((d, k) => d.classList.toggle('is-on', k <= i));
+    };
+    if (reduced) { box.classList.add('is-static'); show(words.length - 1); return; }
+    show(0);
+    scrollers.push(() => {
+      const p = pinnedProgress(box);
+      show(Math.min(words.length - 1, Math.floor(p * words.length * 0.999)));
+    });
+  });
+
+  // 6b. THE CROWD AND THE ONE: a crowd drifts as one; some stop; one gold light takes its own path
+  document.querySelectorAll('.fx-crowd').forEach((box) => {
+    const cv = box.querySelector('canvas'), ctx = cv.getContext('2d');
+    const N = 150, seed = (i) => { const x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); };
+    const people = Array.from({ length: N }, (_, i) => ({ lane: seed(i) * 2 - 1, off: seed(i + 99), speed: 0.035 + seed(i + 7) * 0.02, stopAt: seed(i + 31) }));
+    let W = 0, H = 0, t = 0, visible = false, prog = 0, trail = [];
+    const size = () => {
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = box.clientWidth; H = cv.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    size(); window.addEventListener('resize', size);
+    new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(box);
+    const streamY = (x, lane) => H * 0.62 + Math.sin(x / W * 5 + t * 0.6) * H * 0.08 + lane * H * 0.13;
+    function frame() {
+      if (visible) {
+        t += reduced ? 0 : 0.016;
+        prog = reduced ? 0.8 : progressOf(box);
+        ctx.clearRect(0, 0, W, H);
+        const gone = Math.min(0.7, Math.max(0, (prog - 0.25) * 1.3)); // share of the crowd that has stopped
+        people.forEach((d) => {
+          const x = ((d.off + t * d.speed) % 1) * (W + 40) - 20;
+          const stopped = d.stopAt < gone;
+          const y = streamY(x, d.lane);
+          ctx.beginPath();
+          ctx.arc(x, y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = stopped ? 'rgba(185,180,255,0.08)' : 'rgba(196,181,253,0.55)';
+          ctx.fill();
+        });
+        // the one: starts inside the crowd, then breaks away upward on its own curve
+        const lead = Math.min(1, Math.max(0, (prog - 0.3) * 1.8));
+        const ox = W * (0.18 + 0.64 * Math.min(1, prog * 1.2));
+        const oy = streamY(ox, 0) - lead * lead * H * 0.52;
+        trail.push([ox, oy]); if (trail.length > 70) trail.shift();
+        ctx.beginPath();
+        trail.forEach(([x, y], k) => (k ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+        ctx.strokeStyle = 'rgba(240,192,64,0.35)'; ctx.lineWidth = 1.5; ctx.stroke();
+        const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, 18);
+        g.addColorStop(0, 'rgba(255,241,193,1)'); g.addColorStop(0.3, 'rgba(240,192,64,0.8)'); g.addColorStop(1, 'rgba(240,192,64,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(ox, oy, 18, 0, Math.PI * 2); ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  });
+
+  // 6c. LIVING IN THE GAP: two horizons, the doubts in between, and the moment they meet
+  document.querySelectorAll('.fx-gap').forEach((box) => {
+    const scene = box.querySelector('.fx-gap-scene');
+    const lines = [...box.querySelectorAll('.fx-gap-voice')];
+    const end = box.querySelector('.fx-gap-end');
+    if (reduced) { box.classList.add('is-static'); return; }
+    scrollers.push(() => {
+      const p = pinnedProgress(box);
+      const gap = 1 - Math.min(1, Math.max(0, (p - 0.1) / 0.8));          // 1 = wide apart, 0 = met
+      scene.style.setProperty('--gap', gap.toFixed(3));
+      lines.forEach((l, i) => {
+        const at = 0.1 + (i + 0.5) * (0.75 / lines.length);
+        const o = Math.max(0, 1 - Math.abs(p - at) / (0.75 / lines.length * 0.7)); // one voice at a time
+        l.style.opacity = o.toFixed(2);
+        l.style.transform = `translateY(${((at - p) * 60).toFixed(1)}px)`;
+      });
+      box.classList.toggle('is-met', gap < 0.02);
+      end.style.opacity = gap < 0.02 ? 1 : 0;
+    });
+  });
+
+  if (scrollers.length) {
+    let ticking = false;
+    const run = () => { ticking = false; scrollers.forEach((f) => f()); };
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } }, { passive: true });
+    window.addEventListener('resize', run);
+    run();
+  }
 })();

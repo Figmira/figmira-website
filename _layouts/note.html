@@ -13,11 +13,11 @@ layout: base
   {% if page.description %}<p class="rs-note-lede">{{ page.description }}</p>{% endif %}
 
   <!-- ✦ How to read our notes: every note mixes three layers, each with its own look ✦ -->
-  <p class="fx-layers" aria-label="How to read this note">
-    <span class="fx-layers-title">How to read this note</span>
-    <span class="fx-layer fx-layer--fact"><b>Fact</b> what happened</span>
-    <span class="fx-layer fx-layer--forecast"><b>Forecast</b> what experts expect</span>
-    <span class="fx-layer fx-layer--figment"><b>✦ Figment</b> what we imagine</span>
+  <p class="fx-layers" aria-label="How to read this note: Fact means what happened, Forecast means what experts expect, Figment means what we imagine.">
+    <span class="fx-layers-title">How to read</span>
+    <span class="fx-layer fx-layer--fact" title="What happened"><b>Fact</b></span>
+    <span class="fx-layer fx-layer--forecast" title="What experts expect"><b>Forecast</b></span>
+    <span class="fx-layer fx-layer--figment" title="What we imagine"><b>✦ Figment</b></span>
   </p>
 
   {% if page.topic == "Investing" %}
@@ -25,12 +25,12 @@ layout: base
   {% endif %}
 
   <div class="rs-body">
-{% if page.tldr %}<aside class="fx-tldr" aria-label="The short version">
-  <p class="fx-tldr-title">The short version</p>
+{% if page.tldr %}<details class="fx-tldr" open>
+  <summary class="fx-tldr-title">The short version</summary>
   <ul>{% for item in page.tldr %}
     <li>{{ item }}</li>{% endfor %}
   </ul>
-</aside>{% endif %}
+</details>{% endif %}
 {% if page.whatif %}<p class="fx-whatif">{{ page.whatif }}</p>{% endif %}
 {{ content }}
   </div>

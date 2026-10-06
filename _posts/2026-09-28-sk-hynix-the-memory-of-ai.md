@@ -1,4 +1,5 @@
 ---
+image: /research/images/og-skhy.png
 layout: note
 title: "SK hynix: Why We Believe SKHY Can Run to $780 a Share"
 description: Twenty-four years ago, a nearly bankrupt memory maker refused to be sold. Today it builds the memory AI can't run without. Here's why we believe its stock can quadruple by 2032.

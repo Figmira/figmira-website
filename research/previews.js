@@ -200,7 +200,7 @@
   };
 
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var boxes = document.querySelectorAll('.rs-viz');
+  var boxes = document.querySelectorAll('.rs-list .rs-viz');
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
     es.forEach(function (e) {
       var box = e.target, svg = box.querySelector('svg');
@@ -210,7 +210,8 @@
     });
   }, { rootMargin: '80px' }) : null;
 
-  boxes.forEach(function (box) {
+  function mount(box) {
+    if (box.querySelector('svg')) return;
     var v = VIZ[box.dataset.viz] || VIZ.worlds;
     var svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('viewBox', '0 0 300 190');
@@ -225,5 +226,7 @@
       if (reduce) { if (box._run) box._run.still(); else svg.setCurrentTime(v.still); }   // a single, settled frame
       else if (io) io.observe(box); else { svg.unpauseAnimations(); box._run && box._run.play(); }
     } catch (err) { /* very old browsers: the drawing still shows */ }
-  });
+  }
+  boxes.forEach(mount);
+  window.rsMountPreview = mount;   // the 3D brain's note cards reuse these previews
 })();

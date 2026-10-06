@@ -89,16 +89,39 @@ description: Notes from Figmira Studios on AI, blockchain, robotics, and investi
         s.style.setProperty('--x', (cx + Math.cos(a) * r * xs) + '%');
         s.style.setProperty('--y', (cy + Math.sin(a) * r) + '%');
         s.style.setProperty('--d', (k * 0.7) + 's');
-        s.innerHTML = '✦<span class="rs-star-tip"></span>';
-        s.querySelector('.rs-star-tip').textContent = item.dataset.title;
+        // a small card with the note's moving preview, its "What if" and its title
+        s.innerHTML = '✦<span class="rs-star-tip"><span class="rs-card"><span class="rs-viz rs-card-viz" aria-hidden="true"></span>' +
+          '<span class="rs-card-whatif"></span><span class="rs-card-title"></span><span class="rs-card-read">Read ✦</span></span></span>';
+        var viz = item.querySelector('.rs-viz'), wi = item.querySelector('.rs-item-whatif');
+        s.querySelector('.rs-card-viz').dataset.viz = viz ? viz.dataset.viz : 'worlds';
+        s.querySelector('.rs-card-title').textContent = item.dataset.title;
+        if (wi) s.querySelector('.rs-card-whatif').textContent = wi.textContent; else s.querySelector('.rs-card-whatif').remove();
         s.setAttribute('aria-label', 'Read: ' + item.dataset.title);
+        var wake = function () { if (window.rsMountPreview) window.rsMountPreview(s.querySelector('.rs-card-viz')); };
+        s.addEventListener('pointerenter', wake); s.addEventListener('focus', wake);
         map.appendChild(s);
       });
     });
 
+    // a short line inside the map, so choosing a world always shows a result right where you clicked
+    var focus = document.createElement('p');
+    focus.className = 'rs-focus'; focus.hidden = true; focus.setAttribute('aria-live', 'polite');
+    focus.innerHTML = '<span class="rs-focus-text"></span> <button type="button" class="rs-focus-go"></button>';
+    map.appendChild(focus);
+    var focusText = focus.querySelector('.rs-focus-text'), focusGo = focus.querySelector('.rs-focus-go');
+    focusGo.addEventListener('click', function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      showing.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+
     function show(topic) {
       var shown = 0;
-      worlds.forEach(function (w) { w.setAttribute('aria-pressed', String(w.dataset.topic === topic)); });
+      var world = null;
+      worlds.forEach(function (w) {
+        w.setAttribute('aria-pressed', String(w.dataset.topic === topic));
+        if (w.dataset.topic === topic) world = w.dataset.world;
+      });
+      map.querySelectorAll('.rs-star').forEach(function (st) { st.classList.toggle('is-dim', !!topic && st.dataset.world !== world); });
       map.classList.toggle('is-filtered', !!topic);
       items.forEach(function (item) {
         var match = !topic || item.dataset.topic === topic;
@@ -108,6 +131,15 @@ description: Notes from Figmira Studios on AI, blockchain, robotics, and investi
       empty.hidden = shown > 0;
       showing.textContent = topic ? 'Showing the ' + topic + ' world' : 'Showing all worlds';
       allBtn.hidden = !topic;
+      // tell the 3D brain to turn toward the chosen world
+      map.dispatchEvent(new CustomEvent('rs:world', { detail: { world: world } }));
+      focus.hidden = !topic;
+      if (topic) {
+        focusText.textContent = shown ? topic + ' · ' + shown + (shown === 1 ? ' note' : ' notes')
+                                      : topic + ' is still unexplored. The first note is on its way.';
+        focusGo.textContent = shown === 1 ? 'Read it ↓' : 'See them ↓';
+        focusGo.hidden = !shown;
+      }
     }
     worlds.forEach(function (w) {
       w.addEventListener('click', function () {

@@ -2,14 +2,14 @@
    ✦ FIGMIRA: THE RESEARCH BRAIN ✦
    A slowly turning brain made of stars. Every note is a glowing neuron
    in its world's part of the brain. Every section inside a note is a
-   small violet spark (a "figment") orbiting that neuron. Notes connect
+   small violet spark (an "idea") orbiting that neuron. Notes connect
    automatically: by world, by time, and by the ideas they share.
    Nothing to fill in. Each new note simply makes the brain grow.
 
    If the visitor's device can't draw 3D, this file does nothing and the
    flat star map underneath stays in place.
    ═══════════════════════════════════════════════════════════════════ */
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js';
 
 (function () {
   const map = document.getElementById('rsMap');
@@ -34,7 +34,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
     ai: { c: [0, 0.45, 1.35], color: '#2ee6c8' },
     blockchain: { c: [0, 1.0, -0.45], color: '#7cc4ff' },
     robotics: { c: [0, -0.95, -1.3], color: '#ff9a3c' },
-    investing: { c: [-1.45, -0.3, 0.2], color: '#f0c040' },
+    investing: { c: [-1.35, -0.4, 0.65], color: '#f0c040' },
   };
 
   // ── Set up the 3D scene (bail out quietly if WebGL isn't available) ──
@@ -180,19 +180,24 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
   // ── 3. Neurons (notes) and their figments (sections) ──
   const neurons = [];
-  const perWorld = {};
+  const perWorld = {}, worldTotal = {};
+  notes.forEach((n) => { const w = (n.topic || 'studio').toLowerCase(); worldTotal[w] = (worldTotal[w] || 0) + 1; });
   notes.forEach((n) => {
     const w = (n.topic || 'studio').toLowerCase();
     const W = WORLDS[w] || WORLDS.studio;
-    const k = (perWorld[w] = (perWorld[w] || 0) + 1) - 1;
+    const k = (perWorld[w] = (perWorld[w] || 0) + 1) - 1, total = worldTotal[w];
     const r = rng(hash(n.url));
-    // spread notes of one world in a small spiral around its region
-    const ang = k * 2.4, rad = 0.18 + 0.16 * Math.sqrt(k);
-    const pos = new THREE.Vector3(
-      W.c[0] + Math.cos(ang) * rad * (w === 'investing' ? 0.4 : 1) + (r() - 0.5) * 0.1,
-      W.c[1] + Math.sin(ang) * rad * 0.8 + (w === 'studio' ? 0.1 : 0.25) + (r() - 0.5) * 0.1,
-      W.c[2] + (w === 'investing' ? Math.cos(ang) * rad : (r() - 0.5) * 0.3)
-    );
+    // spread a world's notes evenly over a small ball around its region, so they stay apart from every angle
+    const lift = w === 'studio' ? 0.1 : 0.25;
+    let pos;
+    if (total === 1) {
+      pos = new THREE.Vector3(W.c[0], W.c[1] + lift, W.c[2]);
+    } else {
+      const rad = (w === 'studio' ? 0.62 : 0.42) * (1 + Math.min(0.6, (total - 2) * 0.06));
+      const yy = 1 - (2 * (k + 0.5)) / total, rr = Math.sqrt(1 - yy * yy), th = k * 2.39996 + 0.6;
+      pos = new THREE.Vector3(W.c[0] + Math.cos(th) * rr * rad * 0.7, W.c[1] + lift + yy * rad * 0.75, W.c[2] + Math.sin(th) * rr * rad * 1.3);
+    }
+    pos.x += (r() - 0.5) * 0.06; pos.y += (r() - 0.5) * 0.06;
     const sparks = n.sections.map((title, i) => {
       const a = (i / Math.max(1, n.sections.length)) * Math.PI * 2 + r() * 0.5;
       const e = (r() - 0.5) * 1.4;
@@ -287,7 +292,7 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
   const hint = map.querySelector('.rs-map-hint');
   const ideas = neurons.reduce((s, n) => s + n.sparks.length, 0);
-  if (hint) hint.textContent = `${notes.length} ${notes.length === 1 ? 'note' : 'notes'} · ${ideas} figments · ${links} ${links === 1 ? 'connection' : 'connections'}, and growing. Drag to turn the brain.`;
+  if (hint) hint.textContent = `${notes.length} ${notes.length === 1 ? 'note' : 'notes'} · ${ideas} ideas · growing with every note. Drag to turn the brain.`;
 
   const tmp = new THREE.Vector3();
   function placeLabels() {
@@ -307,6 +312,28 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
     };
     worldBtns.forEach((w) => toScreen(w.v, w.el, 0, true));
     noteStars.forEach((s) => toScreen(s.v, s.el, 40, false));
+    // when two notes line up on screen, nudge their click targets apart so each stays easy to pick
+    const W = map.clientWidth, H = map.clientHeight, MIN = 34;
+    const P = noteStars.map((s) => ({ s, x: parseFloat(s.el.style.getPropertyValue('--x')) / 100 * W, y: parseFloat(s.el.style.getPropertyValue('--y')) / 100 * H }));
+    P.forEach((p) => { p.x0 = p.x; p.y0 = p.y; });
+    for (let it = 0; it < 4; it++) {
+      for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) {
+        let dx = P[j].x - P[i].x, dy = P[j].y - P[i].y, d = Math.hypot(dx, dy);
+        if (d >= MIN) continue;
+        if (d < 0.01) { dx = 1; dy = 0; d = 1; }
+        const push = (MIN - d) / 2;
+        P[i].x -= dx / d * push; P[i].y -= dy / d * push; P[j].x += dx / d * push; P[j].y += dy / d * push;
+      }
+    }
+    P.forEach((p) => {
+      const ox = Math.max(-20, Math.min(20, p.x - p.x0)), oy = Math.max(-20, Math.min(20, p.y - p.y0));
+      const x = (p.x0 + ox) / W * 100, y = (p.y0 + oy) / H * 100;
+      p.s.el.style.setProperty('--x', x + '%'); p.s.el.style.setProperty('--y', y + '%');
+      // open each note's card toward the roomiest side of the map
+      p.s.el.classList.toggle('tip-below', y < 52);
+      p.s.el.classList.toggle('tip-left', x > 66);
+      p.s.el.classList.toggle('tip-right', x < 34);
+    });
   }
 
   // ── 6. Sizing, dragging, and the animation loop ──
@@ -325,10 +352,23 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
   // the brain turns slowly, and slows to a stop while the pointer is over it (so notes are easy to click)
   const SPIN = reduced ? 0 : 0.12;
   let dragging = false, lastX = 0, lastY = 0, spin = SPIN, spinTarget = SPIN, tiltTarget = 0.22;
+  let focusY = null;                          // when a world is chosen, the brain turns to face it
   map.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') spinTarget = 0; });
-  map.addEventListener('pointerleave', () => { spinTarget = SPIN; });
+  map.addEventListener('pointerleave', () => { if (focusY === null) spinTarget = SPIN; });
+  const TAU = Math.PI * 2;
+  const VIEW = { studio: [-1.75, 0.22], ai: [0, 0.22], blockchain: [Math.PI, 0.75], robotics: [Math.PI, -0.2], investing: [null, 0.22] };
+  map.addEventListener('rs:world', (e) => {
+    const w = e.detail && e.detail.world;
+    if (!w || !VIEW[w]) { focusY = null; spinTarget = SPIN; tiltTarget = 0.22; if (reduced) render(); return; }
+    const W = WORLDS[w];
+    let th = VIEW[w][0] === null ? Math.atan2(-W.c[0], W.c[2]) : VIEW[w][0];   // the angle that brings this region to the front
+    const cur = brain.rotation.y;
+    th = cur + ((((th - cur) % TAU) + TAU * 1.5) % TAU) - Math.PI;             // turn the short way round
+    focusY = th; spinTarget = 0; tiltTarget = VIEW[w][1];
+    if (reduced) { brain.rotation.y = th; brain.rotation.x = tiltTarget; render(); }
+  });
   const canvas = renderer.domElement;
-  canvas.addEventListener('pointerdown', (e) => { dragging = true; lastX = e.clientX; lastY = e.clientY; canvas.setPointerCapture(e.pointerId); map.classList.add('is-dragging'); });
+  canvas.addEventListener('pointerdown', (e) => { dragging = true; lastX = e.clientX; lastY = e.clientY; canvas.setPointerCapture(e.pointerId); map.classList.add('is-dragging'); focusY = null; });
   canvas.addEventListener('pointermove', (e) => {
     if (!dragging) return;
     brain.rotation.y += (e.clientX - lastX) * 0.008;
@@ -355,7 +395,9 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
     if (visible && !document.hidden) {
       uniforms.uTime.value += dt;
       spin += (spinTarget - spin) * Math.min(1, dt * 3);
-      if (!dragging) brain.rotation.y += spin * dt;
+      if (dragging) { /* the visitor is turning it */ }
+      else if (focusY !== null) brain.rotation.y += (focusY - brain.rotation.y) * Math.min(1, dt * 2.5);
+      else brain.rotation.y += spin * dt;
       galaxy.rotation.y -= spin * 0.25 * dt;
       // move each pulse along its thread
       const arr = pulsePts.geometry.attributes.position.array;

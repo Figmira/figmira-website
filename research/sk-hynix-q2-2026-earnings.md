@@ -1,4 +1,5 @@
 ---
+image: /research/images/og-skhy.png
 layout: note
 title: "SK hynix Q2 2026 Earnings"
 description: The numbers behind SK hynix's record quarter (April to June 2026), what Wall Street expected, and what the company says comes next.

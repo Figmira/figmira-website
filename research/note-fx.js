@@ -17,6 +17,9 @@
   // One sky color per section, the same world colors as the home page
   const SKY = ['#7c3aed', '#c084fc', '#2ee6c8', '#ff9a3c', '#e879f9', '#f0c040', '#b9b4ff'];
 
+  // On phones, fold "The short version" closed so the story starts on the first screen (tap to open)
+  if (window.matchMedia('(max-width: 640px)').matches) document.querySelectorAll('details.fx-tldr').forEach((d) => { d.open = false; });
+
   /* ── 1. THE LIVING SKY ─────────────────────────────────────────── */
   const sky = document.createElement('canvas');
   sky.className = 'fx-sky';
@@ -448,6 +451,329 @@
       });
       box.classList.toggle('is-met', gap < 0.02);
       end.style.opacity = gap < 0.02 ? 1 : 0;
+    });
+  });
+
+  /* ── 7. THE EDGE: one landscape that explains the whole essay ── */
+  // The ground is the idea: a flat plateau (comfort), a climb (learning), a lip (the edge), a drop (panic).
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const terrain = (s) => {
+    const E = 620 + 180 * s, C = 300 + 330 * s, base = 400, ridge = 190;
+    const y = (x) => {
+      if (x <= C) return base;
+      if (x <= E) { const t = (x - C) / (E - C); return base - (base - ridge) * (t * t * (3 - 2 * t)); }
+      return 600;
+    };
+    let d = 'M0,600 L0,' + base;
+    for (let x = 0; x <= E; x += 4) d += ` L${x},${y(x).toFixed(1)}`;
+    d += ` L${E},${ridge} L${E + 6},600 Z`;
+    let rocks = `M${E + 6},600`;
+    for (let x = E + 6, k = 0; x <= 1010; x += 22, k++) rocks += ` L${x},${(k % 2 ? 520 : 548) + ((k * 37) % 17)}`;
+    rocks += ' L1010,600 Z';
+    return { E, C, base, ridge, y, ground: d, rocks };
+  };
+  const mk = (tag, attrs, parent) => { const el = document.createElementNS(SVGNS, tag); for (const k in attrs) el.setAttribute(k, attrs[k]); if (parent) parent.appendChild(el); return el; };
+  const defsFor = (svg, id) => {
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `
+      <linearGradient id="${id}-ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1f4d"/><stop offset="1" stop-color="#0b0918"/></linearGradient>
+      <radialGradient id="${id}-glow"><stop offset="0" stop-color="#fff1c1"/><stop offset=".35" stop-color="#f0c040" stop-opacity=".9"/><stop offset="1" stop-color="#f0c040" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${id}-edge"><stop offset="0" stop-color="#f0c040" stop-opacity=".55"/><stop offset="1" stop-color="#f0c040" stop-opacity="0"/></radialGradient>
+      <linearGradient id="${id}-panic" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e879f9" stop-opacity=".45"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></linearGradient>`;
+  };
+  const drawWanderer = (svg, id) => {
+    const g = mk('g', { class: 'fx-edge-me' }, svg);
+    mk('circle', { r: 34, fill: `url(#${id}-glow)`, opacity: 0.6 }, g);
+    mk('circle', { r: 6, fill: '#fff6dc' }, g);
+    return g;
+  };
+
+  // 7a. The landscape, pinned while you scroll through six stages
+  document.querySelectorAll('.fx-edge').forEach((box, n) => {
+    const id = 'edge' + n;
+    const svg = box.querySelector('svg');
+    const caps = [...box.querySelectorAll('.fx-edge-cap')];
+    const dots = box.querySelector('.fx-edge-steps');
+    dots.innerHTML = caps.map(() => '<i></i>').join('');
+    defsFor(svg, id);
+    const zones = mk('g', {}, svg);
+    const zComfort = mk('rect', { class: 'fx-ez fx-ez-comfort', y: 0, height: 600 }, zones);
+    const zLearn = mk('rect', { class: 'fx-ez fx-ez-learn', y: 0, height: 600 }, zones);
+    const zPanic = mk('rect', { class: 'fx-ez fx-ez-panic', y: 0, height: 600, fill: `url(#${id}-panic)` }, zones);
+    const ground = mk('path', { fill: `url(#${id}-ground)`, stroke: '#c4b5fd', 'stroke-width': 2, 'stroke-opacity': 0.5 }, svg);
+    const rocks = mk('path', { class: 'fx-edge-rocks' }, svg);
+    const edgeGlow = mk('ellipse', { rx: 70, ry: 110, fill: `url(#${id}-edge)`, class: 'fx-edge-glow' }, svg);
+    const curve = mk('path', { class: 'fx-edge-curve', fill: 'none' }, svg);
+    const axes = mk('g', { class: 'fx-edge-axes' }, svg);
+    axes.innerHTML = '<path d="M40,560 L960,560 M950,552 L962,560 L950,568 M40,560 L40,80 M32,92 L40,80 L48,92"/><text x="955" y="590" text-anchor="end">More pressure →</text><text x="52" y="76">Better performance</text>';
+    const labels = {};
+    [['comfort', 'Comfort'], ['learn', 'Learning'], ['edge', 'The edge'], ['panic', 'Panic']].forEach(([k, t]) => {
+      labels[k] = mk('text', { class: 'fx-edge-label fx-el-' + k, 'text-anchor': 'middle' }, svg);
+      labels[k].textContent = t;
+    });
+    const ghost = mk('g', { class: 'fx-edge-ghost' }, svg);
+    const ghostDot = mk('circle', { r: 5 }, ghost);
+    const ghostTxt = mk('text', { 'text-anchor': 'middle', class: 'fx-edge-ghost-t' }, ghost);
+    ghostTxt.textContent = 'yesterday’s edge';
+    const me = drawWanderer(svg, id);
+
+    let lastStage = -1;
+    const render = (p) => {
+      const stage = Math.min(caps.length - 1, Math.floor(p * caps.length * 0.9999));
+      const local = p * caps.length - stage;
+      const s = stage === 5 ? Math.min(1, local * 1.3) : 0;
+      const T = terrain(s);
+      ground.setAttribute('d', T.ground);
+      rocks.setAttribute('d', T.rocks);
+      zComfort.setAttribute('x', 0); zComfort.setAttribute('width', T.C);
+      zLearn.setAttribute('x', T.C); zLearn.setAttribute('width', T.E - T.C);
+      zPanic.setAttribute('x', T.E + 6); zPanic.setAttribute('width', 1000 - T.E);
+      edgeGlow.setAttribute('cx', T.E - 6); edgeGlow.setAttribute('cy', T.ridge);
+      // where the traveler stands
+      let w;
+      if (stage === 0) w = 120 + local * 140;
+      else if (stage === 1) w = 270 + local * (T.E - 12 - 270);
+      else w = 608;
+      me.setAttribute('transform', `translate(${w},${T.y(w) - 10})`);
+      // labels sit on their part of the ground
+      labels.comfort.setAttribute('x', T.C / 2); labels.comfort.setAttribute('y', T.base + 60);
+      const lx = (T.C + T.E) / 2; labels.learn.setAttribute('x', lx); labels.learn.setAttribute('y', T.y(lx) + (stage === 5 ? 120 : 70));
+      labels.edge.setAttribute('x', T.E - 10); labels.edge.setAttribute('y', T.ridge - 46);
+      labels.panic.setAttribute('x', Math.min(930, (T.E + 1000) / 2 + 10)); labels.panic.setAttribute('y', 470);
+      // Yerkes–Dodson: performance rises with pressure, peaks at the edge, then falls off
+      let c = '';
+      for (let x = 40; x <= 960; x += 8) {
+        const yy = 520 - 330 * Math.exp(-Math.pow((x - T.E) / 230, 2));
+        c += (x === 40 ? 'M' : ' L') + x + ',' + yy.toFixed(1);
+      }
+      curve.setAttribute('d', c);
+      ghost.setAttribute('transform', `translate(620,${T.y(620) - 10})`);
+      box.dataset.stage = stage;
+      if (stage !== lastStage) {
+        lastStage = stage;
+        caps.forEach((cEl, i) => cEl.classList.toggle('is-on', i === stage));
+        dots.querySelectorAll('i').forEach((d, i) => d.classList.toggle('is-on', i <= stage));
+        dots.dataset.label = `${stage + 1} of ${caps.length}`;
+      }
+    };
+    if (reduced) { box.classList.add('is-static'); render(0.88); return; }
+    render(0);
+    scrollers.push(() => render(pinnedProgress(box)));
+  });
+
+  // 7b. Action produces information: a walk in the dark, lit one lantern-step at a time
+  document.querySelectorAll('.fx-walk').forEach((box, n) => {
+    const id = 'walk' + n;
+    const svg = box.querySelector('svg');
+    const btn = box.querySelector('.fx-walk-btn');
+    const log = box.querySelector('.fx-walk-log');
+    const count = box.querySelector('.fx-walk-count');
+    const notes = box.querySelector('template').content.textContent.trim().split('\n').map((t) => t.trim()).filter(Boolean);
+    const defs = mk('defs', {}, svg);
+    defs.innerHTML = `
+      <linearGradient id="${id}-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a5c"/><stop offset="1" stop-color="#120d24"/></linearGradient>
+      <radialGradient id="${id}-lamp"><stop offset="0" stop-color="#ffd27a" stop-opacity=".55"/><stop offset=".5" stop-color="#ff9a3c" stop-opacity=".18"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${id}-flame"><stop offset="0" stop-color="#fff6dc"/><stop offset=".4" stop-color="#ffc35a"/><stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/></radialGradient>
+      <filter id="${id}-soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="26"/></filter>`;
+    // the ground: flat, rocks, a step up, a gap with a plank, a climb, a ledge
+    const groundY = (x) => {
+      if (x < 340) return 430;
+      if (x < 700) return 380;
+      if (x < 820) return 380 - (x - 700) / 120 * 90;
+      return 290;
+    };
+    const sky = mk('g', {}, svg);
+    for (let k = 0; k < 60; k++) mk('circle', { cx: (k * 173) % 1000, cy: (k * 67) % 260 + 10, r: k % 7 ? 1.2 : 2, fill: '#fff', opacity: 0.6 }, sky);
+    mk('path', { d: 'M0,430 L340,430 L340,380 L470,380 L470,600 L0,600 Z', fill: `url(#${id}-g)` }, svg);
+    mk('path', { d: 'M560,600 L560,380 L700,380 L820,290 L1000,290 L1000,600 Z', fill: `url(#${id}-g)` }, svg);
+    mk('path', { d: 'M0,430 L340,430 L340,380 L470,380 M560,380 L700,380 L820,290 L1000,290', fill: 'none', stroke: '#c4b5fd', 'stroke-opacity': 0.45, 'stroke-width': 2 }, svg);
+    [[205, 430, 20], [232, 430, 14], [252, 430, 9]].forEach(([x, y, r]) => mk('path', { d: `M${x - r},${y} L${x - r * 0.4},${y - r} L${x + r * 0.5},${y - r * 0.8} L${x + r},${y} Z`, fill: '#4b3a72', stroke: '#c4b5fd', 'stroke-opacity': 0.4 }, svg));
+    mk('rect', { x: 462, y: 374, width: 106, height: 10, rx: 2, fill: '#b8891f', stroke: '#fde68a', 'stroke-opacity': 0.5 }, svg);
+    mk('text', { x: 515, y: 470, 'text-anchor': 'middle', class: 'fx-walk-gaptxt' }, svg).textContent = 'the gap';
+    // the dark, with light wherever the lantern has been
+    const mask = mk('mask', { id: id + '-mask' }, defs);
+    mk('rect', { x: 0, y: 0, width: 1000, height: 600, fill: 'white' }, mask);
+    const lit = mk('g', { filter: `url(#${id}-soft)` }, mask);
+    const dark = mk('rect', { x: 0, y: 0, width: 1000, height: 600, fill: '#05040b', mask: `url(#${id}-mask)`, class: 'fx-walk-dark' }, svg);
+    const lamp = mk('circle', { r: 150, fill: `url(#${id}-lamp)`, class: 'fx-walk-lamp' }, svg);
+    // a stick figure carrying a torch, posed by code every frame so the walk looks natural
+    const me = mk('g', { class: 'fx-walker', stroke: '#ebe4d4', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', fill: 'none' }, svg);
+    const legB = mk('polyline', { opacity: 0.75 }, me);       // far leg, slightly dimmer
+    const armFree = mk('polyline', { opacity: 0.75 }, me);
+    const torso = mk('line', {}, me);
+    const legA = mk('polyline', {}, me);
+    const head = mk('circle', { r: 9, fill: '#06060d' }, me);
+    const armTorch = mk('polyline', {}, me);
+    const torch = mk('line', { stroke: '#b8891f' }, me);
+    const flameAt = mk('g', {}, me);
+    const flameIn = mk('g', { class: 'fx-walker-flame' }, flameAt);
+    mk('circle', { r: 20, fill: `url(#${id}-flame)`, stroke: 'none' }, flameIn);
+    mk('path', { d: 'M0,-12 C6,-4 7,3 0,8 C-7,3 -6,-4 0,-12 Z', fill: '#ffd27a', stroke: 'none' }, flameIn);
+
+    const xs = [60, 205, 380, 515, 640, 760, 900];
+    // the height of the ground under the feet (a quick step up at the stair, the plank over the gap)
+    const feetY = (x) => {
+      if (x > 183 && x < 264) return 430 - 17 * Math.sin((x - 183) / 81 * Math.PI); // step up and over the rocks
+      if (x < 326) return 430;
+      if (x < 348) return 430 - (x - 326) / 22 * 50;
+      if (x > 466 && x < 564) return 374;
+      return groundY(x);
+    };
+    const L = 15;                                  // thigh and shin length
+    const pt = (x, y) => `${x.toFixed(1)},${y.toFixed(1)}`;
+    const leg = (hx, hy, ph, amp) => {
+      const a = amp * 0.5 * Math.sin(ph) + (1 - amp) * 0.07 * Math.sign(Math.sin(ph) || 1); // swing of the thigh (feet slightly apart when standing)
+      const bend = amp * 0.9 * Math.max(0, Math.cos(ph));       // the knee folds while the leg swings forward
+      const kx = hx + L * Math.sin(a), ky = hy + L * Math.cos(a);
+      const fx = kx + L * Math.sin(a - bend), fy = ky + L * Math.cos(a - bend);
+      return { d: `${pt(hx, hy)} ${pt(kx, ky)} ${pt(fx, fy)}`, a };
+    };
+    let x = xs[0], phase = 0, amp = 0, target = x, moving = false, onArrive = null, last = 0, raf = 0;
+    const draw = () => {
+      const gy = feetY(x);
+      // the leg on the ground is straight; the hip rides on it, which gives a natural bob
+      const aA = amp * 0.5 * Math.sin(phase), aB = amp * 0.5 * Math.sin(phase + Math.PI);
+      const stanceA = Math.cos(phase) <= 0;
+      const hipY = gy - 2 * L * Math.cos(stanceA ? aA : aB);
+      const lean = amp * 0.08;
+      const hx = x, nx = x + Math.sin(lean) * 30, ny = hipY - 30 * Math.cos(lean);
+      legA.setAttribute('points', leg(hx, hipY, phase, amp).d);
+      legB.setAttribute('points', leg(hx, hipY, phase + Math.PI, amp).d);
+      torso.setAttribute('x1', hx); torso.setAttribute('y1', hipY); torso.setAttribute('x2', nx); torso.setAttribute('y2', ny);
+      head.setAttribute('cx', nx + 1); head.setAttribute('cy', ny - 11);
+      const sx = nx - 0.5, sy = ny + 6;
+      const s = -amp * 0.55 * Math.sin(phase);                // free arm swings opposite the near leg
+      armFree.setAttribute('points', `${pt(sx, sy)} ${pt(sx + 8 * Math.sin(s), sy + 8 * Math.cos(s))} ${pt(sx + 8 * Math.sin(s) + 8 * Math.sin(s + 0.5), sy + 8 * Math.cos(s) + 8 * Math.cos(s + 0.5))}`);
+      const ex = sx + 9, ey = sy + 2, hxT = ex + 6, hyT = ey - 10;          // torch arm, raised and steady
+      armTorch.setAttribute('points', `${pt(sx, sy)} ${pt(ex, ey)} ${pt(hxT, hyT)}`);
+      const tx = hxT + 7, ty = hyT - 28;
+      torch.setAttribute('x1', hxT - 1); torch.setAttribute('y1', hyT + 6); torch.setAttribute('x2', tx); torch.setAttribute('y2', ty);
+      flameAt.setAttribute('transform', `translate(${tx.toFixed(1)},${(ty - 6).toFixed(1)})`);
+      lamp.setAttribute('transform', `translate(${tx.toFixed(1)},${(ty - 6).toFixed(1)})`);
+    };
+    const tick = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000 || 0); last = now;
+      if (moving) {
+        const dx = Math.min(110 * dt, target - x);
+        x += dx;
+        phase += dx / 30 * Math.PI;                             // one step per ~30 units, matching the leg swing so feet don't slide
+        amp = Math.min(1, amp + dt * 5);
+        if (target - x < 0.5) { x = target; moving = false; const f = onArrive; onArrive = null; f && f(); }
+      } else {
+        amp = Math.max(0, amp - dt * 4);                        // settle into a standing pose
+      }
+      draw();
+      raf = (moving || amp > 0) ? requestAnimationFrame(tick) : 0;
+    };
+    const go = (to, done) => {
+      if (reduced) { x = to; amp = 0; draw(); done(); return; }
+      target = to; moving = true; onArrive = done;
+      if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+    };
+
+    let step = 0, timer = null, current = null;
+    const light = (lx, r, shade) => {
+      const c = mk('circle', { cx: lx + 20, cy: feetY(lx) - 70, r: 0, fill: shade }, lit);
+      requestAnimationFrame(() => { c.style.transition = reduced ? 'none' : 'r 0.8s ease'; c.style.r = r; c.setAttribute('r', r); });
+      return c;
+    };
+    const arrive = () => {
+      count.textContent = `Steps taken: ${step} · Things you now know: ${step}`;
+      if (current) current.setAttribute('fill', '#3a3a3a');     // the path behind stays faintly lit
+      current = light(xs[step], 130, 'black');
+    };
+    const say = (text, cls) => { log.innerHTML = ''; const li = document.createElement('li'); if (cls) li.className = cls; li.textContent = text; log.appendChild(li); };
+    const reset = () => {
+      clearTimeout(timer); cancelAnimationFrame(raf); raf = 0; moving = false;
+      lit.innerHTML = ''; current = null; step = 0; x = xs[0]; amp = 0; phase = 0;
+      box.classList.remove('is-done', 'is-walking');
+      draw(); arrive();
+      say('It’s dark. Your torch lights a few feet. Everything past that is a guess.');
+      btn.textContent = 'Take the first step'; btn.disabled = false;
+    };
+    const finish = () => {
+      // look back: the whole path you walked is lit
+      lit.querySelectorAll('circle').forEach((c) => c.setAttribute('fill', '#141414'));
+      light(450, 520, '#202020');
+      box.classList.add('is-done');
+      say(notes[notes.length - 1], 'is-edge');
+      btn.textContent = 'Walk it again'; btn.disabled = false;
+      box.classList.remove('is-walking');
+    };
+    const walk = () => {
+      step++;
+      go(xs[step], () => {
+        arrive();
+        say(notes[step - 1]);
+        timer = setTimeout(step < xs.length - 1 ? walk : finish, reduced ? 700 : 450);
+      });
+    };
+    btn.addEventListener('click', () => {
+      if (box.classList.contains('is-walking')) return;
+      if (box.classList.contains('is-done')) reset();
+      box.classList.add('is-walking');
+      btn.textContent = 'Walking…'; btn.disabled = true;
+      walk();
+    });
+    reset();
+  });
+
+  /* ── 8. READING THE SIGNAL: pick the feeling, see where you're standing ── */
+  document.querySelectorAll('.fx-signal').forEach((box, n) => {
+    const id = 'sig' + n;
+    const svg = box.querySelector('svg');
+    const out = box.querySelector('.fx-signal-out');
+    defsFor(svg, id);
+    const T = terrain(0);
+    mk('path', { d: T.ground, fill: `url(#${id}-ground)`, stroke: '#c4b5fd', 'stroke-width': 2, 'stroke-opacity': 0.5 }, svg);
+    mk('path', { d: T.rocks, class: 'fx-edge-rocks' }, svg);
+    const glow = mk('ellipse', { cx: T.E - 6, cy: T.ridge, rx: 70, ry: 110, fill: `url(#${id}-edge)`, opacity: 0 }, svg);
+    const me = drawWanderer(svg, id);
+    const spots = { comfort: 160, edge: 608, cliff: 700 };
+    const put = (k) => {
+      const x = spots[k], y = k === 'cliff' ? 470 : T.y(x) - 10;
+      me.style.transform = `translate(${x}px,${y}px)`;
+      me.classList.toggle('is-falling', k === 'cliff');
+      glow.setAttribute('opacity', k === 'edge' ? 1 : 0);
+    };
+    box.querySelectorAll('.fx-signal-opt').forEach((b) => {
+      b.addEventListener('click', () => {
+        box.querySelectorAll('.fx-signal-opt').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+        put(b.dataset.k);
+        out.textContent = b.dataset.say;
+        out.className = 'fx-signal-out is-' + b.dataset.k;
+      });
+    });
+    me.style.transform = `translate(-60px,${T.base - 10}px)`;
+  });
+
+  /* ── 9. COMMIT CHANGES: the button the whole essay has been about ── */
+  document.querySelectorAll('.fx-commit').forEach((box) => {
+    const btn = box.querySelector('.fx-commit-btn');
+    const msg = box.querySelector('.fx-commit-msg');
+    btn.addEventListener('click', () => {
+      if (box.classList.contains('is-done')) return;
+      box.classList.add('is-done');
+      btn.innerHTML = '<span aria-hidden="true">✓</span> Changes committed';
+      btn.disabled = true;
+      msg.hidden = false;
+      if (reduced) return;
+      const r = btn.getBoundingClientRect(), br = box.getBoundingClientRect();
+      for (let i = 0; i < 26; i++) {
+        const sp = document.createElement('span');
+        sp.className = 'fx-commit-spark';
+        sp.textContent = '✦';
+        const a = (Math.random() * Math.PI) + Math.PI, d = 90 + Math.random() * 220;
+        sp.style.left = (r.left - br.left + r.width / 2) + 'px';
+        sp.style.top = (r.top - br.top + r.height / 2) + 'px';
+        sp.style.setProperty('--tx', Math.cos(a) * d + 'px');
+        sp.style.setProperty('--ty', Math.sin(a) * d - 40 + 'px');
+        sp.style.setProperty('--c', ['#fff1c1', '#f0c040', '#c084fc', '#e879f9', '#2ee6c8'][i % 5]);
+        sp.style.animationDelay = (Math.random() * 0.25) + 's';
+        sp.style.fontSize = (10 + Math.random() * 14) + 'px';
+        box.appendChild(sp);
+        setTimeout(() => sp.remove(), 2200);
+      }
     });
   });
 

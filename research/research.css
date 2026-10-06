@@ -1215,3 +1215,46 @@ details.fx-tldr:not([open]) summary { margin: 0; }
 
 /* skim lines: one bold sentence per section carries the argument */
 .rs-body p strong { font-weight: 600; color: #fff6dc; }
+
+/* ═════════ DESKTOP: let the visuals breathe wider than the text column ═════════ */
+@media (min-width: 1100px) {
+  .rs-body .fx-edge-pin, .rs-body .fx-walk, .rs-body .fx-signal {
+    --wide: min(1040px, 88vw);
+    width: var(--wide);
+    margin-left: calc((100% - var(--wide)) / 2);
+  }
+  /* center the landscape and its caption in the screen, sized so both always fit */
+  .fx-edge-pin { grid-template-rows: auto auto auto; align-content: center; top: 64px; height: calc(100vh - 64px); }
+  .fx-edge-frame { width: min(100%, calc((100vh - 280px) * 1000 / 600)); justify-self: center; }
+  .fx-edge-frame svg { width: 100%; height: auto; display: block; }
+  .fx-edge-caps { width: min(760px, 100%); justify-self: center; min-height: 6.5em; }
+  .fx-edge-steps { width: min(760px, 100%); justify-self: center; }
+}
+.fx-edge-ghost-t { text-anchor: end; transform: translate(-18px, -34px); }
+
+/* ═════════ NOTE PREVIEWS: a small living version of each note's visual, beside it in the list ═════════ */
+.rs-item > a > :not(.rs-viz) { grid-column: 1; min-width: 0; }
+.rs-viz {
+  position: relative; overflow: hidden; border-radius: 10px;
+  border: 1px solid var(--line);
+  background: radial-gradient(ellipse 80% 70% at 60% 20%, rgba(124, 58, 237, 0.18), transparent 70%), rgba(6, 6, 13, 0.7);
+  transition: border-color 0.35s, box-shadow 0.35s, filter 0.35s;
+  filter: saturate(0.9) brightness(0.92);
+}
+.rs-viz svg { display: block; width: 100%; height: 100%; }
+.rs-viz .v-lab { font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 700; letter-spacing: 0.18em; text-anchor: middle; }
+.rs-viz .v-big { font-size: 15px; letter-spacing: 0.12em; }
+.rs-viz .v-sub { font-size: 8.5px; letter-spacing: 0.18em; }
+.rs-viz .v-word { font-family: 'Cinzel', serif; font-size: 25px; font-weight: 700; letter-spacing: 0.12em; text-anchor: middle; }
+.rs-item > a:hover .rs-viz, .rs-item > a:focus-visible .rs-viz {
+  border-color: color-mix(in srgb, var(--world) 55%, transparent);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--world) 18%, transparent);
+  filter: none;
+}
+@media (min-width: 761px) {
+  .rs-item > a { grid-template-columns: minmax(0, 1fr) 236px; column-gap: 32px; align-items: start; }
+  .rs-viz { grid-column: 2; grid-row: 1 / span 5; align-self: center; aspect-ratio: 300 / 190; }
+}
+@media (max-width: 760px) {
+  .rs-viz { aspect-ratio: 300 / 160; margin-bottom: 6px; }
+}

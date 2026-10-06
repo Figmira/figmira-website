@@ -42,6 +42,7 @@ description: Notes from Figmira Studios on AI, blockchain, robotics, and investi
 {% for post in site.posts %}
   <li class="rs-item" data-topic="{{ post.topic }}" data-world="{{ post.topic | downcase }}" data-title="{{ post.title | escape }}" data-url="{{ post.url | relative_url }}">
     <a href="{{ post.url | relative_url }}">
+      <div class="rs-viz" data-viz="{{ post.preview | default: 'worlds' }}" aria-hidden="true"></div>
       <p class="rs-meta">
         <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
         <span class="rs-topic">{{ post.topic }}</span>
@@ -116,4 +117,5 @@ description: Notes from Figmira Studios on AI, blockchain, robotics, and investi
     allBtn.addEventListener('click', function () { show(null); });
   })();
 </script>
+<script src="{{ '/research/previews.js' | relative_url }}"></script>
 <script type="module" src="{{ '/research/brain.js' | relative_url }}"></script>

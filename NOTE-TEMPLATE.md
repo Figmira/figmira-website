@@ -8,6 +8,7 @@ tldr:
   - "Second key point."
   - "Third key point."
 whatif: What if [the imaginative question that sent you looking]?
+preview: worlds
 ---
 
 <!--
@@ -20,6 +21,8 @@ whatif: What if [the imaginative question that sent you looking]?
   4. Change the title, description, topic, and whatif above.
      tldr is "The short version" box at the very top (three short points).
      whatif is the glowing "What if...?" line under it. Delete either one if you don't want it.
+     preview is the small moving picture beside the note on the Research page:
+       edge, skhy, morph, or worlds. (Ask Claude to design a new one for a new note.)
      topic must be exactly one of:  AI   Blockchain   Robotics   Investing   Studio
      (Investing notes automatically show a "not financial advice" line.)
   5. Write your note below. You can delete this comment.

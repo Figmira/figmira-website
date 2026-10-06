@@ -1,4 +1,5 @@
 ---
+preview: worlds
 image: /research/images/og-studios.png
 layout: note
 title: Why Figmira Studios Starts With Research

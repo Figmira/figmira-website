@@ -1,4 +1,5 @@
 ---
+preview: edge
 layout: note
 title: "The Edge, Not the Cliff"
 description: Why growth lives just past the point where things get uncomfortable, why most of us mistake that edge for a cliff, and why the only way to find it is to move.

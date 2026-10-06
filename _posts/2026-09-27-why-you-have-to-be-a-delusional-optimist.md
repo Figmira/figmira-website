@@ -1,4 +1,5 @@
 ---
+preview: morph
 image: /research/images/og-out-of-my-mind.png
 layout: note
 title: "Out of My Mind: Why a Little Delusion Is No Longer Optional"

@@ -1,4 +1,5 @@
 ---
+preview: skhy
 image: /research/images/og-skhy.png
 layout: note
 title: "SK hynix: Why We Believe SKHY Can Run to $780 a Share"

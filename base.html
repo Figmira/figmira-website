@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% if page.layout == "note" %}{{ page.title }} · Figmira Research{% else %}Research · Figmira{% endif %}</title>
+<meta name="description" content="{{ page.description | default: site.description | escape }}">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#110a1e">
+<link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+<link rel="icon" href="{{ '/favicon-64.png' | relative_url }}" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
+<meta property="og:type" content="{% if page.layout == 'note' %}article{% else %}website{% endif %}">
+<meta property="og:site_name" content="Figmira">
+<meta property="og:title" content="{{ page.title | escape }}">
+<meta property="og:description" content="{{ page.description | default: site.description | escape }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:image" content="{{ page.image | default: '/og-image.png' | absolute_url }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@figmira">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<link rel="alternate" type="application/atom+xml" title="Figmira Research" href="{{ '/research/feed.xml' | relative_url }}">
+<!-- Fonts load in the background, so text shows right away even on slow connections -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="{{ '/research/research.css' | relative_url }}?v=4">
+</head>
+<body class="{% if page.layout == 'note' %}is-note{% else %}is-list{% endif %}">
+<!-- ✦ Night sky: still stars everywhere, and a moving sky (lights, butterflies, a shooting star) only at the top ✦ -->
+<div class="rs-sky" aria-hidden="true"></div>
+<div class="rs-skytop" id="rsSkyTop" aria-hidden="true"><canvas id="rsStars"></canvas><span class="rs-shoot"></span></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="fig-bfly" viewBox="0 0 140 100"><g fill="#f6cb72"><path d="M66 54C46 29 29 19 7 12c4 18 6 33 17 43 8 7 23 8 42-1Z"/><path d="M74 54c20-25 37-35 59-42-4 18-6 33-17 43-8 7-23 8-42-1Z"/><path d="M70 46c-3 6-4 13-4 19 0 10 2 16 4 23 2-7 4-13 4-23 0-6-1-13-4-19Z"/></g><g fill="#a874e8"><path d="M66 60C43 56 24 68 31 91c9-10 17-11 25-16 8-5 11-12 10-15Z"/><path d="M74 60c23-4 42 8 35 31-9-10-17-11-25-16-8-5-11-12-10-15Z"/></g></symbol></defs></svg>
+
+<a class="rs-skip" href="#rs-content">Skip to content</a>
+<header class="rs-nav">
+  <a class="rs-brand" href="{{ '/' | relative_url }}" aria-label="Figmira home">
+    <svg viewBox="0 0 140 100" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="nb-gold" gradientUnits="userSpaceOnUse" x1="0" y1="12" x2="0" y2="58"><stop offset="0" stop-color="#ffe29b"/><stop offset="1" stop-color="#eeb055"/></linearGradient><linearGradient id="nb-purple" gradientUnits="userSpaceOnUse" x1="0" y1="58" x2="0" y2="92"><stop offset="0" stop-color="#b583ef"/><stop offset="1" stop-color="#6a36b2"/></linearGradient></defs><g fill="url(#nb-gold)"><path d="M66 54C46 29 29 19 7 12c4 18 6 33 17 43 8 7 23 8 42-1Z"/><path d="M74 54c20-25 37-35 59-42-4 18-6 33-17 43-8 7-23 8-42-1Z"/></g><g fill="url(#nb-purple)"><path d="M66 60C43 56 24 68 31 91c9-10 17-11 25-16 8-5 11-12 10-15Z"/><path d="M74 60c23-4 42 8 35 31-9-10-17-11-25-16-8-5-11-12-10-15Z"/></g><g fill="#f6cb72"><path d="M67 48c-3-11-8-20-14-24l-1 2c6 5 10 12 12 24M73 48c3-11 8-20 14-24l1 2c-6 5-10 12-12 24"/><path d="M70 46c-3 6-4 13-4 19 0 10 2 16 4 23 2-7 4-13 4-23 0-6-1-13-4-19Z"/></g></svg>
+    <span>FIGMIRA</span>
+  </a>
+  <button class="rs-nav-toggle" type="button" aria-controls="rs-links" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+  <nav id="rs-links" class="rs-links" aria-label="Main navigation">
+    <a href="{{ '/research/' | relative_url }}"{% if page.layout != "note" %} aria-current="page"{% endif %}>Research</a>
+    <a href="{{ '/#products' | relative_url }}">Labs</a>
+    <a href="{{ '/#ecosystem' | relative_url }}">Dreamshots</a>
+    <a href="{{ '/#about' | relative_url }}">About</a>
+  </nav>
+</header>
+
+<main class="rs-main" id="rs-content">
+{{ content }}
+</main>
+
+<footer class="rs-footer">
+  <div class="ft-top">
+    <a class="ft-brand" href="{{ '/' | relative_url }}" aria-label="Figmira home"><svg viewBox="0 0 140 100" preserveAspectRatio="none" aria-hidden="true"><use href="#fig-bfly-full"/></svg><span>FIGMIRA</span></a>
+    <p class="ft-tag">STUDY · CREATE · EXPLORE · TRANSFORM</p>
+    <div class="ft-cols">
+      <div><strong>Research</strong><a href="{{ '/research/' | relative_url }}">Latest</a><a href="{{ '/research/' | relative_url }}">Insights</a></div>
+      <div><strong>Labs</strong><a href="{{ '/#products' | relative_url }}">Figmira Budget</a><a href="{{ '/#products' | relative_url }}">Coming Soon</a></div>
+      <div><strong>Dreamshots</strong><a href="{{ '/#ecosystem' | relative_url }}">Experiments</a></div>
+      <div><strong>About</strong><a href="{{ '/#about' | relative_url }}">Our Story</a></div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <small>© {{ site.time | date: '%Y' }} Figmira. All rights reserved.</small>
+    <div><a href="https://x.com/figmira" target="_blank" rel="noopener">X</a><a href="https://github.com/Figmira/figmira-website" target="_blank" rel="noopener">GitHub</a><a href="{{ '/research/' | relative_url }}">Research</a></div>
+  </div>
+</footer>
+<!-- The footer butterfly reuses the top-left logo's drawing -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="fig-bfly-full" viewBox="0 0 140 100"><g fill="url(#nb-gold)"><path d="M66 54C46 29 29 19 7 12c4 18 6 33 17 43 8 7 23 8 42-1Z"/><path d="M74 54c20-25 37-35 59-42-4 18-6 33-17 43-8 7-23 8-42-1Z"/></g><g fill="url(#nb-purple)"><path d="M66 60C43 56 24 68 31 91c9-10 17-11 25-16 8-5 11-12 10-15Z"/><path d="M74 60c23-4 42 8 35 31-9-10-17-11-25-16-8-5-11-12-10-15Z"/></g><g fill="#f6cb72"><path d="M67 48c-3-11-8-20-14-24l-1 2c6 5 10 12 12 24M73 48c3-11 8-20 14-24l1 2c-6 5-10 12-12 24"/><path d="M70 46c-3 6-4 13-4 19 0 10 2 16 4 23 2-7 4-13 4-23 0-6-1-13-4-19Z"/></g></symbol></defs></svg>
+
+<script>
+(function () {
+  // Phone menu
+  var toggle = document.querySelector('.rs-nav-toggle'), links = document.getElementById('rs-links');
+  toggle.addEventListener('click', function () {
+    var open = links.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  });
+  links.addEventListener('click', function (e) { if (e.target.closest('a')) { links.classList.remove('is-open'); toggle.setAttribute('aria-expanded', 'false'); } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && links.classList.contains('is-open')) { links.classList.remove('is-open'); toggle.setAttribute('aria-expanded', 'false'); toggle.focus(); } });
+
+  // Moving sky at the top of the page
+  var sky = document.getElementById('rsSkyTop'), canvas = document.getElementById('rsStars');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lite = !!((navigator.connection && navigator.connection.saveData) || (navigator.deviceMemory && navigator.deviceMemory <= 2));
+  var skyW = 0, skyH = 0;
+  function drawStars() {
+    var w = sky.clientWidth, h = sky.clientHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (!canvas.getContext || (w === skyW && h === skyH)) return;
+    skyW = w; skyH = h; canvas.width = w * dpr; canvas.height = h * dpr;
+    var c = canvas.getContext('2d'); c.scale(dpr, dpr);
+    var seed = 7, rnd = function () { return (seed = (seed * 16807) % 2147483647) / 2147483647; };
+    var count = Math.round(w * h / 2600);
+    for (var i = 0; i < count; i++) {
+      var y = Math.pow(rnd(), 1.5) * h, x = rnd() * w, r = .3 + rnd() * rnd() * 1.3, f = Math.max(.18, 1 - y / (h * 1.05)), t = rnd();
+      c.fillStyle = t > .86 ? 'rgba(255,216,150,' + f + ')' : t > .72 ? 'rgba(200,170,255,' + f + ')' : 'rgba(255,248,235,' + (f * .9) + ')';
+      c.beginPath(); c.arc(x, y, r, 0, 6.283); c.fill();
+    }
+  }
+  requestAnimationFrame(drawStars);
+  var timer; window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(drawStars, 200); });
+  var i, el;
+  for (i = 0; i < (lite ? 8 : 16); i++) {
+    el = document.createElement('span'); el.className = i % 3 === 0 ? 'rs-twinkle rs-spark' : 'rs-twinkle';
+    el.style.left = ((i * 41 + 7) % 100) + '%'; el.style.top = (20 + ((i * 67) % 420)) + 'px';
+    el.style.animationDelay = (-(i * .7)) + 's'; el.style.animationDuration = (3 + (i % 4)) + 's';
+    sky.appendChild(el);
+  }
+  if (reduced) return;
+  for (i = 0; i < (lite ? 7 : 14); i++) {
+    el = document.createElement('span'); el.className = i % 3 === 1 ? 'rs-fig is-violet' : 'rs-fig';
+    el.style.setProperty('--x', ((i * 47 + 11) % 100) + '%'); el.style.setProperty('--y', (180 + ((i * 83) % 360)) + 'px');
+    el.style.setProperty('--delay', (-(i * 1.3)) + 's'); el.style.setProperty('--dur', (10 + (i % 5) * 2.2) + 's');
+    el.style.setProperty('--drift', ((i % 2 ? 1 : -1) * (30 + (i % 4) * 22)) + 'px');
+    sky.appendChild(el);
+  }
+  var xs = [6, 18, 84, 93, 30], ys = [300, 150, 120, 330, 470];
+  for (i = 0; i < (lite ? 2 : 5); i++) {
+    el = document.createElement('span'); el.className = 'rs-fly';
+    el.innerHTML = '<svg viewBox="0 0 140 100"><use href="#fig-bfly"/></svg>';
+    el.style.setProperty('--x', xs[i] + '%'); el.style.setProperty('--y', ys[i] + 'px');
+    el.style.setProperty('--delay', (-(i * 4.1)) + 's'); el.style.setProperty('--dur', (19 + (i % 3) * 5) + 's');
+    el.style.setProperty('--dx', ((i % 2 ? -1 : 1) * (90 + i * 18)) + 'px'); el.style.setProperty('--size', (15 + (i % 3) * 5) + 'px');
+    sky.appendChild(el);
+  }
+})();
+</script>
+<script src="{{ '/cursor.js' | relative_url }}" defer></script>
+</body>
+</html>

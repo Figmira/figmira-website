@@ -1,11 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <radialGradient id="g" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="35%" stop-color="#fde68a"/>
-      <stop offset="75%" stop-color="#f0c040"/>
-      <stop offset="100%" stop-color="#c084fc"/>
-    </radialGradient>
-  </defs>
-  <path d="M32 2 C34.5 21 43 29.5 62 32 C43 34.5 34.5 43 32 62 C29.5 43 21 34.5 2 32 C21 29.5 29.5 21 32 2 Z" fill="url(#g)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><g transform="translate(0 14) scale(1 1.12)"><defs><linearGradient id="hl-gold" gradientUnits="userSpaceOnUse" x1="0" y1="12" x2="0" y2="58"><stop offset="0" stop-color="#ffe29b"/><stop offset="1" stop-color="#eeb055"/></linearGradient><linearGradient id="hl-purple" gradientUnits="userSpaceOnUse" x1="0" y1="58" x2="0" y2="92"><stop offset="0" stop-color="#b583ef"/><stop offset="1" stop-color="#6a36b2"/></linearGradient></defs><g fill="url(#hl-gold)"><path d="M66 54C46 29 29 19 7 12c4 18 6 33 17 43 8 7 23 8 42-1Z"/><path d="M74 54c20-25 37-35 59-42-4 18-6 33-17 43-8 7-23 8-42-1Z"/></g><g fill="url(#hl-purple)"><path d="M66 60C43 56 24 68 31 91c9-10 17-11 25-16 8-5 11-12 10-15Z"/><path d="M74 60c23-4 42 8 35 31-9-10-17-11-25-16-8-5-11-12-10-15Z"/></g><g fill="#f6cb72"><path d="M67 48c-3-11-8-20-14-24l-1 2c6 5 10 12 12 24M73 48c3-11 8-20 14-24l1 2c-6 5-10 12-12 24"/><path d="M70 46c-3 6-4 13-4 19 0 10 2 16 4 23 2-7 4-13 4-23 0-6-1-13-4-19Z"/></g></g></svg>

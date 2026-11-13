@@ -1,540 +1,493 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Figmira — An Independent Research Studio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-:root {
-  --gold:   #f0c040;
-  --gold-lt:#fde68a;
-  --pur:    #7c3aed;
-  --pur-lt: #c084fc;
-  --pink:   #e879f9;
-  --dark:   #06060d;
-  --tx:     #d4a84b;
-  --tx-dim: #3a2e1c;
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#100b1e">
+  <meta name="description" content="Figmira is an independent research studio exploring AI, blockchain, robotics, and investing, and building what comes next. Study the World. Imagine the Next.">
+  <!-- Link previews (X, iMessage, Slack, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Figmira">
+  <meta property="og:url" content="https://figmira.com/">
+  <meta property="og:title" content="Figmira · Study the World. Imagine the Next.">
+  <meta property="og:description" content="An independent research studio exploring AI, blockchain, robotics, and investing. Ideas, products, and Dreamshots brought to life.">
+  <meta property="og:image" content="https://figmira.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The gold and purple Figmira butterfly beside the word Figmira under a starry night sky, with the line Study the World. Imagine the Next.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@figmira">
+  <link rel="canonical" href="https://figmira.com/">
+  <!-- Icons (these files sit next to index.html in the repo) -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"></noscript>
+  <style>
+:root{
+  --ink:#0d081a;--dark:#140c24;--panel:#211433;--purple:#7842a6;--gold:#edc36e;--gold-bright:#ffe0a0;--ivory:#fff1d4;--muted:#d4bfdd;
+  --line:rgba(242,199,126,.34);--sans:'Inter',Arial,sans-serif;--serif:'Cinzel',Georgia,serif;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}body{margin:0;background:#140c27;color:var(--ivory);font-family:var(--sans);line-height:1.48;-webkit-font-smoothing:antialiased}body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 75% 0%,rgba(96,44,150,.35),transparent 60%),radial-gradient(ellipse at 10% 100%,rgba(60,40,140,.3),transparent 55%),#090515}button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #ffdd8b;outline-offset:4px}.skip-link{position:absolute;top:-50px;left:12px;background:#fff;color:#111;z-index:999;padding:10px}.skip-link:focus{top:8px}.site-frame{max-width:1460px;width:calc(100% - 48px);margin:12px auto 26px;border:1px solid rgba(234,196,254,.3);border-radius:14px;background:#0c0818;box-shadow:0 22px 80px rgba(0,0,0,.63),0 0 90px rgba(147,62,198,.24);overflow:hidden;position:relative}
+.site-nav{height:62px;padding:0 clamp(30px,6.6%,100px);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:6;background:linear-gradient(180deg,#110a1e 0%,#130a22 100%);border-bottom:1px solid rgba(233,181,255,.18)}
+.brand-lockup{display:flex;align-items:center;gap:10px;min-width:245px}.brand-lockup span,.footer-brand span{font-family:var(--serif);font-size:23px;letter-spacing:.34em;font-weight:500;color:var(--ivory)}.brand-butterfly{width:50px;height:41px;object-fit:contain;filter:drop-shadow(0 0 3px rgba(255,202,117,.25));transition:transform .5s ease}.brand-lockup:hover .brand-butterfly{transform:rotate(-7deg) translateY(-2px)}.nav-links{display:flex;gap:clamp(22px,3.7vw,57px);align-items:center;font-family:Georgia,serif;font-size:15px;white-space:nowrap}.nav-links a{transition:color .2s}.nav-links a:hover{color:#ffda94}.caret{font-family:var(--sans);opacity:.7;margin-left:5px}.nav-tools{display:flex;gap:21px;align-items:center}.nav-tools:before{content:"";height:26px;width:1px;background:rgba(247,217,145,.42);margin-right:3px}.icon-button{border:0;background:transparent;color:#fbe9c6;padding:5px;display:flex;align-items:center}.nav-pill{border:1px solid var(--gold);color:#fff0d6;background:linear-gradient(120deg,rgba(80,24,109,.38),rgba(12,5,24,.7));border-radius:30px;padding:7px 22px;font-family:Georgia,serif;font-size:14px;box-shadow:0 0 12px rgba(251,191,90,.12)}.nav-pill:hover{background:rgba(229,184,101,.14)}.nav-toggle{display:none}
+.cinematic-panel{position:relative;isolation:isolate;padding:0 clamp(22px,3.7%,54px) 23px;overflow:hidden;background:linear-gradient(180deg,#1b1032,#110c21 77%,#26123a)}.world-scene{display:none;background-repeat:no-repeat;background-position:center -182px;background-size:100% auto;opacity:.94}.scene-tint{position:absolute;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(180deg,rgba(13,7,32,.18) 0%,rgba(25,9,40,.05) 26%,rgba(21,11,43,.72) 48%,rgba(15,8,32,.77) 70%,rgba(22,12,38,.95) 100%),linear-gradient(90deg,rgba(17,11,37,.28),transparent 20%,rgba(20,8,35,.1) 76%,rgba(20,8,35,.13))}.petal-field{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:-1}.petal{position:absolute;width:5px;height:9px;border-radius:90% 0 80% 5%;background:#ed9bd9;opacity:0;filter:drop-shadow(0 0 3px #f6a9df);animation:petalFloat var(--dur,12s) linear infinite;animation-delay:var(--delay,0s);left:var(--x,80%);top:-2%}@keyframes petalFloat{8%{opacity:.6}85%{opacity:.4}100%{transform:translate(var(--drift,-150px),850px) rotate(430deg);opacity:0}}
+.hero{height:258px;display:flex;align-items:center;flex-direction:column;text-align:center;justify-content:center;padding:4px 8px 2px;text-shadow:0 1px 17px rgba(16,4,31,.85)}.hero-butterfly{width:116px;height:73px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(252,179,119,.43));animation:heroFloat 5.5s ease-in-out infinite}.hero-brand{display:flex;gap:22px;align-items:center;font-family:var(--serif);letter-spacing:.38em;margin:0 0 2px;font-size:22px;line-height:1.4}.hero-brand>span{width:46px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}.hero-brand>span:last-child{transform:rotate(180deg)}.hero h1{font:400 clamp(27px,3.0vw,41px)/1.3 Georgia,'Times New Roman',serif;color:#fff0ce;margin:0 0 6px;letter-spacing:.015em;text-shadow:0 1px 13px #220d41,0 3px 32px rgba(19,9,35,.8)}.hero p{font-size:11px;font-weight:600;letter-spacing:.31em;line-height:1.5;margin:0 0 15px;color:#f6e3e0}.hero-actions{display:flex;justify-content:center;gap:26px}.btn{display:inline-flex;gap:17px;min-width:196px;justify-content:center;align-items:center;min-height:37px;border-radius:50px;padding:6px 18px;font-family:Georgia,serif;font-size:15px;box-shadow:0 0 18px rgba(93,22,116,.35);transition:transform .2s,box-shadow .2s}.btn span{font-size:21px;line-height:1}.btn:hover{transform:translateY(-2px)}.gold-btn{background:linear-gradient(180deg,#ffe2a5,#ecab53);color:#211020;border:1px solid #f5cf78;text-shadow:none;font-weight:bold}.gold-btn:hover{box-shadow:0 0 23px rgba(255,203,109,.37)}.outline-btn{background:rgba(17,5,31,.71);border:1px solid #ffd581;color:#fff2df}.outline-btn:hover{box-shadow:0 0 23px rgba(216,157,255,.35)}@keyframes heroFloat{50%{transform:translateY(-4px)}}
+.section-inline{max-width:1295px;margin:0 auto}.section-overline{display:flex;align-items:center;gap:22px;margin:0 0 10px;text-align:center;font-size:12px;font-weight:700;letter-spacing:.37em;color:#fbd17b;white-space:nowrap}.section-overline>span{height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(249,206,115,.65))}.section-overline>span:last-child{transform:rotate(180deg)}
+.featured-products{padding:0 0 11px}.product-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.product-tile{height:94px;position:relative;overflow:hidden;display:flex;align-items:center;text-align:left;gap:17px;padding:14px 18px;border:1px solid rgba(238,172,234,.67);color:#fff0d3;border-radius:13px;background:linear-gradient(120deg,rgba(22,9,38,.94),rgba(66,25,72,.56) 66%,rgba(39,11,57,.82));box-shadow:inset 0 0 22px rgba(181,70,195,.13),0 6px 22px rgba(13,4,28,.35);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}.product-tile:hover{transform:translateY(-4px);border-color:#f7da98;box-shadow:0 8px 30px rgba(246,180,255,.2)}.tile-pattern{position:absolute;inset:0;z-index:0;opacity:.72;pointer-events:none}.tile-icon,.tile-copy,.tile-arrow{position:relative;z-index:1}.tile-icon{display:grid;place-items:center;flex:0 0 55px;height:58px;border:1px solid rgba(249,203,112,.85);color:#f1c675;border-radius:13px;background:rgba(22,8,38,.65);box-shadow:0 0 0 2px rgba(250,214,141,.05),inset 0 0 13px rgba(249,206,135,.08)}.tile-icon.purple{border-color:#d08adc;color:#d594da}.tile-copy{display:flex;flex-direction:column;gap:1px;min-width:0;text-shadow:0 2px 8px #170a22}.tile-kicker{font-size:11px;letter-spacing:.24em;color:#fff0dd;white-space:nowrap}.tile-copy strong{font-size:17px;letter-spacing:.17em;color:#f6c76e;line-height:1.1;white-space:nowrap;font-weight:700}.next-tile .tile-copy strong{font-size:14px;color:#fff1dd;letter-spacing:.11em}.tile-copy small{font-size:8px;letter-spacing:.16em;color:#f1dce7;white-space:nowrap;margin-top:5px}.tile-arrow{margin-left:auto;align-self:end;display:grid;place-items:center;border-radius:50%;width:25px;height:25px;border:1px solid #efcb76;color:#fcd887;flex:0 0 25px;font-size:18px}.budget-pattern svg{position:absolute;bottom:0;right:-6%;height:100%;width:60%;filter:drop-shadow(0 0 8px #d88576)}.budget-pattern{background:radial-gradient(ellipse at 80% 45%,rgba(245,116,86,.35),transparent 50%)}.kaizen-tile{background:linear-gradient(110deg,#1a082e,rgba(63,19,82,.83) 49%,#171039)}.kaizen-pattern{background:linear-gradient(90deg,transparent 50%,rgba(95,48,135,.25)),radial-gradient(ellipse at 82% 50%,rgba(147,86,183,.7),transparent 50%)}.moon-icon{width:55px;height:55px;background:#f7c9d1;border-radius:50%;position:absolute;right:18%;top:8px;box-shadow:0 0 25px #fa8eecaa}.bamboo-lines{position:absolute;right:3%;font-size:51px;font-family:serif;line-height:1.1;opacity:.4;top:6px;color:#100b21}.future-pattern{background:radial-gradient(ellipse at 83% 50%,rgba(219,98,217,.32),transparent 50%)}.future-planet{width:106px;height:106px;position:absolute;border:2px solid #ef8db8;right:8%;top:13px;border-radius:50%;box-shadow:0 -5px 16px rgba(247,123,188,.6);transform:rotate(-18deg)}
+.ecosystem{padding:3px 0 13px}.ecosystem-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:center;margin:auto;max-width:1120px}.eco-item{display:flex;align-items:center;justify-content:center;gap:19px;min-height:71px;position:relative;transition:transform .2s}.eco-item:hover{transform:translateY(-3px)}.eco-item:not(:last-child):after{position:absolute;content:"";right:0;top:10px;height:55px;background:rgba(244,191,121,.48);width:1px}.eco-item svg{flex:0 0 56px}.eco-item>span{display:flex;flex-direction:column}.eco-item small{font-family:var(--serif);font-size:13px;letter-spacing:.2em;line-height:1.1}.eco-item strong{font-family:var(--serif);font-size:19px;letter-spacing:.19em;color:#f2d072;font-weight:500;line-height:1.2}.eco-item:nth-child(2) strong{color:#bdacff}.eco-item:nth-child(3) strong{color:#dfa3db}.eco-item em{font-style:normal;font-size:9px;letter-spacing:.15em;margin-top:5px;white-space:nowrap}
+.articles{padding:0 0 5px}.articles-heading{display:flex;align-items:center;gap:22px;margin-bottom:12px}.articles-heading h2{margin:0;font-size:12px;letter-spacing:.36em;white-space:nowrap;color:#fbd17b}.articles-heading .rule{height:1px;background:rgba(249,206,115,.58);flex:1}.articles-heading a{font-family:Georgia,serif;white-space:nowrap;font-size:12px;color:#ffdc8d}.articles-heading a span{padding-left:10px;font-family:var(--sans);font-size:17px}.article-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.article-card{height:153px;min-width:0;display:flex;overflow:hidden;background:linear-gradient(120deg,rgba(23,10,42,.8),rgba(42,18,64,.84));border:1px solid rgba(232,156,222,.58);border-radius:13px;transition:transform .22s,border-color .22s;box-shadow:inset 0 0 12px rgba(255,184,218,.06)}.article-card:hover{transform:translateY(-3px);border-color:#fbd897}.article-img{width:48%;min-width:42%;height:100%;position:relative;display:block;overflow:hidden;background:#251337}.article-img:after{position:absolute;inset:0;content:"";background:linear-gradient(90deg,transparent 68%,rgba(34,15,49,.22))}.article-img img{width:100%;height:100%;object-fit:cover;object-position:45% center;transition:transform .5s}.article-card:hover img{transform:scale(1.06)}.article-details{display:flex;flex-direction:column;align-items:flex-start;padding:11px 11px 10px 12px;min-width:0;flex:1}.tag{font-size:8px;letter-spacing:.15em;color:#f7d48d;border:1px solid rgba(245,205,125,.55);border-radius:30px;padding:2px 9px;line-height:1.2;margin-bottom:7px}.violet-tag{border-color:#b880d0;color:#eec6fa}.article-details strong{font:400 16px/1.22 Georgia,serif;color:#ffefda}.article-summary{font-size:10px;line-height:1.32;color:#e8d4e7;margin-top:6px;max-width:200px}.read-link{font:500 11px Georgia,serif;color:#f8d273;margin-top:auto;align-self:flex-end}.read-link b{font:400 18px var(--sans);padding-left:6px}
+.site-footer{position:relative;z-index:2;background:linear-gradient(180deg,#140c23,#10091b);border-top:1px solid rgba(251,212,171,.32);padding:17px clamp(25px,4%,63px) 13px}.footer-top{display:flex;align-items:center;gap:25px;justify-content:space-between;min-height:65px}.footer-brand{display:flex;align-items:center;gap:8px}.footer-brand img{width:45px;height:36px}.footer-brand span{font-size:20px;letter-spacing:.29em}.footer-top>p{padding-left:21px;border-left:1px solid rgba(249,207,129,.4);font-size:9px;letter-spacing:.21em;white-space:nowrap}.footer-cols{display:flex;gap:32px}.footer-cols>div{display:flex;flex-direction:column;align-items:flex-start;white-space:nowrap}.footer-cols strong{font-family:Georgia,serif;font-size:12px;font-weight:400;margin-bottom:3px}.footer-cols a{font-size:10px;color:#cbbdd0}.footer-cols a:hover{color:#ffe3a3}.subscribe-footer{border-left:1px solid var(--line);padding-left:19px;display:flex;flex-direction:column;gap:3px;min-width:170px}.subscribe-footer strong{font:400 12px Georgia,serif;color:#f3cc80}.subscribe-footer>span{font-size:9px;color:#d3c3d6;white-space:nowrap}.subscribe-footer button{border:1px solid rgba(243,198,125,.6);border-radius:25px;background:rgba(50,25,64,.55);color:#f4d6a5;padding:4px 10px;text-align:left;display:flex;justify-content:space-between;font-size:10px;width:150px;margin-top:4px}.subscribe-footer button span{color:#edb863}.footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(246,200,130,.34);margin-top:12px;padding-top:10px}.footer-bottom small{font-size:10px;color:#b7aac4}.footer-bottom>div{display:flex;gap:22px;font-size:10px;color:#cbb6d0}
+.about-panel{background:radial-gradient(ellipse at 80% 50%,rgba(103,53,151,.25),transparent 60%),#110b20;display:grid;grid-template-columns:110px 1fr auto;align-items:center;gap:20px;padding:35px clamp(22px,8%,100px);border-top:1px solid rgba(237,187,110,.24);position:relative}.about-icon img{width:100px;height:80px;filter:drop-shadow(0 0 15px rgba(255,205,145,.25))}.kicker{font-size:10px;letter-spacing:.3em;color:#f0c472;margin:0 0 5px}.about-panel h2{font:400 28px Georgia,serif;margin:0 0 7px}.about-panel p:not(.kicker){max-width:730px;color:#d7c5de;margin:0;font-size:13px}.about-button{color:#1b0d1c;background:linear-gradient(180deg,#ffe0a7,#e4a852);border:0;border-radius:30px;padding:12px 20px;white-space:nowrap;font:600 12px var(--sans)}.figment-notice{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);font-size:12px;color:#fbe1b6;text-align:center}.spark-burst{pointer-events:none;position:absolute;color:#f8d88b;font-size:20px;text-shadow:0 0 12px #ffe6a5;animation:burst 1.5s forwards;left:var(--burst-x,50%);top:var(--burst-y,50%)}@keyframes burst{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.35) rotate(100deg)}}
+.modal-backdrop{position:fixed;inset:0;background:rgba(7,4,15,.78);z-index:30;display:grid;place-items:center;padding:20px;backdrop-filter:blur(9px)}.modal-backdrop[hidden]{display:none}.modal{background:radial-gradient(circle at 50% 3%,rgba(125,53,156,.28),transparent 60%),#160c27;border:1px solid rgba(249,198,128,.52);border-radius:18px;width:min(480px,100%);position:relative;padding:28px 30px 30px;text-align:center;box-shadow:0 26px 80px rgba(0,0,0,.6)}.modal-close{position:absolute;right:15px;top:10px;border:0;background:none;color:#f6d6ed;font-size:29px}.modal-kicker{font-family:var(--serif);letter-spacing:.4em;font-size:12px;color:#eec16d;margin:0}.modal>img{width:96px;margin:5px auto}.modal h2{font:400 28px Georgia,serif;margin:0 0 12px}.modal-content{color:#ded0e8;font-size:14px}.modal-content p{margin:0 0 12px}.modal-actions{display:flex;justify-content:center;gap:12px;margin-top:17px;flex-wrap:wrap}.modal-actions a,.modal-actions button{border-radius:30px;padding:9px 18px;background:#edbf75;border:1px solid #edbf75;color:#211128;font:600 12px var(--sans)}.modal-actions .secondary{background:transparent;color:#f7db9e}.modal-content label{display:block;text-align:left;font-size:12px;color:#e5c7db;margin:13px 0 7px}.modal-content input{width:100%;padding:11px 13px;border:1px solid rgba(236,193,128,.5);background:#241531;color:#fff0d1;border-radius:8px}.modal-content .form-note{font-size:12px;color:#c2afd2;text-align:left;margin-top:12px}.modal-content .feedback{font-size:12px;color:#ffe4a7;margin-top:12px}
+@media(min-width:1500px){.site-frame{margin-top:18px}.hero{height:273px}.product-tile{height:100px}.article-card{height:161px}.featured-products{padding-bottom:14px}.ecosystem{padding-bottom:17px}.articles{padding-bottom:10px}}
+@media(max-width:1190px){.site-frame{width:calc(100% - 24px)}.site-nav{padding:0 28px}.brand-lockup{min-width:185px}.brand-lockup span{font-size:19px}.nav-links{gap:23px}.nav-tools{gap:11px}.cinematic-panel{padding:0 22px 25px}.world-scene{background-size:auto 710px;background-position:center -142px}.tile-icon{flex-basis:45px;height:49px}.tile-copy strong{font-size:13px}.tile-copy small{font-size:7px}.tile-kicker{font-size:9px}.product-tile{gap:11px;padding:10px}.footer-top{gap:14px}.footer-cols{gap:15px}.footer-top>p{font-size:8px}}
+@media(max-width:900px){.nav-toggle{display:flex;flex-direction:column;gap:4px;background:transparent;color:#fbdba0;border:0;padding:10px;margin-left:auto}.nav-toggle span{width:22px;height:2px;background:currentColor}.nav-links{display:none;position:absolute;z-index:10;top:62px;left:0;right:0;background:#1c102d;padding:18px 24px;box-shadow:0 16px 24px #090410;flex-direction:column;align-items:flex-start;gap:15px}.nav-links.is-open{display:flex}.nav-tools{margin-left:8px}.nav-tools:before{display:none}.hero{height:295px}.hero h1{font-size:32px}.product-row{gap:9px}.tile-arrow{display:none}.tile-icon{flex-basis:40px}.tile-copy small{letter-spacing:.08em}.eco-item{gap:7px}.eco-item em{white-space:normal}.article-card{height:183px}.article-img{width:40%;min-width:40%}.article-details strong{font-size:15px}.article-details{padding:10px}.footer-top{display:grid;grid-template-columns:1fr 1fr;gap:20px}.footer-top>p{order:3;border:0;padding:0}.footer-cols{order:2}.subscribe-footer{order:4}.about-panel{grid-template-columns:80px 1fr}.about-icon img{width:78px}.about-button{grid-column:2;justify-self:start}}
+@media(max-width:640px){.site-frame{width:100%;border-radius:0;margin:0;border-left:0;border-right:0}.site-nav{height:65px;padding:0 17px}.brand-lockup{min-width:0}.brand-lockup span{letter-spacing:.22em;font-size:18px}.brand-butterfly{width:42px}.nav-tools .nav-pill{font-size:11px;padding:7px 10px}.icon-button{display:none}.cinematic-panel{padding:0 15px 23px}.world-scene{background-size:auto 640px;background-position:62% -80px}.scene-tint{background:linear-gradient(180deg,rgba(14,8,27,.22),rgba(18,8,33,.45) 29%,rgba(17,7,34,.94) 63%,rgba(16,8,30,.96))}.hero{height:327px;padding:0}.hero-butterfly{width:100px;height:70px}.hero-brand{font-size:19px;gap:12px}.hero-brand>span{width:23px}.hero h1{font-size:28px;line-height:1.15;margin:8px 0 10px}.hero p{font-size:9px;letter-spacing:.18em;max-width:310px;margin-bottom:21px}.hero-actions{flex-wrap:wrap;gap:9px}.btn{min-width:138px;font-size:12px;min-height:40px;padding:7px 10px;gap:7px}.section-overline{letter-spacing:.18em;font-size:10px;gap:10px}.product-row{grid-template-columns:1fr;gap:10px}.product-tile{height:96px;padding:12px 16px;gap:15px}.tile-icon{height:58px;flex-basis:58px}.tile-copy strong{font-size:17px}.tile-copy small{font-size:8px}.tile-kicker{font-size:11px}.tile-arrow{display:grid}.ecosystem{padding:15px 0}.ecosystem-row{grid-template-columns:1fr;gap:12px}.eco-item{justify-content:flex-start;padding-left:20px;min-height:64px}.eco-item:not(:last-child):after{width:100%;height:1px;left:0;right:auto;top:auto;bottom:-5px}.articles-heading{gap:10px}.articles-heading h2{font-size:10px;letter-spacing:.2em}.articles-heading a{font-size:10px}.article-row{grid-template-columns:1fr;gap:12px}.article-card{height:152px}.article-img{width:43%;min-width:43%}.article-details strong{font-size:18px}.article-summary{font-size:11px}.site-footer{padding:22px 20px}.footer-top{grid-template-columns:1fr}.footer-top>p{order:2}.footer-cols{order:3;justify-content:space-between}.subscribe-footer{order:4;border-left:0;padding:0}.footer-bottom{gap:12px}.about-panel{padding:30px 20px;grid-template-columns:1fr;text-align:center}.about-icon{display:none}.about-button{grid-column:1;justify-self:center}.figment-notice{position:static;transform:none}.footer-brand span{font-size:19px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}.petal-field{display:none}}
+/* The illustration belongs to the actual content surface. This also ensures
+   the scenic hero remains visible in browser engines that paint negative
+   stacking layers differently. */
+.cinematic-panel{background-color:#0b0719}
+.hero h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(27px,3vw,41px);line-height:1.3}
+.nav-links a{margin:0 8px}
+.modal-content .subscribe-submit{border-radius:30px;background:linear-gradient(180deg,#ffe1a0,#edb35c);border:0;padding:10px 20px;color:#211122;margin-top:10px;font-weight:700}
+@media(max-width:1190px){.cinematic-panel{background-size:auto 710px;background-position:center -142px}.nav-links a{margin:0 1px}}
+@media(max-width:640px){.cinematic-panel{background-size:auto 640px;background-position:62% -80px}}
+/* Keep the navigation CTA legible across rendering engines. */
+.nav-pill{height:32px;line-height:20px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;padding:5px 20px}
+.subscribe-footer button{min-height:25px;line-height:16px;align-items:center}
+
+/* ===== Mockup refresh ===== */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* Nav without logo: links centered, tools on the right */
+.site-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.site-nav .nav-links{grid-column:2;justify-content:center}
+.site-nav .nav-tools{grid-column:3;justify-self:end}
+/* Hero: taller, bigger headline, sunset glow */
+.hero{height:318px;padding-top:10px}
+.hero-butterfly{width:132px;height:84px}
+.hero-brand{font-size:27px;gap:26px;margin-bottom:0}
+.hero-brand>span{width:70px}
+.hero h1{font-size:clamp(30px,3.6vw,52px);line-height:1.18;margin:0 0 10px}
+.hero p{font-size:12px;letter-spacing:.36em;margin-bottom:20px}
+.btn{min-height:44px;min-width:212px;font-size:16px;padding:8px 22px}
+.gold-btn{box-shadow:0 0 26px rgba(255,196,96,.35)}
+.sun-glow{position:absolute;z-index:-2;pointer-events:none;left:62%;top:205px;width:460px;height:260px;background:radial-gradient(ellipse at 50% 55%,rgba(255,226,160,.85) 0,rgba(255,170,95,.45) 9%,rgba(240,110,120,.18) 30%,transparent 62%);mix-blend-mode:screen;animation:sunPulse 7s ease-in-out infinite}
+@keyframes sunPulse{50%{opacity:.82}}
+.petal:nth-child(3n){background:#f7b6e6;width:6px;height:10px}
+.petal:nth-child(4n){background:#d987d6;width:4px;height:7px}
+/* Product tiles */
+.product-tile{height:100px}
+.tile-copy strong{font-size:19px;letter-spacing:.2em}
+.tile-kicker{font-size:12px}
+.tile-copy small{font-size:9px}
+.tile-arrow{width:28px;height:28px;flex-basis:28px;font-size:16px;background:rgba(20,8,36,.55)}
+.budget-pattern svg{width:64%;right:-4%}
+.moon-icon{width:48px;height:48px;right:26%;top:12px;background:radial-gradient(circle at 40% 40%,#fff0f4,#f6c6da 55%,#e79ac6);box-shadow:0 0 22px rgba(255,190,230,.8),0 0 60px rgba(214,120,220,.45)}
+.kaizen-pattern .bamboo{position:absolute;right:2%;top:0;height:100%;width:40%;opacity:.85}
+.future-planet{width:120px;height:120px;right:6%;top:10px;border:0;background:radial-gradient(circle at 30% 35%,rgba(255,180,230,.35),rgba(120,40,140,.15) 55%,transparent 70%);box-shadow:inset 6px 4px 0 -1px #f5a0cf,-6px -2px 22px rgba(247,123,188,.45)}
+.future-stars{position:absolute;inset:0;background:radial-gradient(1px 1px at 62% 30%,#fff 50%,transparent),radial-gradient(1px 1px at 72% 70%,#ffd9f2 50%,transparent),radial-gradient(1.5px 1.5px at 90% 22%,#fff 50%,transparent),radial-gradient(1px 1px at 55% 78%,#fff 50%,transparent)}
+/* Ecosystem */
+.eco-item{gap:22px}
+.eco-item svg{flex:0 0 62px;filter:drop-shadow(0 0 8px rgba(255,210,140,.18))}
+.eco-item small{font-size:14px}
+.eco-item strong{font-size:22px;font-weight:600}
+.eco-item em{font-size:10px}
+/* Articles */
+.article-card{height:162px}
+.article-details{padding:13px 14px 12px 14px}
+.article-details strong{font-size:20px;line-height:1.18}
+.article-summary{font-size:11.5px;line-height:1.38;max-width:240px}
+.tag{font-size:9px;font-weight:600;padding:3px 10px}
+.read-link{font-size:12.5px}
+/* Footer */
+.footer-cols{gap:40px}
+.footer-cols a{font-size:11px;line-height:1.6}
+.footer-cols strong{font-size:13px}
+.subscribe-footer{min-width:250px;margin:0}
+.subscribe-footer strong{font-size:14px}
+.subscribe-footer>span{font-size:10px}
+.footer-email{display:flex;align-items:center;margin-top:7px;border:1px solid rgba(243,198,125,.55);border-radius:30px;background:rgba(30,15,44,.7);padding:3px 3px 3px 14px}
+.footer-email input{flex:1;min-width:0;border:0;background:transparent;color:#fff0d6;font:12px var(--sans);padding:5px 6px 5px 0}
+.footer-email input::placeholder{color:#a996b4}
+.footer-email input:focus-visible{outline:none}
+.footer-email:focus-within{border-color:#ffdd8b;box-shadow:0 0 0 2px rgba(255,221,139,.25)}
+.subscribe-footer .footer-email button{width:34px;height:28px;min-height:0;margin:0;padding:0;display:grid;place-items:center;border:0;border-radius:20px;background:linear-gradient(180deg,#ffe1a0,#edb35c);color:#211122;font:700 16px var(--sans)}
+.footer-feedback{margin:5px 0 0;font-size:10px;color:#ffe4a7;min-height:0}
+.footer-feedback:empty{display:none}
+@media(min-width:1500px){.hero{height:330px}.product-tile{height:104px}.article-card{height:168px}}
+@media(max-width:1190px){.tile-copy strong{font-size:14px}.tile-kicker{font-size:10px}.tile-copy small{font-size:7.5px}.article-details strong{font-size:17px}.footer-cols{gap:20px}.subscribe-footer{min-width:210px}.sun-glow{left:56%}}
+@media(max-width:900px){.site-nav{display:flex;justify-content:space-between}.nav-toggle{margin-left:0}.site-nav .nav-tools{margin-left:auto}.hero{height:340px}.hero h1{font-size:36px}.btn{min-width:180px}.footer-cols{flex-wrap:wrap}.article-card{height:190px}.sun-glow{left:45%;top:230px}}
+@media(max-width:640px){.hero{height:380px}.hero h1{font-size:30px;line-height:1.15}.hero-brand{font-size:20px;gap:12px}.hero-brand>span{width:28px}.hero p{font-size:9px;letter-spacing:.18em}.btn{min-width:140px;font-size:13px;min-height:42px;padding:7px 12px}.tile-copy strong{font-size:17px}.tile-kicker{font-size:11px}.tile-copy small{font-size:8px}.article-card{height:160px}.article-details strong{font-size:18px}.footer-cols{gap:18px 26px}.subscribe-footer{min-width:0;width:100%}.sun-glow{left:20%;width:340px;top:250px}}
+@media(prefers-reduced-motion:reduce){.sun-glow{animation:none}}
+
+/* ===== Logo + layout update ===== */
+.hero{height:282px}
+.hero-brand{gap:28px;margin:0 0 14px}
+.hero-brand>span{width:80px}
+.hero-logo{display:block;height:clamp(52px,5.4vw,78px);width:auto;filter:drop-shadow(0 0 14px rgba(252,179,119,.35));animation:heroFloat 5.5s ease-in-out infinite}
+.product-row{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1060px;margin:0 auto}
+@media(min-width:1500px){.hero{height:296px}}
+@media(max-width:900px){.hero{height:300px}}
+@media(max-width:640px){.hero{height:310px}.hero-logo{height:42px}.hero-brand{gap:10px;margin-bottom:10px}.hero-brand>span{width:22px}.product-row{grid-template-columns:1fr}}
+
+/* ===== Middle logo = footer logo, larger, gold/purple, no motion ===== */
+.hero-logo{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 0 16px;animation:none}
+.hero-logo svg{width:90px;height:72px;flex:0 0 auto;filter:drop-shadow(0 0 12px rgba(252,179,119,.3))}
+.hero-logo span{font-family:var(--serif);font-size:44px;font-weight:500;letter-spacing:.29em;margin-right:-.29em;line-height:1;color:var(--ivory)}
+@media(max-width:640px){.hero-logo{gap:10px}.hero-logo svg{width:56px;height:45px}.hero-logo span{font-size:27px}}
+
+/* Footer logo matches the middle logo */
+.footer-brand svg{width:45px;height:36px;flex:0 0 auto;filter:drop-shadow(0 0 6px rgba(252,179,119,.25))}
+
+/* ===== Night sky of figments theme ===== */
+.cinematic-panel{background-image:none!important;background-color:#0b0719}
+.sun-glow{display:none}
+.night-sky{position:absolute;inset:0;z-index:-3;pointer-events:none;overflow:hidden;background:
+  radial-gradient(ellipse 620px 300px at 80% 110px,rgba(158,84,226,.42),transparent 70%),
+  radial-gradient(ellipse 560px 280px at 14% 170px,rgba(84,70,214,.30),transparent 70%),
+  radial-gradient(ellipse 900px 190px at 50% 330px,rgba(236,140,150,.20),transparent 72%),
+  radial-gradient(ellipse 520px 120px at 50% 345px,rgba(255,200,120,.14),transparent 72%),
+  linear-gradient(180deg,#070414 0,#100828 180px,#1d0f3e 340px,#170c31 520px,#110922 100%)}
+#star-canvas{position:absolute;inset:0;width:100%;height:100%}
+.scene-tint{background:linear-gradient(180deg,transparent 0,transparent 330px,rgba(11,6,24,.35) 520px,rgba(11,6,24,.6) 100%)!important}
+.tw-star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff6e0;box-shadow:0 0 6px 1px rgba(255,236,190,.8);animation:twinkle 4s ease-in-out infinite}
+.tw-star.spark{width:11px;height:11px;border-radius:0;box-shadow:none;background:#ffe9b8;clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);filter:drop-shadow(0 0 4px #ffdf9c)}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.15)}}
+.shooting-star{position:absolute;top:46px;left:74%;width:130px;height:1.5px;border-radius:2px;background:linear-gradient(90deg,#fff6dc,rgba(255,246,220,0));opacity:0;transform:rotate(-20deg);animation:shoot 12s linear infinite}
+@keyframes shoot{0%,86%{opacity:0;transform:translate(0,0) rotate(-20deg)}88%{opacity:1}100%{opacity:0;transform:translate(-430px,156px) rotate(-20deg)}}
+/* Figments (replace the petals) */
+.figment{position:absolute;left:var(--x);top:var(--y);width:5px;height:5px;border-radius:50%;background:#ffe2a0;box-shadow:0 0 8px 2px rgba(255,205,120,.75),0 0 18px 6px rgba(255,190,110,.25);opacity:0;animation:figRise var(--dur,12s) ease-in-out infinite;animation-delay:var(--delay,0s)}
+.figment.violet{background:#e3c8ff;box-shadow:0 0 8px 2px rgba(190,140,255,.8),0 0 18px 6px rgba(160,110,240,.3)}
+.figment:nth-child(4n){width:3px;height:3px}
+@keyframes figRise{0%{transform:translate(0,0);opacity:0}12%{opacity:.95}50%{transform:translate(var(--drift,30px),-150px)}85%{opacity:.5}100%{transform:translate(calc(var(--drift,30px) * -.4),-320px);opacity:0}}
+.fig-fly{position:absolute;left:var(--x);top:var(--y);width:var(--size,18px);opacity:0;filter:drop-shadow(0 0 5px rgba(255,205,130,.7));animation:figFly var(--dur,22s) linear infinite;animation-delay:var(--delay,0s)}
+.fig-fly svg{display:block;width:100%;height:auto;animation:figFlap .42s ease-in-out infinite alternate}
+@keyframes figFlap{to{transform:scaleX(.3)}}
+@keyframes figFly{0%{transform:translate(0,0) rotate(8deg);opacity:0}10%{opacity:.85}35%{transform:translate(calc(var(--dx) * .45),-70px) rotate(-10deg)}65%{transform:translate(calc(var(--dx) * .6),-170px) rotate(12deg)}90%{opacity:.7}100%{transform:translate(var(--dx),-270px) rotate(-6deg);opacity:0}}
+/* Cards read a little cooler on the night sky */
+.product-tile{border-color:rgba(196,160,255,.5);background:linear-gradient(120deg,rgba(18,9,38,.92),rgba(52,24,84,.6) 66%,rgba(30,12,58,.85))}
+.article-card{border-color:rgba(196,160,255,.45)}
+.article-img svg{display:block;width:100%;height:100%;transition:transform .5s}
+.article-card:hover .article-img svg{transform:scale(1.06)}
+/* Dreamshots item is a button: make it look like its neighbors */
+button.eco-item{background:none;border:0;color:inherit;font:inherit;text-align:left;padding:0;width:100%}
+.eco-item:nth-child(3) strong{color:#eab4ea}
+@media(max-width:1190px){.eco-item strong{font-size:18px;letter-spacing:.13em}.eco-item small{font-size:12px}.eco-item{gap:14px}.eco-item svg{flex-basis:50px;width:50px;height:44px}}
+@media(max-width:640px){.eco-item strong{font-size:22px;letter-spacing:.19em}.eco-item small{font-size:14px}.eco-item{gap:22px}.eco-item svg{flex-basis:62px;width:62px;height:55px}button.eco-item{padding-left:20px}.shooting-star{left:80%;width:90px}}
+@media(prefers-reduced-motion:reduce){.tw-star,.shooting-star{animation:none}.shooting-star{display:none}}
+
+/* ===== Device + connection hardening ===== */
+/* Older Safari: blur behind pop-ups, and edge anchoring without the "inset" shorthand */
+.modal-backdrop{-webkit-backdrop-filter:blur(9px);top:0;right:0;bottom:0;left:0}
+.night-sky,#star-canvas,.scene-tint,.petal-field,.tile-pattern,.future-stars,.article-img:after{top:0;right:0;bottom:0;left:0}
+body:before{top:0;right:0;bottom:0;left:0}
+/* Butterfly glow rides on the moving layer, so it is never redrawn */
+.fig-fly{filter:none}
+.fig-fly svg{filter:drop-shadow(0 0 5px rgba(255,205,130,.7))}
+.article-summary{font-size:12px}
+/* Small laptops and landscape tablets: footer fits inside the frame */
+@media(min-width:901px) and (max-width:1279px){
+  .footer-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand cols sub" "tag cols sub";align-items:center;column-gap:26px;row-gap:4px}
+  .footer-brand{grid-area:brand;align-self:end}
+  .footer-top>p{grid-area:tag;align-self:start;border:0;padding:0;margin:0}
+  .footer-cols{grid-area:cols;justify-self:center}
+  .subscribe-footer{grid-area:sub;min-width:0;width:230px}
+}
+/* Touch screens: bigger tap areas and readable small print */
+@media(max-width:900px){
+  .footer-cols a{padding:6px 0;font-size:13px;line-height:1.3}
+  .footer-cols strong{font-size:14px;margin-bottom:2px}
+  .footer-bottom>div{gap:6px}
+  .footer-bottom>div a{display:inline-block;min-width:28px;padding:8px 8px;text-align:center;font-size:12px}
+  .footer-bottom small{font-size:12px}
+  .subscribe-footer>span{font-size:12px;white-space:normal}
+  .footer-email input{font-size:16px;padding:7px 6px 7px 0}
+  .subscribe-footer .footer-email button{width:40px;height:34px}
+  .modal-content input{font-size:16px}
+}
+@media(max-width:640px){
+  .hero p{font-size:10px}
+  .tile-copy small{font-size:9px}
+  .tile-kicker{font-size:12px}
+  .eco-item em{font-size:11px}
+  .footer-top>p{font-size:10px}
+  .article-card{height:auto;min-height:164px}
+}
+@media(max-width:640px){.footer-top{grid-template-columns:minmax(0,1fr)}.footer-top>p{white-space:normal}}
+@media(max-width:340px){.articles-heading{flex-wrap:wrap;gap:4px 10px}.articles-heading .rule{display:none}.cinematic-panel{padding-left:12px;padding-right:12px}}
+@media(max-width:420px){.footer-bottom{flex-direction:column;align-items:flex-start;gap:2px}.footer-bottom>div{margin-left:-8px}}
+/* Very narrow phones */
+@media(max-width:380px){
+  .eco-item strong{font-size:18px;letter-spacing:.14em}
+  .eco-item{gap:16px}
+  button.eco-item,.eco-item{padding-left:10px}
+  .hero-logo span{font-size:24px}
+  .hero-logo svg{width:50px;height:40px}
 }
 
-body { 
-  background:var(--dark); 
-  font-family:'Montserrat', sans-serif; 
-  overflow-x:hidden; 
-  color:var(--tx); 
-  line-height: 1.6; 
-  opacity: 0; 
-  animation: fadeInApp 1.2s ease-out forwards; 
-}
+/* ===== EMAIL SIGNUP SWITCH =====
+   Hidden until a real email service is connected.
+   To bring "Get Updates" and the footer email box back, delete this block. */
+.nav-pill[data-modal="updates"],#footer-signup{display:none!important}
+@media(min-width:901px) and (max-width:1279px){.footer-top{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"brand cols" "tag cols"}}
+/* With the button gone there is room for search on phones */
+@media(max-width:640px){.nav-tools .icon-button{display:flex;padding:8px}}
+/* ===== end switch ===== */
 
-@keyframes fadeInApp {
-  to { opacity: 1; }
-}
-
-/* ── CURSOR (Reverted to your exact smooth logic) ── */
-#cursorStar { position:fixed; top:-100px; left:-100px; pointer-events:none; z-index:9999; width:16px; height:16px; clip-path:polygon(50% 0%,55% 42%,100% 50%,55% 58%,50% 100%,45% 58%,0% 50%,45% 42%); background:radial-gradient(circle,white 10%,var(--gold) 55%,rgba(192,132,252,.5) 100%); animation:starSpin 4s linear infinite; filter:drop-shadow(0 0 5px var(--gold)) drop-shadow(0 0 12px rgba(192,132,252,.6)); mix-blend-mode:screen; transform:translate(-50%,-50%) rotate(0deg); transition:width .2s, height .2s, opacity 0.3s ease; opacity: 0; will-change: transform, opacity; }
-@keyframes starSpin { to { transform:translate(-50%,-50%) rotate(360deg); } }
-#cursorRing { position:fixed; top:-100px; left:-100px; pointer-events:none; z-index:9998; width:40px; height:40px; border:1px solid rgba(240,192,64,.35); border-radius:50%; transform:translate(-50%,-50%); transition:width .25s, height .25s, border-color .25s, opacity 0.3s ease; opacity: 0; will-change: transform, opacity; }
-.trail-dot { position:fixed; top:-100px; left:-100px; border-radius:50%; pointer-events:none; z-index:9997; transform:translate(-50%,-50%); mix-blend-mode:screen; transition: opacity 0.3s ease; opacity: 0; will-change: transform, opacity; }
-
-/* ── TOUCH DEVICE FALLBACK ── */
-@media (hover: none) and (pointer: coarse) {
-  body, .btn, .brand-card, .value-card, a, .door-letter { cursor: auto !important; }
-  #cursorStar, #cursorRing, .trail-dot { display: none !important; }
-}
-
-/* ── REDUCED MOTION ACCESSIBILITY ── */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  .sweep-ray, .particle, .orb-1, .orb-2 { display: none !important; }
-  .gw-canvas { opacity: 0.5 !important; } 
-}
-
-body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:.35; }
-
-/* ── NAV ── */
-nav { position:fixed; top:0; left:0; right:0; z-index:500; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; height:64px; background:linear-gradient(to bottom,rgba(6,6,13,.97),transparent); transition: padding 0.3s; }
-.nav-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-.nav-butterfly { width:24px; height:22px; filter:drop-shadow(0 0 5px rgba(192,132,252,.7)); }
-.nav-logo { font-family:'Cinzel',serif; font-size:16px; font-weight:900; letter-spacing:.28em; background:linear-gradient(90deg,var(--gold),var(--pur-lt)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; }
-.nav-links { display:flex; gap:36px; list-style:none; }
-.nav-links a { font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:.2em; color:rgba(255,255,255,0.7); text-decoration:none; text-transform:uppercase; transition:color .3s; white-space:nowrap; }
-.nav-links a:hover { color:var(--gold); }
-
-/* ── HERO & AMBIENT ORBS ── */
-#hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden; padding:64px 20px 120px; }
-.orb { position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; will-change: transform; }
-
-@keyframes orbBreathe {
-  0%, 100% { transform: scale(1) translate(0, 0); }
-  50% { transform: scale(1.08) translate(30px, -20px); }
-}
-@keyframes orbBreatheAlt {
-  0%, 100% { transform: scale(1) translate(0, 0); }
-  50% { transform: scale(1.1) translate(-40px, 30px); }
-}
-
-.orb-1 { width:700px; height:700px; background:var(--pur); top:-200px; left:-200px; opacity:.15; animation: orbBreathe 18s ease-in-out infinite; }
-.orb-2 { width:500px; height:500px; background:var(--gold); bottom:-150px; right:-100px; opacity:.07; animation: orbBreatheAlt 22s ease-in-out infinite; }
-
-.hero-imagination { font-family:'Cinzel',serif; font-weight: 700; font-size:clamp(12px,1.4vw,18px); letter-spacing:.55em; text-transform:uppercase; margin-bottom:28px; text-align:center; }
-
-/* ══════════════════════════════════════════════════════ 
-  FIGMIRA GATEWAY (Reverted to your golden code with 36px mobile clamp)
-  ═══════════════════════════════════════════════════════ */
-#gwWrap { position:relative; width:min(92vw, 1100px); margin-bottom:18px; }
-#gwLetters { display:flex; align-items:center; justify-content:center; gap:0; }
-
-.gw-letter { position:relative; display:inline-flex; align-items:center; justify-content:center; opacity:0; transform:translateY(50px); }
-.gw-glyph { font-family:'Cinzel',serif; font-weight:900; font-size:clamp(36px,10.5vw,152px); line-height:1; color:rgba(175,170,195,0.52); display:block; user-select:none; letter-spacing:-.01em; text-shadow:0 2px 40px rgba(0,0,0,.8); position: relative; z-index: 5; }
-.gw-canvas { position:absolute; pointer-events:none; mix-blend-mode:screen; z-index: 6; }
-
-/* ── THE SWEEPING LIGHT APERTURES (Original Masks Restored) ── */
-.aperture-scene { position: relative; display: inline-flex; justify-content: center; align-items: center; }
-.light-sweep-container { position: absolute; top: 50%; left: 50%; width: 200vw; height: 150vh; transform: translate(-50%, 0); pointer-events: none; z-index: 1; mix-blend-mode: screen; opacity: 0; }
-.sweep-ray { width: 100%; height: 100%; transform-origin: 50% 0%; animation: pendulumSweep 8s ease-in-out infinite alternate; will-change: transform; }
-@keyframes pendulumSweep { 0% { transform: rotate(-14deg); } 100% { transform: rotate(14deg); } }
-
-.ray-nimble { background: conic-gradient(from 180deg at 50% 0%, transparent 145deg, rgba(255, 150, 50, 0.1) 155deg, rgba(255, 220, 100, 0.5) 175deg, rgba(255, 255, 255, 0.8) 180deg, rgba(255, 220, 100, 0.5) 185deg, rgba(255, 150, 50, 0.1) 205deg, transparent 215deg); -webkit-mask-image: radial-gradient(circle at 50% 0%, black 10%, transparent 60%); }
-.ray-frost { background: conic-gradient(from 180deg at 50% 0%, transparent 145deg, rgba(100, 180, 255, 0.1) 155deg, rgba(160, 230, 255, 0.5) 175deg, rgba(255, 255, 255, 0.8) 180deg, rgba(160, 230, 255, 0.5) 185deg, rgba(100, 180, 255, 0.1) 205deg, transparent 215deg); -webkit-mask-image: radial-gradient(circle at 50% 0%, black 10%, transparent 60%); }
-
-/* ── DOM PARTICLES ── */
-.dom-particles { position: absolute; inset: 0; pointer-events: none; z-index: 10; opacity: 0; }
-.particle { position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; border-radius: 50%; opacity: 0; will-change: transform, opacity; }
-.dom-particles.active .particle { animation: particleFloat var(--dur) ease-out infinite var(--del); }
-@keyframes particleFloat { 0% { transform: translate(0, 0) scale(0.5); opacity: 0; } 20% { opacity: 0.8; } 100% { transform: translate(var(--tx), var(--ty)) scale(1.5); opacity: 0; } }
-
-/* AAA Performance Pause */
-.hero-paused .sweep-ray, .hero-paused .particle, .hero-paused .orb-1, .hero-paused .orb-2 { animation-play-state: paused !important; }
-
-/* ── THE PIXEL MASK ── */
-.pixel-scene { position: relative; display: inline-flex; }
-.pixel-grid { position: absolute; inset: -5px; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr); z-index: 20; }
-.pixel-block { background: var(--gold-lt); opacity: 1; border-radius: 1px; will-change: transform, opacity; }
-
-/* ── LAYOUT ELEMENTS ── */
-.hero-tagline { font-family:'Cinzel',serif; font-size:clamp(12px,1.5vw,20px); letter-spacing:.42em; text-transform:uppercase; margin-bottom:44px; margin-top:6px; text-align:center; }
-.hero-cta { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; opacity: 0; transform: translateY(20px); }
-
-.btn { font-family:'Cinzel',serif; font-size:12px; font-weight: 700; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; padding:15px 36px; border-radius:2px; position:relative; overflow:hidden; transition: color .3s ease, border-color .3s ease, box-shadow .3s ease; cursor:pointer; text-align:center; display: inline-block; will-change: transform; }
-.btn-primary { background:transparent; border:1px solid var(--gold); color:var(--gold-lt); }
-.btn-primary::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(240,192,64,.12),rgba(124,58,237,.08)); opacity:0; transition:opacity .3s; }
-.btn-primary:hover::before { opacity:1; }
-.btn-primary:hover { box-shadow:0 0 30px rgba(240,192,64,.3); }
-.btn-secondary { background:transparent; border:1px solid rgba(192,132,252,.35); color:var(--pur-lt); }
-.btn-secondary:hover { border-color:var(--pur-lt); box-shadow:0 0 30px rgba(192,132,252,.2); }
-
-.scroll-hint { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; font-family:'Cinzel',serif; font-size:10px; font-weight:700; letter-spacing:.3em; color:rgba(255,255,255,0.4); text-transform:uppercase; opacity: 0; }
-.scroll-line { width:1px; height:40px; background:linear-gradient(to bottom,rgba(240,192,64,.5),transparent); animation:scrollDrop 2s ease-in-out infinite; }
-@keyframes scrollDrop { 0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom} }
-
-/* SECTIONS */
-.section-divider { width:100%; display:flex; align-items:center; gap:24px; padding:0 60px; margin:0 auto; max-width:1200px; }
-.section-divider::before,.section-divider::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(240,192,64,.2),transparent); }
-.section-divider span { font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:.4em; color:rgba(255,255,255,0.4); white-space:nowrap; }
-
-.ill-word { display: inline; color: rgba(255, 255, 255, 0.4); transition: color 0.15s ease-out, text-shadow 0.15s ease-out; will-change: color, text-shadow; }
-.ill-word.active { color: var(--tx); text-shadow: 0px 0px 20px rgba(240,192,64,0.6); }
-
-/* ── VALUES SECTION (WITH NEW SVGS) ── */
-#values { padding:110px 60px; max-width:1300px; margin:0 auto; }
-.values-headline { font-family:'Cinzel',serif; font-size:clamp(24px,3.8vw,46px); font-weight:900; margin-bottom:68px; text-align:center; }
-.values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; }
-.value-card { background:linear-gradient(145deg,#0d0d1e,#110d22); border:1px solid #1a1a2e; border-radius:4px; padding:40px 32px; position:relative; overflow:hidden;  opacity: 0; transform: translateY(30px); }
-
-.value-icon { margin-bottom: 16px; display: flex; }
-.value-icon svg { width: 32px; height: 32px; stroke: var(--gold); filter: drop-shadow(0 0 8px rgba(240, 192, 64, 0.4)); transition: transform 0.4s ease, filter 0.4s ease; }
-.value-card:hover .value-icon svg { transform: scale(1.1) translateY(-2px); filter: drop-shadow(0 0 12px var(--gold-lt)); stroke: var(--gold-lt); }
-
-.value-label { font-family:'Cinzel',serif; font-size:14px; font-weight:700; letter-spacing:.25em; margin-bottom:12px; text-transform:uppercase; color: var(--gold-lt); }
-.value-desc { font-size:15px; font-weight: 300; line-height: 1.8; }
-
-/* ── BRANDS SECTION (3-COLUMN GRID) ── */
-#brands { padding:110px 60px; }
-.brands-inner { max-width:1400px; margin:0 auto; text-align:center; }
-.brands-eyebrow { font-family:'Cinzel',serif; font-size:12px; font-weight:700; letter-spacing:.45em; margin-bottom:52px; text-transform:uppercase; color: rgba(255,255,255,0.6); }
-
-.brands-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
-
-.brand-card { background:linear-gradient(145deg,#0d0d1e,#110d22); border:1px solid #1a1a2e; border-radius:4px; padding:50px 20px; width: 100%; position:relative; overflow:hidden; transition:all .4s ease;  display:flex; flex-direction:column; align-items:center; gap:14px; opacity: 0; transform: translateY(30px); }
-.brand-card:hover { border-color:rgba(240,192,64,.28); transform:translateY(-8px); box-shadow:0 24px 80px rgba(240,192,64,.07); }
-
-.brand-word-row { display:flex; gap:2px; flex-wrap:nowrap; justify-content:center; margin-bottom: 12px; width: 100%; min-width: 0;}
-.brand-divider { width:40px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); opacity:.4; }
-.brand-desc { font-size:14px; font-weight: 300; text-align:center; line-height: 1.8; margin: 0 10px; }
-.brand-link { font-family:'Cinzel',serif; font-size:11px; font-weight:700; letter-spacing:.3em; color:var(--pur-lt); text-decoration:none; text-transform:uppercase; margin-top:8px; opacity:.75; transition:opacity .3s; }
-.brand-link:hover { opacity:1; }
-
-.door-letter { position:relative; display:inline-flex; align-items:center; justify-content:center; overflow:visible; cursor:pointer; flex: 0 1 auto; min-width: 0; }
-.door-letter-inner { position:relative; display:inline-flex; align-items:center; justify-content:center; overflow:hidden; min-width: 0; }
-.letter-char { font-family:'Cinzel',serif; font-weight:900; letter-spacing:0.02em; background:linear-gradient(90deg,var(--gold-lt),var(--gold) 40%,var(--pur-lt)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:block; position:relative; z-index:2; user-select:none; transition:opacity .35s ease; font-size:clamp(12px, 4vw, 42px); padding: 0 1px; min-width: 0; }
-.door-reveal { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; z-index:1; transition:opacity .4s ease; transition-delay: 0.2s; }
-.door-reveal-symbol { filter:drop-shadow(0 0 12px currentColor); font-size:clamp(14px, 4vw, 32px); }
-
-.door-panel-left,.door-panel-right { position:absolute; top:0; bottom:0; width:50%; background:linear-gradient(160deg,#130e28,#0c0819); border:1px solid rgba(192,132,252,.1); transition:transform 1.4s cubic-bezier(0.22, 1, 0.36, 1); z-index:3; will-change: transform; }
-.door-panel-left  { left:0; transform-origin:left center; }
-.door-panel-right { right:0; transform-origin:right center; }
-.door-letter.open .door-panel-left  { transform:perspective(700px) rotateY(-88deg); }
-.door-letter.open .door-panel-right { transform:perspective(700px) rotateY(88deg); }
-.door-letter.open .letter-char      { opacity:0; }
-.door-letter.open .door-reveal      { opacity:1; }
-
-/* ── FOOTER ── */
-#footer { padding:58px; border-top:1px solid #0f0f1a; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:30px; }
-.footer-brand { font-family:'Cinzel',serif; font-size:22px; font-weight:900; letter-spacing:.3em; background:linear-gradient(90deg,var(--gold),var(--pur-lt)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.footer-copy  { font-size:13px; font-weight: 400; color: rgba(255,255,255,0.5); }
-.footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; margin-left: 20px; }
-.footer-links a:hover { color: var(--gold); }
-
-.footer-socials { display: flex; gap: 20px; align-items: center; }
-.footer-socials a { color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-.footer-socials a:hover { color: var(--gold); transform: translateY(-2px); filter: drop-shadow(0 0 8px rgba(240,192,64,0.7)); }
-.footer-socials svg { width: 20px; height: 20px; fill: currentColor; }
-
-/* ── MOBILE RESPONSIVE MEDIA QUERIES ── */
-@media (max-width: 1024px) {
-  .brands-row { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
-}
-
-@media (max-width: 768px) {
-  nav { padding: 16px 20px; flex-direction: column; gap: 12px; height: auto; }
-  .nav-links { gap: 24px; flex-wrap: wrap; justify-content: center; }
-  #hero { padding-top: 120px; }
-  .section-divider { padding: 0 24px; }
-  #values, #brands { padding: 80px 24px; }
-  .hero-cta { flex-direction: column; width: 100%; max-width: 280px; }
-  .hero-imagination, .hero-tagline { letter-spacing: .24em; font-size: 12px; }
-  .hero-tagline { letter-spacing: .14em; }
-  .btn { width: 100%; }
-  .brand-card { padding: 40px 12px; }
-  #footer { padding: 40px 24px; flex-direction: column; text-align: center; justify-content: center; gap: 24px; }
-  .footer-links { display: flex; justify-content: center; width: 100%; }
-  .footer-links a { margin: 0 10px; }
-  .footer-socials { justify-content: center; width: 100%; margin-bottom: 10px; }
+/* ===== Our Horizon (founder note) ===== */
+.horizon{padding:4px 0 20px}
+.horizon-card{position:relative;max-width:900px;margin:0 auto;text-align:center;padding:24px clamp(20px,5%,56px) 22px;border:1px solid rgba(196,160,255,.35);border-radius:14px;
+  background:radial-gradient(ellipse 70% 90% at 50% 0%,rgba(158,84,226,.22),transparent 70%),linear-gradient(180deg,rgba(24,12,46,.78),rgba(16,8,32,.86));
+  box-shadow:0 0 40px rgba(120,66,166,.18),inset 0 1px 0 rgba(255,226,160,.08)}
+.horizon-overline{margin:0 0 10px}
+.horizon h2{margin:0 0 12px;font:400 clamp(24px,2.5vw,34px)/1.22 Georgia,'Times New Roman',serif;color:#fff0ce;letter-spacing:.01em;text-shadow:0 0 22px rgba(255,200,120,.18)}
+.horizon-body{max-width:720px;margin:0 auto;font:400 14.5px/1.7 var(--sans);color:#e3d4ec}
+.horizon-sign{display:inline-flex;align-items:center;gap:9px;margin:14px 0 0;font:italic 400 16px Georgia,'Times New Roman',serif;color:#f3cc80}
+.horizon-sign svg{filter:drop-shadow(0 0 5px rgba(255,205,130,.5))}
+@media(max-width:640px){
+  .horizon{padding:2px 0 16px}
+  .horizon-card{padding:20px 18px;border-radius:12px}
+  .horizon h2{font-size:23px}
+  .horizon h2 br{display:none}
+  .horizon-body{font-size:14px;line-height:1.65;text-align:left}
 }
 </style>
-<!-- ✦ FIGMIRA: link previews, search description & tab icons ✦ -->
-<meta name="description" content="Figmira is an independent research studio exploring the frontiers of AI, blockchain, robotics, and investing.">
-<meta name="theme-color" content="#06060d">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="icon" href="favicon-64.png" type="image/png" sizes="64x64">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Figmira">
-<meta property="og:url" content="https://figmira.com/">
-<meta property="og:title" content="Figmira · Study the World. Imagine the Next.">
-<meta property="og:description" content="An independent research studio exploring the frontiers of AI, blockchain, robotics, and investing.">
-<meta property="og:image" content="https://figmira.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="A golden four-pointed star opening into a violet galaxy above the word Figmira.">
-<meta name="twitter:card" content="summary_large_image">
-<!-- ✦ FIGMIRA GATEWAY styles ✦ -->
-<link rel="stylesheet" href="gateway.css?v=2">
+  
+  <title>Figmira — Study the World. Imagine the Next.</title>
 </head>
 <body>
+<a class="skip-link" href="#content">Skip to content</a>
+<div class="site-frame" id="top">
+  <header class="site-nav">
+    <button class="nav-toggle" type="button" aria-controls="nav-links" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+    <nav id="nav-links" class="nav-links" aria-label="Main navigation">
+      <a href="#articles">Research <span class="caret">⌄</span></a>
+      <a href="#products">Labs <span class="caret">⌄</span></a>
+      <a href="#ecosystem">Dreamshots</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="nav-tools"><button type="button" id="search-open" class="icon-button" aria-label="Search Figmira articles"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><button type="button" class="nav-pill" data-modal="updates">Get Updates</button></div>
+  </header>
+  <main id="content">
+    <div class="cinematic-panel">
+      <div class="world-scene" aria-hidden="true"></div><div class="scene-tint" aria-hidden="true"></div>
+      <div class="night-sky" id="night-sky" aria-hidden="true"><canvas id="star-canvas"></canvas><span class="shooting-star"></span></div>
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="fig-bfly" viewBox="0 0 140 100"><g fill="#f6cb72"><path d="M66 54C46 29 29 19 7 12c4 18 6 33 17 43 8 7 23 8 42-1Z"/><path d="M74 54c20-25 37-35 59-42-4 18-6 33-17 43-8 7-23 8-42-1Z"/><path d="M70 46c-3 6-4 13-4 19 0 10 2 16 4 23 2-7 4-13 4-23 0-6-1-13-4-19Z"/></g><g fill="#a874e8"><path d="M66 60C43 56 24 68 31 91c9-10 17-11 25-16 8-5 11-12 10-15Z"/><path d="M74 60c23-4 42 8 35 31-9-10-17-11-25-16-8-5-11-12-10-15Z"/></g></symbol></defs></svg>
+      <div class="petal-field figment-field" id="petal-field" aria-hidden="true"></div>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-logo" role="img" aria-label="Figmira"><svg viewBox="0 0 140 100" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="hl-gold" gradientUnits="userSpaceOnUse" x1="0" y1="12" x2="0" y2="58"><stop offset="0" stop-color="#ffe29b"/><stop offset="1" stop-color="#eeb055"/></linearGradient><linearGradient id="hl-purple" gradientUnits="userSpaceOnUse" x1="0" y1="58" x2="0" y2="92"><stop offset="0" stop-color="#b583ef"/><stop offset="1" stop-color="#6a36b2"/></linearGradient></defs><g fill="url(#hl-gold)"><path d="M66 54C46 29 29 19 7 12c4 18 6 33 17 43 8 7 23 8 42-1Z"/><path d="M74 54c20-25 37-35 59-42-4 18-6 33-17 43-8 7-23 8-42-1Z"/></g><g fill="url(#hl-purple)"><path d="M66 60C43 56 24 68 31 91c9-10 17-11 25-16 8-5 11-12 10-15Z"/><path d="M74 60c23-4 42 8 35 31-9-10-17-11-25-16-8-5-11-12-10-15Z"/></g><g fill="#f6cb72"><path d="M67 48c-3-11-8-20-14-24l-1 2c6 5 10 12 12 24M73 48c3-11 8-20 14-24l1 2c-6 5-10 12-12 24"/><path d="M70 46c-3 6-4 13-4 19 0 10 2 16 4 23 2-7 4-13 4-23 0-6-1-13-4-19Z"/></g></svg><span aria-hidden="true">FIGMIRA</span></div>
+        <h1 id="hero-title">Study the World. Imagine the Next.</h1>
+        <p>IDEAS, PRODUCTS, AND DREAMSHOTS BROUGHT TO LIFE.</p>
+        <div class="hero-actions"><a class="btn gold-btn" href="#articles">Explore Articles <span aria-hidden="true">→</span></a><a class="btn outline-btn" href="#products">Discover Products <span aria-hidden="true">→</span></a></div>
+      </section>
 
-
-<nav>
-  <a class="nav-brand" href="#">
-    <svg class="nav-star" viewBox="0 0 64 64" aria-hidden="true">
-      <defs>
-        <radialGradient id="navStarG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"/><stop offset="35%" stop-color="#fde68a"/><stop offset="75%" stop-color="#f0c040"/><stop offset="100%" stop-color="#c084fc"/></radialGradient>
-      </defs>
-      <path d="M32 2 C34.5 21 43 29.5 62 32 C43 34.5 34.5 43 32 62 C29.5 43 21 34.5 2 32 C21 29.5 29.5 21 32 2 Z" fill="url(#navStarG)"/>
-    </svg>
-    <span class="nav-logo">FIGMIRA</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#values">Our Vision</a></li>
-    <li><a href="#brands">Our Studio</a></li>
-    <li><a href="/research/">Research</a></li>
-    <li><a href="https://x.com/figmira" target="_blank" rel="noopener">Follow Us</a></li>
-  </ul>
-</nav>
-
-<section id="hero">
-  <!-- ✦ FIGMIRA: main heading for search engines and screen readers (invisible on screen) ✦ -->
-  <h1 class="gw-visually-hidden">Figmira: an independent research studio for AI, blockchain, robotics, and investing</h1>
-
-  <p class="hero-imagination ill-target">An Independent Research Studio</p>
-
-  <div id="gwWrap">
-    <div id="gwLetters" aria-hidden="true">
-      <span class="gw-letter" style="--c:#c084fc"><span class="gw-glyph">F</span></span>
-      <span class="gw-letter" style="--c:#f0c040"><span class="gw-glyph">I</span></span>
-      <span class="gw-letter" style="--c:#2ee6c8"><span class="gw-glyph">G</span></span>
-      <span class="gw-letter" style="--c:#ff9a3c"><span class="gw-glyph">M</span></span>
-      <span class="gw-letter" style="--c:#e879f9"><span class="gw-glyph">I</span></span>
-      <span class="gw-letter" style="--c:#b9b4ff"><span class="gw-glyph">R</span></span>
-      <span class="gw-letter" style="--c:#fff1c1"><span class="gw-glyph">A</span></span>
-    </div>
-  </div>
-
-  <p class="hero-tagline ill-target">Study the World. Imagine the Next.</p>
-  <!-- ✦ FIGMIRA: what we are, in one line ✦ -->
-  <p class="hero-oneliner">We study the frontiers shaping what comes next: AI, blockchain, robotics, and investing. New research notes, written to be read.</p>
-  <div class="hero-cta">
-    <a href="/research/" class="btn btn-primary">Read the Research</a>
-    <a href="#values" class="btn btn-secondary">Our Vision</a>
-  </div>
-  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
-</section>
-
-<div class="section-divider"><span class="ill-target">✦ Our Purpose ✦</span></div>
-
-<section id="values">
-  <h2 class="values-headline ill-target">Born from a Figment. Grounded in Research.</h2>
-  <div class="values-grid">
-    
-    <div class="value-card">
-      <div class="value-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
-          <line x1="12" y1="22" x2="12" y2="12"></line><line x1="22" y1="8.5" x2="12" y2="12"></line><line x1="2" y1="8.5" x2="12" y2="12"></line>
-        </svg>
-      </div>
-      <div class="value-label">Explore</div>
-      <p class="value-desc ill-target">We follow the frontiers of AI, blockchain, robotics, and investing, and we go to the original sources, not just the headlines.</p>
-    </div>
-
-    <div class="value-card">
-      <div class="value-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
-        </svg>
-      </div>
-      <div class="value-label">Question</div>
-      <p class="value-desc ill-target">We face the brutal facts, including the ones we don't like. Every claim gets a source, and every forecast is labeled as one.</p>
-    </div>
-
-    <div class="value-card">
-      <div class="value-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-        </svg>
-      </div>
-      <div class="value-label">Explain</div>
-      <p class="value-desc ill-target">We turn dense research into notes anyone can read, with plain language and charts that come alive as you scroll.</p>
-    </div>
-
-    <div class="value-card">
-      <div class="value-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"></ellipse>
-          <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"></ellipse>
-        </svg>
-      </div>
-      <div class="value-label">Imagine</div>
-      <p class="value-desc ill-target">Then we ask the question that matters most: what does this make possible? Every world starts as a figment.</p>
-    </div>
-
-  </div>
-</section>
-
-<div class="section-divider"><span class="ill-target">✦ Our Studio ✦</span></div>
-
-<!-- ✦ FIGMIRA: STUDIOS (research) ✦ -->
-<section id="brands">
-  <div class="brands-inner">
-    <p class="brands-eyebrow ill-target">Figmira Studios · Research</p>
-    <div class="brands-row">
-      <div class="brand-card" id="card-studios">
-        <div class="brand-word-row">
-          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">S</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#e879f9">S</span></div></div></div>
-          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">T</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">T</span></div></div></div>
-          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">U</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#c084fc">U</span></div></div></div>
-          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">D</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#fde68a">D</span></div></div></div>
-          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">I</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#e879f9">I</span></div></div></div>
-          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">O</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#f0c040">O</span></div></div></div>
-          <div class="door-letter brand-door"><div class="door-letter-inner"><span class="letter-char">S</span><div class="door-panel-left"></div><div class="door-panel-right"></div><div class="door-reveal"><span class="door-reveal-symbol" style="color:#c084fc">S</span></div></div></div>
+      <section class="featured-products section-inline" id="products" aria-labelledby="products-title">
+        <h2 class="section-overline" id="products-title"><span></span>FROM FIGMIRA LABS<span></span></h2>
+        <div class="product-row">
+          <button class="product-tile budget-tile" type="button" data-product="budget">
+            <span class="tile-pattern budget-pattern" aria-hidden="true"><svg viewBox="0 0 240 90" preserveAspectRatio="none"><defs><linearGradient id="mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9d6b" stop-opacity=".55"/><stop offset="1" stop-color="#3a1640" stop-opacity="0"/></linearGradient></defs><path d="M60 90 110 48 128 60 168 18 190 34 214 4 240 22V90Z" fill="url(#mtn)"/><path d="M0 83 32 73 56 79 85 54 103 65 132 31 159 47 195 8 240 27" fill="none" stroke="#ffcc69" stroke-width="2.4"/><path d="M0 83 32 73 56 79 85 54 103 65 132 31 159 47 195 8 240 27V90H0Z" fill="#efb85a" opacity=".12"/></svg></span>
+            <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 40 40" width="39" height="39"><path d="M6 30h6V21H6zM17 30h6V13h-6zM28 30h6V5h-6z" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+            <span class="tile-copy"><span class="tile-kicker">FIGMIRA</span><strong>BUDGET</strong><small>PLAN · TRACK · GROW</small></span>
+            <span class="tile-arrow" aria-hidden="true">→</span>
+          </button>
+          <button class="product-tile next-tile" type="button" data-product="next">
+            <span class="tile-pattern future-pattern" aria-hidden="true"><span class="future-planet"></span><span class="future-stars"></span></span>
+            <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40"><path d="m20 5 16 9-16 9L4 14 20 5Zm-16 16 16 9 16-9M4 28l16 9 16-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+            <span class="tile-copy"><span class="tile-kicker">NEXT PRODUCT</span><strong>IN DEVELOPMENT</strong><small>A NEW FIGMIRA EXPERIENCE</small></span>
+            <span class="tile-arrow" aria-hidden="true">→</span>
+          </button>
         </div>
-        <div class="brand-divider"></div>
-        <p class="brand-desc ill-target">Our forge of ideas. Before we build new worlds, we study the forces shaping them. For now, Figmira Studios is a research studio, and these are the frontiers we'll be writing about.</p>
-        <ul class="gw-research">
-          <li><span class="gw-research-name">Artificial Intelligence</span><span class="gw-research-desc">How intelligent systems learn, create, and work alongside people.</span></li>
-          <li><span class="gw-research-name">Blockchain</span><span class="gw-research-desc">Open networks, digital ownership, and what's worth building on them.</span></li>
-          <li><span class="gw-research-name">Robotics</span><span class="gw-research-desc">Machines that sense, move, and act in the physical world.</span></li>
-          <li><span class="gw-research-name">Investing</span><span class="gw-research-desc">How capital finds the ideas that shape what comes next.</span></li>
-        </ul>
-        <a href="/research/" class="brand-link">Read the research →</a>
-      </div>
+      </section>
+
+      <section class="ecosystem section-inline" id="ecosystem" aria-labelledby="ecosystem-title">
+        <h2 class="section-overline" id="ecosystem-title"><span></span>THE FIGMIRA ECOSYSTEM<span></span></h2>
+        <div class="ecosystem-row">
+          <a class="eco-item" href="#articles"><svg viewBox="0 0 56 50" width="62" height="55" aria-hidden="true"><defs><linearGradient id="eco-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9b0"/><stop offset="1" stop-color="#d9973a"/></linearGradient></defs><path d="M28 11c-10-5-17-5-25-2v31c9-3 18-3 25 3 7-6 16-6 25-3V9c-8-3-15-3-25 2Z" fill="url(#eco-gold)" fill-opacity=".12"/><path d="M28 11c-10-5-17-5-25-2v31c9-3 18-3 25 3 7-6 16-6 25-3V9c-8-3-15-3-25 2Zm0 0v32" fill="none" stroke="url(#eco-gold)" stroke-width="2.8" stroke-linejoin="round"/></svg><span><small>FIGMIRA</small><strong>RESEARCH</strong><em>STORIES &amp; IDEAS</em></span></a>
+          <a class="eco-item" href="#products"><svg viewBox="0 0 56 50" width="62" height="55" aria-hidden="true"><defs><linearGradient id="eco-violet" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2d8ff"/><stop offset=".55" stop-color="#9c86ff"/><stop offset="1" stop-color="#5b3fc4"/></linearGradient></defs><path d="m28 6 23 12-23 12L5 18 28 6Z" fill="url(#eco-violet)"/><path d="m5 28 23 12 23-12M5 38l23 11 23-11" fill="none" stroke="url(#eco-violet)" stroke-width="3.2" stroke-linejoin="round"/></svg><span><small>FIGMIRA</small><strong>LABS</strong><em>APPS WE BUILD</em></span></a>
+          <button class="eco-item" type="button" id="dreamshots-open"><svg viewBox="0 0 56 50" width="62" height="55" aria-hidden="true"><defs><linearGradient id="eco-pink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbd3f6"/><stop offset="1" stop-color="#9a4fc0"/></linearGradient></defs><path d="M15 42C8.5 42 3.5 37.2 3.5 31c0-5.6 4.2-10.300 9.700-10.900C14.800 13 21 8 28.500 8c7.300 0 13.500 4.700 15.400 11.300C48.800 20.200 52.500 24.500 52.500 30c0 6.600-5 12-11.500 12Z" fill="url(#eco-pink)"/></svg><span><small>FIGMIRA</small><strong>DREAMSHOTS</strong><em>IDEAS WE DARE TO TRY</em></span></button>
+        </div>
+      </section>
+
+      <section class="horizon section-inline" id="about" aria-labelledby="horizon-title">
+        <div class="horizon-card">
+          <p class="section-overline horizon-overline"><span></span>OUR HORIZON<span></span></p>
+          <h2 id="horizon-title">Make the future understandable.<br> Then help build it.</h2>
+          <p class="horizon-body">I never believed I could build something like Figmira. Then AI made me a little delusional, in the best way. It let me dream past what I thought was possible, and I figured the least I could do was share that. So Figmira follows curiosity wherever it leads: research on the forces shaping tomorrow, apps that make everyday life easier, tools for the games we love, and experiments that might not work at all. If it sparks our imagination, it belongs here.</p>
+          <p class="horizon-sign"><svg viewBox="0 0 140 100" width="26" height="21" aria-hidden="true"><use href="#fig-bfly"/></svg>Iso, Founder</p>
+        </div>
+      </section>
+
+      <section class="articles section-inline" id="articles" aria-labelledby="articles-title">
+        <div class="articles-heading"><h2 id="articles-title">FROM FIGMIRA RESEARCH</h2><span class="rule"></span><a href="https://figmira.com/research/">View All Articles <span aria-hidden="true">→</span></a></div>
+        <div class="article-row">
+          <a class="article-card" href="https://figmira.com/research/the-edge-not-the-cliff/"><span class="article-img"><img src="data:image/webp;base64,UklGRnIiAABXRUJQVlA4IGYiAADwfwCdASoAAYgAPj0aikOiIaEVWgZIIAPEsgBh8verHyc/O/1T9tfYs4562/hP3T17v43SB8l5BHtHe3/1Hqe/Pf/f/P/6A/1i9P//I9bX9f/53qV/qH+j/bP3tPR3/o/sA+Qb+3/7vrK/QK8uz2Yv7h/2v3a9sT//+wB///ba5peHvygxfdNPyrRUzT2ofdPIbzE+P/+z6hH5L/Rf9l/avU+iwclPxvQX9qvtP/S9Jidb9Qagn5kcczQF/T3/a9mz/V8v319/7PcP/Xn/vGwtMoVw0lukuEKYHMgCfAz1BX9hr3hFZCz2seSNwg5AR7J3vAaBNgRD5l/5T+ekmUsA47KYZTnIqIZFaaBca7wU64CY+ppJv0gwrfkBG4QUq2V/A/kglBYrz+z89EeL0XYySHnzXl63c/Vj81N7IAHnUd6KrRhvNLdtCFDvAfdUMy7jcN1UJ6mq2H2V8MdXuX2Q5X9Ovxre0ryVIwSSvwHWckNtSKDU5eszB+4RSbetB2Whyrx4V2QUz7A9R1kvtsroCwTvRwreVleXN7iX3mcPs/TC1VPUp9lG/ZFN1wc/dQqqtWSldL73XAPfyFglSScKl/YwctJFkfdUPbxHl3svwKTpvD1AtjwDKfeKYG51o2Daa37VgCGrUugV32lcS4A2TrUPg8xlb6aGUdOv89T4UY/opsgv/2iDMh7VUQObDXnp3DnklnxjJ0AC/coav3DJsnm5Y1d+IIa+zaPFyX//aEkB8wkHzrKaZLUiOwGv8ckfl0UDJru+Az20V7uy07H2KLSZAKUrlso+waYKfpDKyJDl1EdG88OPtz7FrrxPg+RhuoYZ+O8mLl11lnhCvfBu1LPb2Vu1bteKTB3X480Sru9FVF9IN/nrqB4PgHZUvp/hiOH/46J5Amqcv1Fx6eZJPlU8Yc51cPa6PrucerrH5idgjSrDRb3/gL+tS/xvfktwTWFf8hz3+f95LXRSRo/69zuS8qiJyh5SbGsf0wjDNnEaGKfc5PgVejzaNTHpxNdXfzKw/2DpaIw3/8/7D72K8qexixGB5yB2zy1qdn81EaxIM747f7yHjvJqW3eehQXaDrtI+TG8amu9hikJlV4Vob88jDySMrllMpZy6XHyRrLL0GGXWqrcpSj9WlHB6v4NdZ215ZfwlW9Y4lnM38ft6yMGL1l8UyWxiuR5tscaVOPtKUzuKrTYuLOwv1/OYiAkZSEmZ+chp67kB0YXIRxV392xdtwdKDVQRP/kl3+1EfCI1U7mK+VF7vFA76mM2yRqGYMfY7aTvGeM8IERS077q8B5cIZe2Fkt5Pc2ZccS0If3Q9j2nvj/vr4Bjc5AMXzUG7+WqAdLJHB4hamUShSqsyiW6iL+KgAA/v+sj9cUbH7P+gGqa1+JZC9hCU3b/VvSAJ7ThFQk7orTW9XE3yiU7QTNw8w0Vz9KoGr5xfe3LByhtTJnwYPHgfJqwpeFT2T7HdBPUmpLImrD2Zytzl2x2MplCF0ksirgND0xdfwhBsQJGDhGojIM52cDP2Zo4Eqsuc7GxY0hK8copGxkLg+nx+TW5sZZJ77MRDNO48OwjhzLPWJ/vhd7oi3FISn2yO3ZvWIbetKP2oYEtQsw2itlB3IpZz1JybqGu4uasSdwugH4IYBSjA/k4x5xg4vBVl2lzCpkm6Gg5QzH8SWJRbQYTuuAXHuZJ8Yg1wWLiX5oO8kawsEtKNSxaW7E7l2AVfWzCMqjqyMcbPISGGFdAyZPvptjzz54V+xqy7MPtzkP4DGEGd/LyIY1wjHtylec3eD0fv6H4kdFEdpt1Ndd7EJG0vxLPPQqQ3mlfZAojf59cd8b68Jl1A9+hGyrm0jyjL9tUeVyRsFttqceEtIT7CM7hayOA5hAn/ExH5879nZ+dIv39wGllbU9g/xTX9QNe9livibPesaZuw+Pxjfj699iS9JKnnffOjNdaTsrzgJwNmUiGNJMBUjsUYoJT1so8OezFCplXa/+/dTNyAtAFMuRxq/4Gcv0v1V3mu5TLnnLrG75SxUD4jVoJTBh2Pwq8qaVVzxLkmOVwfidGnTpInQUR/WYMTUZuWf1L8dQYl8FGkG9nOm0yYIca3a+Lx1e4H8gOXQ6uknjuUjFgLsdmk2LYR5PcgbqaBQX4AMTTGnfUdACiblNSXq1aqnjf4/16UZ+eKk9irtF0BybBX1ITypw0dfOBc+ZGLUkINw03wTVNt9WzRM6v70sgbiaPSfJYvmcfjuot/+qQ/m1xPazA+b442S8PjL8ey+dWkEh4LBEjPRF5jQZ51e4DqrE0Hb7jrbuhEPHF+PHEWTYVIcYuRhHDHdP+PBYCKPjPvBFGVebHEozP/yieSU6e/1vVR90DM7BgMbR2C8KpTuNim39IA5QeJXj8iBC+iej5AX8IhOv9gdrRsBFsdm9ur7FmrS9JLgzG4JTY36GxJCxFNLQ2jfUR2lRXlh53Ve2esWXK4xkFZ9ELWpoXs8rP+CPNGEqoXCF+OFp/LZQlN8HIOmPG87r6zUnZwg8KXTBUgp5W3KzeLgFWmvQOsBLbkY6OytNpFCKOOjkkcgdw5W//ZaAijdbEIkgzN49yfqB3IGRL5/SLG2g07WCN6djK6At7wbsO7wNT0yheNcdOS+WN0qX44lRI3Bx8HFyE4AIffBAHk1qWD+hR5oLGA427I5bTrOfl/2QcaQzPgxQ0CIxzh+zyIx1c3nSlgXT1Q7o8H7n6FoCiSsSkVkPuicCWgxEa7cO96rAcfNcJTXYsuL7CiE651WaNkg+1UzoInrxe50OIRqXT8Rzacki8gUEP+U6DRSZOqqfnSLmtJiJQFoY9Iq/A1lagBtxxo5D8fq7YvCtz9HEwUUgUWyte6W6v/2ooxvSVUo5R7S/m1Vr+MFKE/lLw3gg+lQtE2f0UFpGrEXxlMZOFiw87yZKc6rsIWKXVSfvCjJrpHMoXOiwA/w+AzyO4ucrrzJ/9mIQRdtQ8s1D1M8LqsPUsPFGeTx/Xko0lOMFqAjtYUVdEewTVZY15apMZoBklPevQ5E20ErQkewE/+GXeOIibOtY2bOzJWjEKDPJ4TTUbEYlF3z5rtP2XMyEpU7i9/vl7wGc6F9UXvgiOlOfVFuO2ShzjHqdeK2xBwXIrfxgVJn3MAV2Q7bg514H6YXMSrzGzPZtBeDmTgvo3Ix8ZDM1Mvzwy5Fiz9ZV7BQNFi4RfFNtuE9LoanFNkTsi0dLP/AXePra6bFIlYriZ9pqZPMiK94j7IUSpdcQu1S0BcEhlqgq367IotKqZFTo25CcaIKinAHygnto67hj54TM8AWO4HPCP0rx8qq4M7dg/LE6onbEe/aX4tyV9hmw2H8I4ugt+lopG1Yj8XnVDSjT+/CPlQUOa8EQ8dSVYhhIq1OPd6hCncIheeo9NNxvjYxJeywW0Kx3yqUyKOXRg/ecVc/sB7zigmmxeZQaJZLJmdD96vbl3asEjlRil/VrexAWYmMdvIgXpFsBz9bhvze8cfg9qd/yoADGYxBZElxv03WRPXcX/+gHussJx7KAOIBNd9H339gQ9Nw1ryln8DnGAel192OwFspBthEIQVtI5I8ohcbq3ZTj8NbWYGwNsSLBPnkc9Yz0uXFJW76z/uv7auQfiBnx9CGA3bVAp9qB0fi+4OaiEPSmcDEKfxfpAoR3Nap/4Vus1aw5hcRbNbneWypSG4ZtLPNduAZD4NHrPRbEQZMbO1IhkMIf/FBzOCi7PrsbBttaa2KwbPSWDO7T6/kj/MAJB6Z0uVyo7qTDYyyTFW9qhG3Kq+X8OxQktf7SK2vrxnYjTeC7Ql/pj7jL75mIZmCDEOr7s3lDX2NG8889e+9lQRuYno5oK5RZlYOD6+b7o6s58iIZ4KGwAHdlqHG/Tl7B4c2LKmulog1fSlRniCvC6quNgODJPIhnn2RNqSLt/f3QyIuRr0hxeP5giMGad54sUD5IBzL+8uRsDHjlQuDPnVAIjqfRLYHn0RCFVWB7rd5GR7YiBYGghXssUwr64R0TKpb3kGOU1jJBts1eISqBxELq/f19wswk71cPesZkFhk/Y9u1JCFawAfdpb3ifF1KdLDr03YAWhlXUUh//WPVUho8fydYc5vt6nPagnB6KJrxHw2qHyoCmc2fkab7muSThtb+Kh3Y1dMD4pP5RkX8FZ4wgC/DFVqxiGgxoDDruZPYmUD4lfZG7CRxcZEEu1QqJ7GiZKNBmoQe6jGvgHg9p70OB3wvGzL5UZExRI9AoGp6/euSdxQ7Gi/ZJd83Yz362/t7QsDm8u7CUI2dFoLqqfDLm628ignSwGKCNl90m34Nd3bCLKIYMoVABa+eChLppQNH0aSLTppSCGB3N+Y9yiEEcnv5bhVY8mB6b5FCwlvLHsUXWmt16CVrmbugRqU7sS2KmfOj5C/zhNP3CPebOSdZwAZNfqI8+4CsW+9GCWb+bnsUK8//sCvKakIYXQ6GEyVVrYT+it7fNcfExY/6FezEn8PdoQo1UK6qJ6/XC48krPuQnKq5To2P7zgPny9Eyvn42rS6/sf7n2BhcN/x3RydLDsmCcgaBaIb2WHzLfUPvqwq68ASwdBgy9N+l6qfYnGEZPKNdI6tX5EzWC6ri0FIUQNiMwStrT6huaCMJK6cUZcvyGL9a4RVAK1UjhGVGgiTdcIWRGXLBxF4XP0PynWuOQZ+iuGcbu7vCy7Na77iVtLEhgiDBbCbvycGptU434v/gXjgc3747ltyqoOJ/5iX/vJ53LuKP2H5ai/m2ZPflnDw8V6ygilFudjAVDeJV2whl6n0jf10U/oM6SPHYhRjNtYVFM0OHCM5wjsrnhY2cdr+xcNkFoXLfzEWs+YB6KMps3siFZCSI8Norgh9yN1yNggECsBNfJ7G3Ep8J7Pj63n4gMBlMKgngqz9QNXnv1rypx+PazNEoVvF9jaDCC0Zf3eQJAs+OdGQuExaXJx/BLAEIL5BkOz7zsD4/X5k04uUCRP25EeTDCuiIE3AtPgzevLQo2vQLG3iSBkv7lOHfJ6i8MuAqyMnKNkzwTFonJf9speHqqSGisymLa6eV4FkPwlBt6cDuOABlOW3xxk0AFjnsaZLikpK2Z6ck9c6nTNUXPxoB3uhBzAb5l0ZT4I1ge5pyUUCy3YNAEec+St9gRcJ+EMGEH7llB55Me2N4VSFoXHWYw82W37OAzyE4fk7eFYgCeWEn7j0oPI2NgFTgIwimz1jD+y+mM5dW/RKZH2gI4it80f3uSab7V5ZCiCzmMEL7PIPXoEfjwGL4oTtvcogkFLt4J+Y5XWzsSd32zF95oZZ/Vq3H6zhWjxsrKol5oq3IxIcQeg4My9AJLSXAxOWrKb/O3vhXwnmW2qDPXskgJeBDizzBgV4RPaa4mBoosQa1498a5iOg+vp+LsH7u2KeIBAKtmqI8GRdQzx4oCtpsXae8YDBaztptNcdvvILs4Gpj7Yn0ip/DUqh1JvsYZhtkJ0xK/zsQQGp2/tIazSEr6eS69XaI9L2zdo4L3EVXm5sYq8FZvne+PK3YVrF4Tcps1aDCfBHTP6ABmQ5aDvHRN5snj92kebXMGXoUWMmlbuJTgL6UiVyOmhwbQQE+EYc3kI5TrMlue/Vue5XeCmelI6nl4Z1ivztsMqZ7t4py3YiLoXoldUkrlVjTmgTiKbeWtss8VCLlFvSSSSLMhfyebg1FA4YZE41vba10A+PRFaMsR5tciLwYxdLn/kNZePJXqaHq077N3J8/2BBdU7tAu40eDlV9GJc9EdtTJ3y1NP5i7oui7opEFZSlsl4Z/ieenyq9YGXXCIhZrdQ6kYTnlUlNquFcBuj5SAJ0cxWlsWLi8r6DwCcifBTRhcCMGtA/AfVagvNU2b0ZgRc/Vrdr67N1Cvp2/n6+NEJ3UnYYZf3syzN31H/Jm8FZDg3zb38Yju5r55VmY5uXe97uTm8sq/kg8loBix8OE8aRhWBd13H6n630a13n6irg9C41cU/EpQK/7Hc2Q7mahVQG5Pl3vpA5oP9Z5OCJfbRIewQ9PjfqZk8V7XA9fbZi6RhbzBaqo8280Gu/NFqysA4/Dwxmb7gEdpN2bzo6lFLNGu8t7UeVM6wkZnuMDfMfhowegR6O6O3SpxF4o/V0ER6zZrwvvIKLyncHyn3+XON5o6mGxodLlGbMmuBFpm1ZTJwlarUwBaFWX5WCmNigDz3AskcJSXdCbem5K42eYVBCALNjAB5nVmLXVy/sOQSi0IaKQqi1Nn837r3sdZ0O2sP90q0yefenCP/ucH9iJw+Fzrqk3T8ySHr/IT4QFdy9oBG5bdn7YYArS04R7eRBVsImIepCor0McoVYnHHyad4LlI+f3RmltERvp3CiE5rrRJIBo2qADTHzZzWleSbQe5MUv+tAqzu8wz/COWkgxBFvd27ZytmRI56KfPndBMbqu4kywomqaMFS8Dr4gLq7XSd2LD5xoSlsbnLxTjyjJuBtlMByE4Ym311gwXruCczTMKc/70Zmj387qjkymWyysz6OQwnvukqAZcd66/UH7vhnQR7X48abG1rIL/EOYuGCi2WFl1XRSVCPmFk8PsYJ2O/rMKTORWJ3VNdENYQW5QI9eYwiMzA7Wmh/hvPo0dIs7y70MpUzFL5/E4vMJLfMgBrVYHWXrrr8cTVdx3hQbCz9BEMWrE2ZwAazlbYkLbIHyAsl7mRa8u94u6oPmnRmqds8/YFmSEdMokHYhY6yp1KHsS/QJRt9ZHMHBj/Zt1cf9pM6akLKdgsUmPR9ihOnYInXnEC1xRFX2AMAJzRTo9rKiehwOT3g5C3q0uIswxunRQM8JnAwARFaSioY+lNGKTz88odKKQsXvD2qBsP22eCs+qTRM26rWaRr7u2C1Zex9TJJAimHiODZRPgvV4bC7bO+0LGJoa8ePScD6UgGYZyv3t9ScggdB2djqGhAiC4gvZjuoSDj6kBAHj4zIp71pj7wurPLzYUa8XJ6In3RVujmWNhanhqXOOs5j1veBFvmEyEPBYyTchxa/0nb2+uP1QqL16T3TrR/dtdZkJmjfX5D5Lhytp/pgn5Dsc9Cv7K2T1Ma62dpeaW2dzc3JkLTQ+23meZ6f17cCp1xbTUOBFWNeoyWeR5xZdbmn87RcVeeHz6LcabwaStmWJmCY6xJ16PPnM4JeHjSv786rp1gz65pwCNZEPmP8n/+P+Cz3H0j44eEzNWJp/6/w5mMy2zB+sFZUArUcW/uxjD6VkrppDuHdp0QO3Tq1FWlga4ToHfi2c/dRxg+V7WbWDBB3mGFCwZr6zxBI4/uoiC6JQSoi+FlyF+5nCc9gIPge2jfa9A+k0Rw38emIjfut3wcemBEca/n8CXZbjerSEWZCWoQ4Lfg2S/4NoeNN6w/ktwqehfNxbUT9+6kcjq1ka7Dy7wXCelR18MUE/r6SfUgwAssQUxWTkVTWTQ73B8C9hNA6OftzMxKzPA2qQr4Plh+XBR212TOdCnPDSlzh04DTzUX5E+5EVVfg0DDcgXOYgA/w4unVWyx3D1+8s7okH1J6nWZrpLYlSP9Ie/qE1PynDswXDR7D6mB3eD9Is/YECqf7ql0fcfcf8v/sHs5nAWiIRRU5bTTFKKsjUfXw88d8At89tgx16BfmEQQVf94Z5+BWUh4/g8uA2Wmfcc6+QlPGD1bDu5NTcMOgLFY9tLkK0y3v2urz9KmmiliUir4XvsZ8V0XjOkkAWWOOu+Xsumqyq2J4TqIyZHyPkDO30TWjJsFQunUIsQaSUFPA1+X1LND64lozpkpmGxXAlC016zM6dhJ8hd3b2rma/FkQGArvvpKsK8c3W6MOoWFSV+X7XqCv4tiX54tNxN44Hrcj2JC2fKWSQE414shWnJt8IXcoPU5yE0S6pVzVjGXppotJWU6cqUJC6QKcwDQyqyfvZE0hTv3JL6o3TKK23ME/8C2u0gLSFvqH6Nbc9xXnWhWtq639RTNKN1x5Fme2d7K7u6+H9UKbGUH0g47kgpYd5Ks6ZTpXjqnM6sR5DI5YjqHSLmQMHRuCVhZ+7A1NS5SiFZZYtPdD9iYr5IynQIbXz8wxG+pa1p0bmtBO54TiVSfhTDXODQHdn4hSr++qbIDW6xt5HjHRcBcTfQu/YqfsF799d6oTp34hZ5IJ7BTJFpFHyiy/aFO5uEQvCqwUQ6wQGzNx0OjT4bFANu2YReaeN8VqtQ/zzsAZ3Dwh2Ut5O62+qEst9hYFlna4bGzcYMlvHUUCaY7fQUqDGhgfsLunntkXWDMGId//hGmebQ0ZwWx+iY1N+1wNyDUFgPqkXt+XXPBfmkLln3vi1h6v6aqEUefp96J0Fac6nWnJ5ktj3mOT63rgCCWQnFB0K0TJHZ+DklYLHVDrEPAbbWJ49XZ6CgcqPA4KhhlfHngRMXf6ki9Ig1Gp2/skLGEaWwle/tAkhl2xW9UIjd9AHyO8MdNOwN+zDdepbQJjEVPoUou57K/OzAcl/MefXPvxcxcwkgTiKJXm/OiiqjKPH7AcJEtLhA2Nq0+LUGONBYo/NMlpwYXg1op3bSiXbo15YWu0YPX1rqLo5g2qX0O6YgfXojy4+IShoXTdS/oLk2cblTc8Hq8UgVO3zg43Wk3Da7utTEO1195Mq7X9//mbrzt36BI48ta+o6q1dFGqfEM39su/Hwml5RY8ebm5ZqQ9HxQ4U2z81l+Wia24/Tjxfac33xOxYnEH3slg0obcd4bTZ50x97cvFM3D3g9yawOj58taQeQy3p3IvK/5w6MnKH2J48We/Cah01erm117z+T3W2UMFhqT1+fQMji8oOkKBHCeFOtouiC52jCYrORIAOU3LgtMx0dqYpqf4T0KjD1bS5fiH/9lGuCuWfzUMQhmqDo4n4JH08Ox392iT3S0iT2A2jjRkY6QUb2Kvxlbn137cvsi3uxp/jB1WRoaipK2Ef4fdjwfEnIe43ugy4JcNPjUzEfeh/YSNfLvhm9eFt6NNzaiVZHxqS2HncBwROr8MpGvRsWV0c129U4OfYkE+S0MKdmVmRnbt4LU73GZRZEzXud2Nj32GMB5n5BZ+LzN1cCuvlhj0TAN870M31lV/YjkJoRx3ibu8+prhAGcCG12DcPnG9yGCTDTWxFV4hbRqtxt91uyLpUT5/w0tMYqCEFnpeDY8qAmhZblMeZA+dZu+9vIKIaPIPypHN6uHp5VaiTyIvr31k2XpNNYsVrLF4qIOOJFNBfaNf8n91T7uIX4KWTfbE19vx4pM5U8hOiLb+20N9dOP2WQ+VMwUR0x5eOmWWnNsS/p2TRqBfXyMsuS8x4T5CnREIbUREeTxllRIVNW7elOFEUW8OeNdyMF6s4OzNUg7libxzW0DrNlz4q/felgzs2wEAt701JQxysTe8chIo/eHrMI2bk7ZSz62V/Z+er5/qxVMMJx0HwpaHOQwQHFNo9KJDfRTtBWKNs8E8Lf/1be7e7Vb7GD3iUTor2eJwM/FH1H5a3vU4v/UqNFZP9mwHhvWb5b1G6jBclHQh8IQrlhVqCJPJTTMmEm4hG5HTEPCBWlzq+SkTIHCNBsXK3Erild0i2JXu6ZWPKgzSenFCNkr8EHHFx6UIs8I+lwKN3WMRtbU52nv7+F0B7DE0molV0D5kye0r9EQTfw+LMLbFbJvQYfI/cucYwfnbYxvmJoALnBuM2UqvmyXzAjz882u5Z6xMXGtbyIO9M91NcQIYmeXjaC0VRctGreQXVjVZVNaEj2qtpnvmZIhR+BsbzHgNgCaGy/uAa1pNciKVH2q/n/GLVpgoqXuBOJqgnZCS3kmG8EFZZwJdhzAqVA+1u/0rA5phIdbqj7r7+RjKX2IE6X53OJiIX9OCAaGsaMU7jD9re3hndTAT9D75tYcg/DOyyXhMZ5UHqNHgprQRXBiF22ApB/SzDFnjM0X4+RWiQ5yPYziKUXcMZIL7BudlfHsmVVKN4thN5Jwcomqv1Q5t6V6ImtxXW2JWVkcgNqCwpIOJMFA7BbgBIjXyVBBGGfjW8/IUpEsG3rUC1ga6wZQ2nVep0XXPbFUU03I4Aj2XKShRF3WxUP+BRp7JpnYzs+Oyi133fcrgA1Yktg+XYQ/rOV5TUNPT3NI+VnQNOV5fSacc0BOHZbkLHYnE0WyecGF6R6+NrleHCx1+iT4uwPJmMmtxU+cXV8E8jnIZLCAyYM2/I36ICPMxeTjK/A52ZlRJwSsybTqwFomLAkj7a4SwyH+0fgMuBUBK27zfd0/EsapMt5jsp/ug6uFfMz8Ac8NbGeByP4rfvJ0lKXtzsZXnjHw1+MAMAp2ki5Hv63Li5SUzDSntWO+1wXSngYss38aN6wL3rvueweE4P5lSWSXwpWSD/KVH6IYSTKrQFJtyrE8PT3rQeFP0TVOl98L0RkjATTF9qPU8ni03UKpVJh+ytbV/sca+7vXubrJGjmWHCICqgdbXfH7pfX9aVhp7E3SVNcMTsuQm3n2orf9tZL1g+648D0K2Fjz4ygQgoOOPJYczdZKaZQnynTCh22IblgSW/O2C9YwKDigTLlFhFLaAN0i2e5pqTXx573CVVEPWIwbQFmNsZ2Kx55rkded44TKCbu4tPnhRjmWzgaiosDJjjZp5vN9DVAN+dO36sSLoI6K46YgXOz2HQDmas47JBa0q9cOO9YRP5XHQrDiU2psmM2pKphzBlqFiPnckhUX20sWEpF8pibVCbk9D5VSNvZnGRNKy/3z1fJy50bKv7DqCPDfasN/pImfAgnmDHKbarhsymFli8SVIoE5q9SSybDlfmh+ZIrIE7Hz1rYmwWVJHqiftmC30t42G02yU7nUwsZkF9Ix3LsSqZpbNZzOi1H5DPrPgqXgz6GNX7fO+n6IBKP4MFXut3eypd6ZTgt6OPyLnwGsEjw1W6HJr3Klf6ZQ4e3pDs/gxBy5Z9VGXKYw8snPyjt4PpLGlYExKmFyeaG52bUoRdvFzLNkUiuKzG5/plck91RPAB2VG8SvfLAyvkiFCGdc5sSG4/IcwsFMZHz2k75MdgfnsWjzA4BsFr1LrnZENyqzPm8XcUwBEADP/S/vd91pwrM2yT9+Z5PCcYVtUKcFgOpAarCXASOyi0n3U9+3DlNll8ihNoWu1DmgRvVk8bs+yNKcLm5dA9UigGmBGNEN6/B5F/o31RE6rQQpnFf1m4yiAFEkVz2lnpcAD8mZUxcvmkO9ZoNWUnhVSyWYKxt8xkpqbw++1u7tU3VvINb5e9gtfiF5FCclnYHIIM6vbSQ8XpcHsEdxKWYEeovAsnfw8/xiqSvS1/CdrskYFp7gvBwh2qIRZ2R/7WE0JsPhS9jgecDhIF3I0ytpMiKXscWV1k7TKN9c7Fma9cFyDt8sYg6L4z/+q7b+Xs7MwPP1NRoS9I76K9AAb6cI2aJyUgQy3GmYNs16XyU0LrBPnM4VVbX9Qf30pAB5lrYOrRAE0eKM25rnipYuAUNIZYb4dnbZPS+30azAY9bAhLilkTpcIjcXyB1rX7EotWF/bId+COmtVRah66JLWAIrMyMJeNcT7ifgf7peOwGb6GT/q89Y1GG9UT4kaNqH5tnndTor9oudwEY6Ix2LnAc8U5ZP+H4MmTm+bD7CpejznMl/MUMP9TOhJ/lryxRM2k0k2/v3G8i3LUYasdObYFWvjuQoFbitRBDluEthWEufWzyCCFAIEtjuSpOSmrnKoPBJMiXAANbZSZ0FRAhqDO+YsjtwRkKoAece2vywc7AIunEwrJoPyEaqnoAA" alt="Explorer standing above a golden mountain valley" loading="lazy"></span><span class="article-details"><span class="tag">EXPLORATION</span><strong>The Edge,<br>Not the Cliff</strong><span class="article-summary">Why growth begins just beyond what feels comfortable.</span><span class="read-link">Read Article <b aria-hidden="true">→</b></span></span></a>
+          <a class="article-card" href="https://figmira.com/research/why-you-have-to-be-a-delusional-optimist/"><span class="article-img"><img src="data:image/webp;base64,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" alt="A glowing butterfly emerging from light" loading="lazy"></span><span class="article-details"><span class="tag violet-tag">CREATION</span><strong>Out of My Mind</strong><span class="article-summary">Why a little delusion is no longer optional.</span><span class="read-link">Read Article <b aria-hidden="true">→</b></span></span></a>
+          <a class="article-card" href="https://figmira.com/research/why-figmira-studios-starts-with-research/"><span class="article-img"><svg viewBox="0 0 240 200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="An open book glowing under a night sky"><defs><linearGradient id="ar-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0620"/><stop offset=".6" stop-color="#2a1454"/><stop offset="1" stop-color="#5a2a6e"/></linearGradient><radialGradient id="ar-glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe2a0" stop-opacity=".75"/><stop offset=".45" stop-color="#f0a56a" stop-opacity=".25"/><stop offset="1" stop-color="#f0a56a" stop-opacity="0"/></radialGradient><linearGradient id="ar-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9b0"/><stop offset="1" stop-color="#d9973a"/></linearGradient></defs><rect width="240" height="200" fill="url(#ar-sky)"/><g fill="#fff8eb"><circle cx="22" cy="24" r="1"/><circle cx="58" cy="52" r=".7"/><circle cx="96" cy="18" r=".9"/><circle cx="150" cy="34" r=".7"/><circle cx="196" cy="20" r="1.1"/><circle cx="222" cy="64" r=".7"/><circle cx="34" cy="92" r=".7"/><circle cx="208" cy="110" r=".8"/><circle cx="130" cy="64" r=".6"/><circle cx="74" cy="118" r=".6"/><circle cx="176" cy="78" r=".6"/></g><ellipse cx="120" cy="112" rx="110" ry="80" fill="url(#ar-glow)"/><g fill="#ffe6ad" transform="translate(0 -22)"><path d="M120 60l2.600 8.400 8.400 2.600-8.400 2.600L120 82l-2.600-8.400-8.400-2.600 8.400-2.600Z"/><path d="M84 88l1.600 5.400 5.400 1.600-5.400 1.600L84 102l-1.600-5.400L77 95l5.400-1.600Z"/><path d="M160 80l1.800 6.200 6.200 1.800-6.200 1.800L160 96l-1.800-6.200-6.200-1.800 6.200-1.800Z"/><path d="M138 104l1.200 3.800 3.800 1.200-3.800 1.200L138 114l-1.200-3.800-3.800-1.200 3.800-1.200Z"/><path d="M102 110l1 3.200 3.200 1-3.200 1L102 118.400l-1-3.200-3.200-1 3.200-1Z"/></g><g transform="translate(72 104) scale(1.7)"><path d="M28 11c-10-5-17-5-25-2v31c9-3 18-3 25 3 7-6 16-6 25-3V9c-8-3-15-3-25 2Z" fill="#2a1240" fill-opacity=".85"/><path d="M28 11c-10-5-17-5-25-2v31c9-3 18-3 25 3 7-6 16-6 25-3V9c-8-3-15-3-25 2Zm0 0v32" fill="none" stroke="url(#ar-gold)" stroke-width="1.800" stroke-linejoin="round"/></g></svg></span><span class="article-details"><span class="tag">IDEAS</span><strong>Why We Start<br>With Research</strong><span class="article-summary">Studying this world before building the next.</span><span class="read-link">Read Article <b aria-hidden="true">→</b></span></span></a>
+        </div>
+      </section>
     </div>
-  </div>
-</section>
-
-<!-- ✦ FIGMIRA: ORIGIN STORY ✦
-     This is a DRAFT written in your voice. Change any sentence to your real story. -->
-<section id="origin" class="gw-origin" aria-labelledby="origin-title">
-  <div class="section-divider"><span>✦ Our Origin ✦</span></div>
-  <div class="gw-origin-inner">
-    <h2 id="origin-title" class="gw-origin-title">Every world starts as one person's figment.</h2>
-    <div class="gw-origin-body">
-      <p>Figmira began as an idea I couldn't let go of: the worlds we imagine deserve to be built, not only dreamed about.</p>
-      <p>So I'm building a home for them, starting where every world begins: research. AI, blockchain, robotics, and investing are the frontiers I'm exploring first.</p>
-      <p>We're at the very beginning, and every realm on this page is still a figment. Stay close and watch them take shape.</p>
-    </div>
-    <p class="gw-origin-sign"><span class="gw-origin-name">Iso</span><span class="gw-origin-role">Founder, Figmira</span></p>
-  </div>
-</section>
-
-<!-- ✦ FIGMIRA: FINALE, "release it" ✦ -->
-<section id="finale" class="gw-finale" aria-labelledby="finale-title">
-  <div class="gw-finale-inner">
-    <div class="gw-finale-star" aria-hidden="true">✦</div>
-    <h2 id="finale-title" class="gw-finale-title">Every realm starts as a figment.</h2>
-    <p class="gw-finale-sub">Yours too. Release it and watch it go explore the universe.</p>
-    <button type="button" class="btn btn-primary gw-release" id="gwRelease">Release it ✦</button>
-    <p class="gw-figment-msg" id="gwReleaseMsg" role="status" aria-live="polite"></p>
-  </div>
-</section>
-
-<footer id="footer">
-  <div class="footer-brand">FIGMIRA</div>
-  
-  <div class="footer-socials">
-    <a href="#" target="_blank" aria-label="Follow FIGMIRA on Instagram">
-      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-    </a>
-    <a href="https://x.com/figmira" target="_blank" rel="noopener" aria-label="Follow Figmira on X">
-      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-    </a>
-  </div>
-
-  <div class="footer-copy ill-target">© 2026 Figmira. Study the World. Imagine the Next.</div>
-</footer>
-
-<script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+  </main>
+  <footer class="site-footer"><div class="footer-top"><a class="footer-brand" href="#top"><svg viewBox="0 0 140 100" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fl-gold" gradientUnits="userSpaceOnUse" x1="0" y1="12" x2="0" y2="58"><stop offset="0" stop-color="#ffe29b"/><stop offset="1" stop-color="#eeb055"/></linearGradient><linearGradient id="fl-purple" gradientUnits="userSpaceOnUse" x1="0" y1="58" x2="0" y2="92"><stop offset="0" stop-color="#b583ef"/><stop offset="1" stop-color="#6a36b2"/></linearGradient></defs><g fill="url(#fl-gold)"><path d="M66 54C46 29 29 19 7 12c4 18 6 33 17 43 8 7 23 8 42-1Z"/><path d="M74 54c20-25 37-35 59-42-4 18-6 33-17 43-8 7-23 8-42-1Z"/></g><g fill="url(#fl-purple)"><path d="M66 60C43 56 24 68 31 91c9-10 17-11 25-16 8-5 11-12 10-15Z"/><path d="M74 60c23-4 42 8 35 31-9-10-17-11-25-16-8-5-11-12-10-15Z"/></g><g fill="#f6cb72"><path d="M67 48c-3-11-8-20-14-24l-1 2c6 5 10 12 12 24M73 48c3-11 8-20 14-24l1 2c-6 5-10 12-12 24"/><path d="M70 46c-3 6-4 13-4 19 0 10 2 16 4 23 2-7 4-13 4-23 0-6-1-13-4-19Z"/></g></svg><span>FIGMIRA</span></a><p>STUDY · CREATE · EXPLORE · TRANSFORM</p><div class="footer-cols"><div><strong>Research</strong><a href="https://figmira.com/research/">Latest</a><a href="https://figmira.com/research/">Insights</a></div><div><strong>Labs</strong><a href="#products">Figmira Budget</a><a href="#products">Coming Soon</a></div><div><strong>Dreamshots</strong><a href="#ecosystem">Experiments</a></div><div><strong>About</strong><a href="#about">Our Story</a></div></div><form class="subscribe-footer" id="footer-signup"><strong>Stay in the Figmira Loop</strong><span>New articles, products, and worlds.</span><div class="footer-email"><label class="sr-only" for="footer-email">Email address</label><input id="footer-email" type="email" placeholder="Enter your email" autocomplete="email"><button type="submit" aria-label="Sign up for updates">→</button></div><p class="footer-feedback" id="footer-feedback" role="status" aria-live="polite"></p></form></div><div class="footer-bottom"><small>© <span id="year">2026</span> Figmira. All rights reserved.</small><div><a href="https://x.com/figmira" target="_blank" rel="noreferrer">X</a><a href="https://github.com/Figmira/figmira-website" target="_blank" rel="noreferrer">GitHub</a><a href="https://figmira.com/research/">Research</a></div></div></footer>
+</div>
+<div class="modal-backdrop" id="modal-backdrop" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" aria-label="Close dialog">×</button><p class="modal-kicker">FIGMIRA</p><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDAgMTAwIiBmaWxsPSJub25lIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkZpZ21pcmEgYnV0dGVyZmx5Ij4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ29sZCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiNmZmYxYjUiLz48c3RvcCBvZmZzZXQ9Ii41IiBzdG9wLWNvbG9yPSIjZWRjMTZiIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYmQ4MjNiIi8+PC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPGcgc3Ryb2tlPSJ1cmwoI2dvbGQpIiBzdHJva2Utd2lkdGg9IjMuNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik02NSA1NEM1MSAzMyAzMSAxOSA3IDEyYzggMTMgOSAyOSAxNiAzOCA5IDExIDIzIDExIDM4IDkiLz4KICAgIDxwYXRoIGQ9Ik02MSA1OUMzNyA2MCAyNiA3MiAzMSA5MGM5LTExIDIwLTEyIDI5LTIxIDUtNSA3LTkgOC0xMyIvPgogICAgPHBhdGggZD0iTTc1IDU0YzE0LTIxIDM0LTM1IDU4LTQyLTggMTMtOSAyOS0xNiAzOC05IDExLTIzIDExLTM4IDkiLz4KICAgIDxwYXRoIGQ9Ik03OSA1OWMyNCAxIDM1IDEzIDMwIDMxLTktMTEtMjAtMTItMjktMjEtNS01LTctOS04LTEzIi8+CiAgICA8cGF0aCBkPSJNNjcgNDZjLTMtMTMtOC0yMC0xNC0yNE03MyA0NmMzLTEzIDgtMjAgMTQtMjQiIHN0cm9rZS13aWR0aD0iMi40Ii8+CiAgPC9nPgogIDxwYXRoIGQ9Ik03MCA0NWMtMyA1LTQgMTMtNCAxOSAwIDkgMiAxNSA0IDI0IDItOSA0LTE1IDQtMjQgMC02LTEtMTQtNC0xOVoiIGZpbGw9InVybCgjZ29sZCkiLz4KPC9zdmc+Cg==" alt="" width="90" height="70"><h2 id="modal-title"></h2><div class="modal-content" id="modal-content"></div><div class="modal-actions" id="modal-actions"></div></div></div>
 <script>
-'use strict';
-
-/* ═══════════════════════════════════════════════════════════════════ 
-  LENIS SMOOTH SCROLL (Your Golden Code Engine)
-═══════════════════════════════════════════════════════════════════ */
-const lenis = new Lenis({
-  duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  direction: 'vertical',
-  gestureDirection: 'vertical',
-  smooth: true,
-  mouseMultiplier: 1,
-  smoothTouch: false,
-  touchMultiplier: 2,
-});
-
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
-/* ═══════════════════════════════════════════════════════════════════ 
-  GSAP ANIMATION ENGINE
-═══════════════════════════════════════════════════════════════════ */
-gsap.registerPlugin(ScrollTrigger);
-
-// Sync GSAP with Lenis Smooth Scrolling (Golden Code)
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
-gsap.ticker.lagSmoothing(0);
-
-const heroTl = gsap.timeline({
-  scrollTrigger: { trigger: "#hero", start: "top 20%" }
-});
-
-heroTl.from("nav .nav-brand, nav .nav-links li", {
-  opacity: 0,
-  y: -20,
-  duration: 1,
-  stagger: 0.1,
-  ease: "power3.out"
-}, 0.2); 
-
-heroTl.to(".gw-letter", {
-  opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out"
-}, "-=0.5");
-
-heroTl.to([".hero-cta", ".scroll-hint"], { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.5");
-
-if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-  document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
-    });
-    btn.addEventListener('mouseleave', () => {
-      gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
-    });
+(() => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (query, root = document) => root.querySelector(query);
+  const $$ = (query, root = document) => [...root.querySelectorAll(query)];
+  const menu = $('#nav-links');
+  const toggle = $('.nav-toggle');
+  toggle?.addEventListener('click', () => {
+    const open = menu.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
   });
-}
+  $$('#nav-links a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('is-open');
+    toggle?.setAttribute('aria-expanded','false');
+  }));
+  $('#year').textContent = String(new Date().getFullYear());
 
-// Scroll-Scrubbed Text Illumination (Your Golden Code Logic)
-document.querySelectorAll('.ill-target').forEach(el => {
-  const words = el.textContent.trim().split(/\s+/);
-  el.innerHTML = words.map(w => `<span class="ill-word">${w}</span>`).join(' ');
-  
-  const wordSpans = el.querySelectorAll('.ill-word');
-
-  ScrollTrigger.create({
-    trigger: el,
-    start: "top 95%", 
-    end: "bottom bottom", 
-    scrub: true,      
-    onUpdate: (self) => {
-      let activeWordsCount = Math.floor(self.progress * wordSpans.length);
-      if (self.progress > 0.99) activeWordsCount = wordSpans.length;
-
-      wordSpans.forEach((word, i) => {
-        const isActive = i < activeWordsCount;
-        if (isActive && !word.classList.contains('active')) {
-          word.classList.add('active');
-        } else if (!isActive && word.classList.contains('active')) {
-          word.classList.remove('active');
-        }
-      });
+  const products = {
+    budget: {title:'Figmira Budget',html:'<p>A simple, privacy-minded budget companion for tracking expenses, setting savings goals and making your money feel easier to manage.</p><p><strong>Status:</strong> iOS app in testing. App Store availability has not been announced.</p>'},
+    next: {title:'What comes next?',html:'<p>Every new product begins as a figment. We are exploring useful tools and original experiences, but have not announced the next release.</p>'}
+  };
+  const articles = [
+    { title:'The Edge, Not the Cliff', url:'https://figmira.com/research/the-edge-not-the-cliff/', tag:'Studio' },
+    { title:'Out of My Mind: Why a Little Delusion Is No Longer Optional', url:'https://figmira.com/research/why-you-have-to-be-a-delusional-optimist/', tag:'Studio' },
+    { title:'Why Figmira Studios Starts With Research', url:'https://figmira.com/research/why-figmira-studios-starts-with-research/', tag:'Studio' },
+    { title:'SK hynix: Why We Believe SKHY Can Run to $780 a Share', url:'https://figmira.com/research/sk-hynix-the-memory-of-ai/', tag:'Investing' }
+  ];
+  const backdrop = $('#modal-backdrop'), title = $('#modal-title'), content = $('#modal-content'), actions = $('#modal-actions');
+  let priorFocus = null;
+  const action = (label, href, secondary = false) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.textContent = label;
+    if(secondary) a.className = 'secondary';
+    return a;
+  };
+  function openModal(head, html, links = []) {
+    priorFocus = document.activeElement;
+    title.textContent = head;
+    content.innerHTML = html;
+    actions.replaceChildren();
+    links.forEach(([label,href,secondary]) => actions.append(action(label,href,secondary)));
+    backdrop.hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('#modal-close').focus();
+  }
+  function closeModal(){
+    backdrop.hidden = true;
+    document.body.style.overflow='';
+    priorFocus?.focus?.();
+  }
+  $('#modal-close')?.addEventListener('click', closeModal);
+  backdrop?.addEventListener('pointerdown', e => { if(e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if(backdrop.hidden) return;
+    if(e.key === 'Escape'){closeModal();return;}
+    if(e.key === 'Tab') {
+      const focusable = $$('button,a[href],input', $('.modal')).filter(el=>!el.disabled);
+      const first = focusable[0], last=focusable[focusable.length-1];
+      if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
     }
   });
-});
-
-gsap.utils.toArray(".value-card").forEach((card, i) => {
-  gsap.to(card, {
-    scrollTrigger: { trigger: card, start: "top 90%" },
-    opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: i * 0.1
+  $$('.product-tile').forEach(tile => tile.addEventListener('click',()=>{
+    const p=products[tile.dataset.product];
+    openModal(p.title,p.html,[['Explore Figmira research','https://figmira.com/research/',true]]);
+  }));
+  $$('[data-modal="updates"]').forEach(el=>el.addEventListener('click',()=>{
+    openModal('Stay in the Figmira Loop', '<p>Hear about new research, product launches, and worlds taking shape.</p><form id="signup-form"><label for="signup-email">Email address</label><input id="signup-email" type="email" placeholder="you@example.com" autocomplete="email" required><p class="form-note">Preview mode: email collection is not connected to a mailing-list provider yet.</p><p class="feedback" id="signup-feedback" role="status" aria-live="polite"></p><button type="submit" class="subscribe-submit">Check signup</button></form>');
+    $('#signup-form')?.addEventListener('submit',e=>{
+      e.preventDefault();
+      $('#signup-feedback').textContent='This is a design preview. Connect a mailing-list provider before collecting email addresses.';
+    });
+  }));
+  $('#dreamshots-open')?.addEventListener('click',()=>{
+    openModal('Figmira Dreamshots','<p>Our open playground. These are ideas we like, experiment with, and try, just to see where they go.</p><p><strong>Status:</strong> Nothing announced yet.</p>');
   });
-});
-
-gsap.utils.toArray(".brand-card").forEach((card, i) => {
-  gsap.to(card, {
-    scrollTrigger: { trigger: card, start: "top 85%" },
-    opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: i * 0.1
+  $('#footer-signup')?.addEventListener('submit',e=>{
+    e.preventDefault();
+    $('#footer-feedback').textContent='Preview only: email signup is not connected yet.';
   });
-
-  ScrollTrigger.create({
-    trigger: card,
-    start: "top 75%", 
-    onEnter: () => {
-      card.querySelectorAll('.brand-door').forEach((door, j) => {
-        setTimeout(() => door.classList.add('open'), j * 150); 
-      });
-    },
-    onLeaveBack: () => {
-      card.querySelectorAll('.brand-door').forEach((door) => {
-        door.classList.remove('open');
+  $('#search-open')?.addEventListener('click',()=>{
+    openModal('Explore our research','<label for="article-search">Search published articles</label><input id="article-search" type="search" placeholder="Try: research, SK hynix, growth"><div class="search-results" id="search-results"></div>');
+    function renderResults(){
+      const q=$('#article-search').value.trim().toLowerCase();
+      const matched=articles.filter(a=>(a.title+' '+a.tag).toLowerCase().includes(q));
+      const root=$('#search-results');root.replaceChildren();
+      if(!matched.length){root.textContent='No matching research notes.';return;}
+      matched.forEach(a=>{
+        const link=document.createElement('a');link.href=a.url;link.textContent=a.title+' ↗';
+        link.style.cssText='display:block;text-align:left;padding:11px 2px;border-bottom:1px solid #5a385d;font-size:13px;color:#ffe0a3';
+        root.append(link);
       });
     }
+    $('#article-search').addEventListener('input',renderResults);
+    $('#article-search').focus();renderResults();
   });
-});
+  // Night sky: stars drawn once on a canvas
+  const sky = $('#night-sky'), canvas = $('#star-canvas');
+  const lite = !!((navigator.connection && navigator.connection.saveData) || (navigator.deviceMemory && navigator.deviceMemory <= 2));
+  let skyW = 0, skyH = 0;
+  function drawStars(){
+    const w = sky.clientWidth, h = sky.clientHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if(!canvas.getContext || (w === skyW && h === skyH)) return;
+    skyW = w; skyH = h;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    const c = canvas.getContext('2d'); c.scale(dpr, dpr);
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const count = Math.round(w * h / 2600);
+    for(let i=0;i<count;i++){
+      const y = Math.pow(rnd(), 1.7) * h, x = rnd() * w, r = .3 + rnd() * rnd() * 1.3;
+      const fade = Math.max(.18, 1 - y / (h * 1.05)), tint = rnd();
+      c.fillStyle = tint > .86 ? `rgba(255,216,150,${fade})` : tint > .72 ? `rgba(200,170,255,${fade})` : `rgba(255,248,235,${fade * .9})`;
+      c.beginPath(); c.arc(x, y, r, 0, 6.283); c.fill();
+    }
+  }
+  requestAnimationFrame(drawStars);
+  let starTimer; window.addEventListener('resize', () => { clearTimeout(starTimer); starTimer = setTimeout(drawStars, 200); });
+  for(let i=0;i<(lite?12:24);i++){
+    const t=document.createElement('span'); t.className = i%3===0 ? 'tw-star spark' : 'tw-star';
+    t.style.left = `${(i*41+7)%100}%`; t.style.top = `${10+((i*67)%360)}px`;
+    t.style.animationDelay = `${-(i*.7)}s`; t.style.animationDuration = `${3+(i%4)}s`;
+    sky.append(t);
+  }
+  // Figments: glowing lights and small butterflies that drift upward
+  if(!reduced){
+    const field = $('#petal-field');
+    for(let i=0;i<(lite?10:20);i++){
+      const f=document.createElement('span'); f.className = i%3===1 ? 'figment violet' : 'figment';
+      f.style.setProperty('--x',`${(i*47+11)%100}%`);
+      f.style.setProperty('--y',`${150+((i*83)%520)}px`);
+      f.style.setProperty('--delay',`${-(i*1.3)}s`);
+      f.style.setProperty('--dur',`${10+(i%5)*2.2}s`);
+      f.style.setProperty('--drift',`${(i%2?1:-1)*(30+(i%4)*22)}px`);
+      field.append(f);
+    }
+    for(let i=0;i<(lite?3:6);i++){
+      const b=document.createElement('span'); b.className='fig-fly';
+      b.innerHTML='<svg viewBox="0 0 140 100"><use href="#fig-bfly"/></svg>';
+      b.style.setProperty('--x',`${[8,22,68,82,92,40][i]}%`);
+      b.style.setProperty('--y',`${[300,120,90,260,430,520][i]}px`);
+      b.style.setProperty('--delay',`${-(i*4.1)}s`);
+      b.style.setProperty('--dur',`${19+(i%3)*5}s`);
+      b.style.setProperty('--dx',`${(i%2?-1:1)*(90+i*18)}px`);
+      b.style.setProperty('--size',`${16+(i%3)*5}px`);
+      field.append(b);
+    }
+  }
+})();
+
 </script>
-<script src="cursor.js?v=2" defer></script>
-<script type="module" src="gateway.js?v=2"></script>
 </body>
 </html>

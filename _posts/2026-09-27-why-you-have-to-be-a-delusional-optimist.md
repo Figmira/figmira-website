@@ -4,7 +4,7 @@ image: /research/images/og-out-of-my-mind.png
 layout: note
 title: "Out of My Mind: Why a Little Delusion Is No Longer Optional"
 description: On being a little delusional, why it stopped being optional, and why AI turned me into a believer.
-topic: Studio
+topic: Ideas
 whatif: What if the odds are the wrong thing to measure?
 date: 2026-09-27 12:00:00 -0500
 tldr:

@@ -4,7 +4,7 @@ image: /research/images/og-studios.png
 layout: note
 title: Why Figmira Studios Starts With Research
 description: Before building new worlds, I want to understand the forces shaping them. Here's what these notes will cover, and how I'll write them.
-topic: Studio
+topic: Ideas
 whatif: What if the best way to build new worlds is to study this one first?
 ---
 

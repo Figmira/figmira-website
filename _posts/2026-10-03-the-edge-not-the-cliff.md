@@ -3,7 +3,7 @@ preview: edge
 layout: note
 title: "The Edge, Not the Cliff"
 description: Why growth lives just past the point where things get uncomfortable, why most of us mistake that edge for a cliff, and why the only way to find it is to move.
-topic: Studio
+topic: Ideas
 whatif: What if the discomfort is the direction?
 date: 2026-10-03 06:00:00 -0500
 image: /research/images/og-edge.png
